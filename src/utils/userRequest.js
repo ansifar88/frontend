@@ -1,6 +1,7 @@
 import axios from 'axios'
+const baseUrl = import.meta.env.VITE_USERURL
 const userRequest = axios.create({
-    baseURL: 'http://localhost:8801'
+    baseURL: baseUrl
 })
 
 userRequest.interceptors.request.use((req)=> {

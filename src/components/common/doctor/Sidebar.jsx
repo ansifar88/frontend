@@ -7,12 +7,23 @@ import {
   List,
   ListItem,
   ListItemPrefix,
-  ListItemSuffix,
- 
+  ListItemSuffix, 
 } from "@material-tailwind/react";
+import { useDispatch } from "react-redux";
+import { Logoutdetails } from "../../../Redux/DoctorSlice";
+import { useNavigate } from "react-router-dom";
 
 export function Sidebar({ isOpen, closeSidebar }) {
- 
+ const dispatch = useDispatch()
+ const navigate = useNavigate()
+
+ const handleLogout = async()=>{
+  localStorage.removeItem("currentDoctor")
+  dispatch(Logoutdetails({
+    doctorInfo:{}
+  }))
+  navigate('/doctor')
+ }
  
   return (
         <List className="text-white">
@@ -76,7 +87,7 @@ export function Sidebar({ isOpen, closeSidebar }) {
             </ListItemPrefix>
             Chats
           </ListItem>
-          <ListItem>
+          <ListItem onClick={handleLogout}>
             <ListItemPrefix>
               <svg
                 xmlns="http://www.w3.org/2000/svg"

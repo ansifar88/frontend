@@ -1,6 +1,8 @@
 import axios from 'axios'
+const baseUrl = import.meta.env.VITE_DOCTORURL
+
 const doctorRequest = axios.create({
-    baseURL: 'http://localhost:8801/'
+    baseURL: baseUrl
 })
 
 doctorRequest.interceptors.request.use((req)=> {

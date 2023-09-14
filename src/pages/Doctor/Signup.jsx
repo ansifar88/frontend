@@ -6,6 +6,10 @@ import { doctorSignup } from '../../api/doctorApi';
 import { DoctorSignupWithGoogle } from '../../api/doctorApi';
 import { setdoctordetails } from '../../Redux/DoctorSlice';
 import { useDispatch } from 'react-redux';
+import { SignupSchema } from '../../yup/validation';
+import { useFormik } from 'formik';
+import { ToastContainer } from 'react-toastify';
+import { GenerateError } from '../../toast/GenerateError';
 
 import {
     Input,
@@ -19,6 +23,35 @@ function Signup() {
     const[value,setValue] = useState({name:'',mobile:'',email:'',password:''})
     const [ guser, setGUser ] = useState([]);
     const dispatch = useDispatch()
+
+    const initialValues = {
+      name: "",
+      email : "",
+      mobile : "",
+      password : ""
+    }
+    const {
+      values,
+      errors,
+      touched,
+      handleBlur,
+      handleSubmit,
+      handleChange,
+      setFieldValue,
+      
+    } = useFormik({
+      initialValues : initialValues,
+      validationSchema : SignupSchema,
+      onSubmit : async(values) => {
+        const response = await doctorSignup(values)
+        if (response.data.created) {
+          localStorage.setItem("currentDoctor",response.data.token)
+          navigate("/doctor/home")
+      }else{
+        GenerateError(response.data.message)
+      }
+      }
+    })
 
     const Gsignup = useGoogleLogin({
       onSuccess: (codeResponse) => setGUser(codeResponse),
@@ -46,6 +79,8 @@ function Signup() {
                       localStorage.setItem("currentDoctor",response.data.token)
                       dispatch(setdoctordetails({doctorInfo : doctorDetails}))
                       navigate('/doctor/home') 
+                    }else{
+                      GenerateError(response.data.message)
                     }
                   })
                 })
@@ -54,30 +89,30 @@ function Signup() {
     },
     [ guser ]
   );
-    const handleSubmit = async(e)=>{
-        e.preventDefault()
-        const {name,email,mobile,password} = value
-        try {
-            if (!name) {
-                console.log('Name is required');
-              }else if(!email){
-                console.log("Email is required");
-              }else if(!mobile){
-                console.log("Mobile is required");
-              }else if(!password){
-                console.log("Password is required");
-              }else{
-                const response = await doctorSignup(value)
-                if (response.data.created) {
-                    localStorage.setItem("currentDoctor",response.data.token)
-                    navigate("/doctor/home")
-                }
+    // const handleSubmit = async(e)=>{
+    //     e.preventDefault()
+    //     const {name,email,mobile,password} = value
+    //     try {
+    //         if (!name) {
+    //             console.log('Name is required');
+    //           }else if(!email){
+    //             console.log("Email is required");
+    //           }else if(!mobile){
+    //             console.log("Mobile is required");
+    //           }else if(!password){
+    //             console.log("Password is required");
+    //           }else{
+    //             const response = await doctorSignup(value)
+    //             if (response.data.created) {
+    //                 localStorage.setItem("currentDoctor",response.data.token)
+    //                 navigate("/doctor/home")
+    //             }
                 
-              }
-        } catch (error) {
-            console.log(error.message);
-        }
-    }
+    //           }
+    //     } catch (error) {
+    //         console.log(error.message);
+    //     }
+    // }
     return (
     <>
       <div
@@ -105,16 +140,44 @@ function Signup() {
               
               <form className="xl:w-1/2 md:w-2/3 sm:w-2/3" onSubmit={handleSubmit} >
                 <div className="mb-4">
-                  <Input size="lg" label="Name" variant="standard" name='name' color='white' className='bg-[#1572a9b6] ' onChange={(e)=>setValue({...value,[e.target.name] : e.target.value})}/>
+                  <Input size="lg" label="Name" variant="standard" name='name' color='white' className='bg-[#1572a9b6] ' 
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.name}                  
+                  />
+                  {touched.name && errors.name && (
+                    <div className="text-red-500 text-sm ">{errors.name}</div>
+                  )}
                 </div>
                 <div className="mb-4">
-                  <Input size="lg" label="Email" variant="standard" name='email' color='white' className='bg-[#1572a9b6]' onChange={(e)=>setValue({...value,[e.target.name] : e.target.value})}/>
+                  <Input size="lg" label="Email" variant="standard" name='email' color='white' className='bg-[#1572a9b6]' 
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.email}                  
+                  />
+                  {touched.email && errors.email && (
+                    <div className="text-red-500 text-sm ">{errors.email}</div>
+                  )}
                 </div>
                 <div className="mb-4">
-                  <Input size="lg" label="Mobile" variant="standard" name='mobile' type='number' color='white' className='bg-[#1572a9b6]' onChange={(e)=>setValue({...value,[e.target.name] : e.target.value})}/>
+                  <Input size="lg" label="Mobile" variant="standard" name='mobile' type='number' color='white' className='bg-[#1572a9b6]' 
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.mobile}                  
+                  />
+                  {touched.mobile && errors.mobile && (
+                    <div className="text-red-500 text-sm ">{errors.mobile}</div>
+                  )}
                 </div>
                 <div className="mb-4">
-                  <Input type="password" size="lg" variant="standard" name='password' label="Password" color='white' className='bg-[#1572a9b6]' onChange={(e)=>setValue({...value,[e.target.name] : e.target.value})}/>
+                  <Input type="password" size="lg" variant="standard" name='password' label="Password" color='white' className='bg-[#1572a9b6]' 
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.password}                  
+                  />
+                {touched.password && errors.password && (
+                    <div className="text-red-500 text-sm ">{errors.password}</div>
+                  )}
                 </div>
                 <div className="flex items-start justify-between">
                 
@@ -138,6 +201,7 @@ function Signup() {
         </div>
       </div>
     </div>
+    <ToastContainer/>
     </>
   )
 }

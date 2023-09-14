@@ -3,9 +3,11 @@ import {Link, useNavigate} from 'react-router-dom'
 // import { GoogleLogin } from '@react-oauth/google';
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
-import { userSignup ,UserSignupWithGoogle} from '../../api/userApi';
 import { useDispatch } from 'react-redux';
 import { setuserdetails } from '../../Redux/UserSlice';
+import { ToastContainer } from 'react-toastify';
+import { GenerateError , GenerateSuccess } from '../../toast/GenerateError';
+
 import {
 
   Input,
@@ -13,6 +15,9 @@ import {
   Typography,
   
 } from "@material-tailwind/react";
+import { userSignup ,UserSignupWithGoogle} from '../../api/userApi';
+import { SignupSchema } from '../../yup/validation';
+import { useFormik } from 'formik';
 
  
 
@@ -22,6 +27,36 @@ function Signup() {
   const [ guser, setGUser ] = useState([]);
   const dispatch = useDispatch()
   
+  const initialValues = {
+    name: "",
+    email : "",
+    mobile : "",
+    password : ""
+  }
+  const {
+    values,
+    errors,
+    touched,
+    handleBlur,
+    handleSubmit,
+    handleChange,
+    setFieldValue,
+    setValues
+  } = useFormik({
+    initialValues : initialValues,
+    validationSchema : SignupSchema,
+    onSubmit : async(values , { resetForm }) => {
+      const response = await userSignup(values)
+      if(response.data.created){
+        resetForm(initialValues);
+        GenerateSuccess(response.data.message);
+      }else{
+        resetForm(initialValues);
+        GenerateError(response.data.message);
+      }
+    
+    }
+  })
   const Gsignup = useGoogleLogin({
     onSuccess: (codeResponse) => setGUser(codeResponse),
     onError: (error) => console.log('Signup Failed:', error)
@@ -48,6 +83,8 @@ useEffect(
                     localStorage.setItem("currentUser",response.data.token)
                     dispatch(setuserdetails({userInfo : userDetails}))
                     navigate('/')
+                  }else{
+                    GenerateError(response.data.message)
                   }
                 })
               })
@@ -57,35 +94,15 @@ useEffect(
   [ guser ]
 );
 
-  const handleSubmit = async (e) =>{
-    e.preventDefault()
-    const {name,email,mobile,password} = value
-    try {
-      
-      if (!name) {
-        console.log('Name is required');
-      }else if(!email){
-        console.log("Email is required");
-      }else if(!mobile){
-        console.log("Mobile is required");
-      }else if(!password){
-        console.log("Password is required");
-      }else{
-        const response = await userSignup(value)
-        console.log(response,"response");
-        
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
   return (
+    <>
     <div
   className="min-h-screen flex items-center justify-center bg-cover bg-center"
   style={{
     backgroundImage: "url('https://images.unsplash.com/photo-1584982751601-97dcc096659c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80')",
   }}
 >
+
       <div className="w-full max-w-[48rem] p-4 ">   
         <div className="bg-transparent shadow-lg rounded-none overflow-hidden ">
           <div className="md:flex ">
@@ -103,16 +120,44 @@ useEffect(
               
               <form className="w-full md:w-96" onSubmit={handleSubmit}>
                 <div className="mb-4">
-                  <Input size="lg" label="Name" variant="standard" name='name' color='white' className='bg-[#1572a9b6]' onChange={(e)=>setValue({...value,[e.target.name] : e.target.value})}/>
+                  <Input size="lg" label="Name" variant="standard" name='name' color='white' className='bg-[#1572a9b6] ' 
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.name}
+                  />
+                  {touched.name && errors.name && (
+                    <div className="text-red-500 text-sm ">{errors.name}</div>
+                  )}
                 </div>
                 <div className="mb-4">
-                  <Input size="lg" label="Email" variant="standard" name='email' color='white' className='bg-[#1572a9b6]' onChange={(e)=>setValue({...value,[e.target.name] : e.target.value})}/>
+                  <Input size="lg" label="Email" variant="standard" name='email' color='white' className='bg-[#1572a9b6]' 
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.email}
+                  />
+                  {touched.email && errors.email && (
+                    <div className="text-red-500 text-sm ">{errors.email}</div>
+                  )}
                 </div>
                 <div className="mb-4">
-                  <Input size="lg" label="Mobile" variant="standard" name='mobile' type='number' color='white' className='bg-[#1572a9b6]' onChange={(e)=>setValue({...value,[e.target.name] : e.target.value})}/>
+                  <Input size="lg" label="Mobile" variant="standard" name='mobile' type='number' color='white' className='bg-[#1572a9b6]' 
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.mobile}
+                  />
+                  {touched.mobile && errors.mobile && (
+                    <div className="text-red-500 text-sm ">{errors.mobile}</div>
+                  )}
                 </div>
                 <div className="mb-4">
-                  <Input type="password" size="lg" variant="standard" name='password' label="Password" color='white' className='bg-[#1572a9b6]' onChange={(e)=>setValue({...value,[e.target.name] : e.target.value})}/>
+                  <Input type="password" size="lg" variant="standard" name='password' label="Password" color='white' className='bg-[#1572a9b6]' 
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.password}
+                  />
+                  {touched.password && errors.password && (
+                    <div className="text-red-500 text-sm ">{errors.password}</div>
+                  )}
                 </div>
                 <div className="flex items-start justify-between">
                 
@@ -137,6 +182,9 @@ useEffect(
         </div>
       </div>
     </div>
+    <ToastContainer/> 
+
+    </>
   );
 }
 

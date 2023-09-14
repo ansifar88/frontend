@@ -4,13 +4,18 @@ import { DoctorLogin } from '../../api/doctorApi';
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import{ setdoctordetails } from '../../Redux/DoctorSlice'
 
 import {
     Input,
     Button,
     Typography, 
   } from "@material-tailwind/react";
+  import{ setdoctordetails } from '../../Redux/DoctorSlice'
+  import { LoginSchema } from '../../yup/validation';
+  import { useFormik } from 'formik';
+  import { ToastContainer } from 'react-toastify';
+import { GenerateError } from '../../toast/GenerateError';
+
 
 function Login() {
     const[value,setValue] = useState({email:'',password:''})
@@ -18,6 +23,32 @@ function Login() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
+    const initialValues = {
+      email : "",
+      password : ""
+    }
+    const {
+      values,
+      errors,
+      touched,
+      handleBlur,
+      handleSubmit,
+      handleChange,
+      setFieldValue,
+    } = useFormik({
+      initialValues: initialValues,
+      validationSchema: LoginSchema,
+      onSubmit: async (values) =>{
+        const response = await DoctorLogin(values)
+        console.log(response);
+        if (response.data.access) {
+          localStorage.setItem("currentDoctor", response.data.token)
+                  navigate("/doctor/home")
+        }else{
+          GenerateError(response.data.message)
+        }
+      }
+    })
     const Glogin = useGoogleLogin({
       onSuccess: (codeResponse) => setGUser(codeResponse),
       onError: (error) => console.log('Login Failed:', error)
@@ -42,7 +73,9 @@ function Login() {
                       }
                       dispatch(setdoctordetails({doctorInfo : doctorDetails}))
                       localStorage.setItem("currentDoctor",response.data.token)
-                      navigate('/')
+                      navigate('/doctor/home')
+                    }else{
+                      GenerateError(response.data.message)
                     }
                   })
                 })
@@ -52,26 +85,6 @@ function Login() {
     [ guser ]
   )
 
-    const handleSubmit = async (e)=>{
-      e.preventDefault()
-      const {email,password} = value
-      try {
-        if(!email){
-          console.log("email cant be empty");
-        }else if(!password){
-          console.log("password cant be blank");
-        }else{
-          const response = await DoctorLogin(value)
-          console.log(response);
-          if (response.data.access) {
-            localStorage.setItem("currentDoctor", response.data.token)
-                    navigate("/doctor/home")
-          }
-        }
-      } catch (error) {
-        console.log(error.message);
-      }
-    }
   return (
     <>
       <div
@@ -100,11 +113,25 @@ function Login() {
               <form className="xl:w-1/2 md:w-2/3 sm:w-2/3" onSubmit={handleSubmit} >
                 
                 <div className="mb-4">
-                  <Input size="lg" label="Email" variant="standard" name='email' color='white' className='bg-[#1572a9b6]' onChange={(e)=>setValue({...value,[e.target.name] : e.target.value})}/>
+                  <Input size="lg" label="Email" variant="standard" name='email' color='white' className='bg-[#1572a9b6]' 
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.email}
+                  />
+                  {touched.email && errors.email && (
+                    <div className="text-red-500 text-sm ">{errors.email}</div>
+                  )}
                 </div>
                
                 <div className="mb-4">
-                  <Input type="password" size="lg" variant="standard" name='password' label="Password" color='white' className='bg-[#1572a9b6]' onChange={(e)=>setValue({...value,[e.target.name] : e.target.value})}/>
+                  <Input type="password" size="lg" variant="standard" name='password' label="Password" color='white' className='bg-[#1572a9b6]' 
+                  onChange={handleChange} 
+                  onBlur={handleBlur}
+                  value={values.password}
+                  />
+                  {touched.password && errors.password && (
+                      <div className="text-red-500 text-sm ">{errors.password}</div>
+                  )}
                 </div>
                 <div className="flex items-start justify-between">
                 
@@ -128,6 +155,7 @@ function Login() {
         </div>
       </div>
     </div>
+    <ToastContainer/>
     </>
   )
 }

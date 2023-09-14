@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 import {
 
   Input,
@@ -7,12 +8,15 @@ import {
   Typography,
   
 } from "@material-tailwind/react";
-import { Link, useNavigate } from 'react-router-dom';
 // import { FcGoogle } from 'react-dom/fc'
 import { UserLogin } from '../../api/userApi';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useDispatch } from 'react-redux';
 import { setuserdetails } from '../../Redux/UserSlice';
+import { LoginSchema } from '../../yup/validation';
+import { useFormik } from 'formik';
+import { ToastContainer } from 'react-toastify';
+import { GenerateError } from '../../toast/GenerateError';
 
 const Login = () =>{
   const navigate = useNavigate()
@@ -20,6 +24,32 @@ const Login = () =>{
   const[guser,setGUser] = useState([])
   const dispatch = useDispatch()
 
+  const initialValues = {
+    email : "",
+    password : ""
+  }
+  const {
+    values,
+    errors,
+    touched,
+    handleBlur,
+    handleSubmit,
+    handleChange,
+    setFieldValue,
+  } = useFormik({
+    initialValues: initialValues,
+    validationSchema: LoginSchema,
+    onSubmit: async (values) =>{
+      const response = await UserLogin(values)
+          console.log(response);
+          if (response.data.access) {
+            localStorage.setItem("currentUser", response.data.token)
+                    navigate("/")
+          }else{
+            GenerateError(response.data.message)
+          }
+    }
+  })
   const Glogin = useGoogleLogin({
     onSuccess: (codeResponse) => setGUser(codeResponse),
     onError: (error) => console.log('Login Failed:', error)
@@ -46,6 +76,8 @@ useEffect(
                     dispatch(setuserdetails({userInfo : userDetails}))
                     localStorage.setItem("currentUser",response.data.token)
                     navigate('/')
+                  }else{
+                    GenerateError(response.data.message)
                   }
                 })
               })
@@ -54,29 +86,9 @@ useEffect(
   },
   [ guser ]
 )
-
-    const handleSubmit = async (e)=>{
-      e.preventDefault()
-      const {email,password} = value
-      try {
-        if(!email){
-          console.log("email cant be empty");
-        }else if(!password){
-          console.log("password cant be blank");
-        }else{
-          const response = await UserLogin(value)
-          console.log(response);
-          if (response.data.access) {
-            localStorage.setItem("currentUser", response.data.token)
-                    navigate("/")
-          }
-        }
-      } catch (error) {
-        console.log(error.message);
-      }
-    }
   
   return (
+    <>
     <div
   className="min-h-screen flex items-center justify-center bg-cover bg-center"
   style={{
@@ -100,10 +112,24 @@ useEffect(
               
               <form className="w-full md:w-96" onSubmit={handleSubmit}>
                 <div className="mb-4">
-                  <Input size="lg" label="Email" variant="standard" name='email' color='white' className='bg-[#1572a9b6]' onChange={(e)=> {setValue({...value,[e.target.name]:e.target.value})}}/>
+                  <Input size="lg" label="Email" variant="standard" name='email' color='white' className='bg-[#1572a9b6]' 
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.email}
+                  />
+                  {touched.email && errors.email && (
+                    <div className="text-red-500 text-sm ">{errors.email}</div>
+                  )}
                 </div>
                 <div className="mb-4">
-                  <Input type="password" size="lg" label="Password" variant="standard" name='password' color='white' className='bg-[#1572a9b6]' onChange={(e)=>{setValue({...value,[e.target.name] : e.target.value})}} />
+                  <Input type="password" size="lg" label="Password" variant="standard" name='password' color='white' className='bg-[#1572a9b6]'
+                   onChange={handleChange} 
+                   onBlur={handleBlur}
+                   value={values.password}
+                   />
+                    {touched.password && errors.password && (
+                      <div className="text-red-500 text-sm ">{errors.password}</div>
+                    )}
                 </div>
                 <div className="flex items-start justify-between">
                 
@@ -127,6 +153,8 @@ useEffect(
         </div>
       </div>
     </div>
+    <ToastContainer/>
+    </>
   );
 }
 

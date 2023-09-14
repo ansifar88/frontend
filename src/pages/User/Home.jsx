@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { NavBar } from '../../components/common/user/NavBar'
 import Banner from '../../components/user/Banner';
+import { Footer } from '../../components/common/user/Footer';
 function Home() {
   return (
     <>
@@ -12,7 +13,7 @@ function Home() {
             <Banner/>
         </div>
         <div>
-        <Banner/>
+        <Footer/>
         </div>
       </div>
     </>
