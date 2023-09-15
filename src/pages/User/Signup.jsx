@@ -176,6 +176,12 @@ useEffect(
                     Login
                   </Link>
                 </Typography>
+                <Typography color="white" className="mt-4 text-center font-normal">
+                  Are you a Doctor ?{"  "}
+                  <Link to={'/doctor/signup'} className="font-medium text-gray-900">
+                    Sign up
+                  </Link>
+                </Typography>
               </form>
             </div>
           </div>

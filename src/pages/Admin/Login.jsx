@@ -37,7 +37,7 @@ const Login = () =>{
       const response = await AdminLogin(values)
       if (response.data.access) {
         localStorage.setItem("currentAdmin", response.data.token)
-                navigate("/admin/home")
+                navigate("/admin")
       }else{
         GenerateError(response.data.message)
       }

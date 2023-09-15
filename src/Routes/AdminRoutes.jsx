@@ -4,22 +4,26 @@ import Login from '../pages/Admin/Login'
 import Home from '../pages/Admin/Home'
 import AdminPublic from '../Protected/AdminPublic'
 import AdminProtected from '../Protected/AdminProtected'
+import Layout from '../pages/Admin/Layout'
+import { Users } from '../components/admin/Users'
 function AdminRoutes() {
   return (
-    <>
+    
       <Routes>
 
-        <Route element={<AdminPublic/>} >
-          <Route path='/' element={<Login/> } />
-          <Route path='/login' element={<Login/> } />
+        <Route element={ <AdminPublic/>} >
+          <Route exact path='/login' element={ <Login/> } />
+          
         </Route>
-
-        <Route element={<AdminProtected/>} >
-          <Route path='/home' element={<Home/> } />
+        
+        <Route  path="/" element={ <Layout> </Layout> }>
+          <Route index element={ <AdminProtected> <Home/> </AdminProtected> } />
+          <Route path="/users" element={ <AdminProtected> <Users/> </AdminProtected>} />
         </Route>
         
       </Routes>
-    </>
+
+   
   )
 }
 

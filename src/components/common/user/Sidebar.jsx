@@ -25,6 +25,9 @@ export function Sidebar({ isOpen, closeSidebar }) {
     }))
     navigate('/')
   }
+  const navigateLogin = async()=>{
+    navigate('/login')
+  }
  
   return (
         <List className="text-white">
@@ -110,8 +113,10 @@ export function Sidebar({ isOpen, closeSidebar }) {
           </ListItem>
           </>
           ) : (
-            <ListItem>
+            <ListItem onClick={navigateLogin}>
+              
             <ListItemPrefix>
+
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"

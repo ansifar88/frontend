@@ -23,7 +23,7 @@ import { useNavigate } from "react-router-dom";
 
     const handleLogout = async()=>{
       localStorage.removeItem("currentAdmin")
-      navigate('/admin')
+      navigate('/admin/login')
     }
     return (
       <Card className="h-[calc(100vh-2rem)] w-full fixed bg-[#2c7c8d] rounded-none max-w-[18.7rem] p-4 text-red shadow-xl shadow-blue-gray-900/5">
@@ -41,7 +41,7 @@ import { useNavigate } from "react-router-dom";
             </ListItemPrefix>
             Doctors
           </ListItem>
-          <ListItem>
+          <ListItem onClick={() => navigate('/admin/users')}>
             <ListItemPrefix>
               <UserCircleIcon className="h-5 w-5" />
             </ListItemPrefix>
@@ -60,7 +60,7 @@ import { useNavigate } from "react-router-dom";
             <ListItemPrefix>
               <Cog6ToothIcon className="h-5 w-5" />
             </ListItemPrefix>
-            Settings
+            Departments
           </ListItem>
           <ListItem onClick={handleLogout}>
             <ListItemPrefix>
