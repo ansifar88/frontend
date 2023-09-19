@@ -26,10 +26,10 @@ import { useNavigate } from "react-router-dom";
       navigate('/admin/login')
     }
     return (
-      <Card className="h-[calc(100vh-2rem)] w-full fixed bg-[#2c7c8d] rounded-none max-w-[18.7rem] p-4 text-red shadow-xl shadow-blue-gray-900/5">
+      <Card className="h-[calc(100vh-2rem)]  w-full fixed bg-[#2c7c8d] rounded-none max-w-[18.7rem] p-4 text-red shadow-xl shadow-blue-gray-900/5">
         
         <List className="text-white mt-8">
-          <ListItem>
+          <ListItem onClick={() => navigate('/admin')}>
             <ListItemPrefix>
               <PresentationChartBarIcon className="h-5 w-5" />
             </ListItemPrefix>

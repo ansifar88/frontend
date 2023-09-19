@@ -8,3 +8,9 @@ export async function AdminLogin(value) {
       return err;
     }
   }
+
+export const manageUser = async(id)=>{
+  return adminRequest.put(`/manageuser/${id}`,{
+    withCredentials : true
+  })
+}

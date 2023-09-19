@@ -1,4 +1,3 @@
-import React from 'react'
 import { Routes , Route } from 'react-router-dom'
 import Login from '../pages/Admin/Login'
 import Home from '../pages/Admin/Home'
@@ -15,10 +14,12 @@ function AdminRoutes() {
           <Route exact path='/login' element={ <Login/> } />
           
         </Route>
-        
+        <Route element={ <AdminProtected/>} >
+
         <Route  path="/" element={ <Layout> </Layout> }>
-          <Route index element={ <AdminProtected> <Home/> </AdminProtected> } />
-          <Route path="/users" element={ <AdminProtected> <Users/> </AdminProtected>} />
+          <Route index element={  <Home/> } />
+          <Route path="/users" element={ <Users/> } />
+        </Route>
         </Route>
         
       </Routes>
