@@ -56,7 +56,7 @@ import { useNavigate } from "react-router-dom";
               <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" />
             </ListItemSuffix>
           </ListItem>
-          <ListItem>
+          <ListItem onClick={() => navigate('/admin/departments')}>
             <ListItemPrefix>
               <Cog6ToothIcon className="h-5 w-5" />
             </ListItemPrefix>

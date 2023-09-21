@@ -43,7 +43,7 @@ function Login() {
         console.log(response);
         if (response.data.access) {
           localStorage.setItem("currentDoctor", response.data.token)
-                  navigate("/doctor/home")
+                  navigate("/doctor")
         }else{
           GenerateError(response.data.message)
         }
@@ -73,7 +73,7 @@ function Login() {
                       }
                       dispatch(setdoctordetails({doctorInfo : doctorDetails}))
                       localStorage.setItem("currentDoctor",response.data.token)
-                      navigate('/doctor/home')
+                      navigate('/doctor')
                     }else{
                       GenerateError(response.data.message)
                     }

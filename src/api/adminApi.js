@@ -14,3 +14,9 @@ export const manageUser = async(id)=>{
     withCredentials : true
   })
 }
+
+export const addDepartment = async(details) => {
+  return adminRequest.post("/department",details,{
+    withCredentials :true
+  })
+}

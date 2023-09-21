@@ -1,7 +1,8 @@
 import React from 'react'
 import { NavBar } from '../../components/common/doctor/NavBar'
 import { Footer } from '../../components/common/doctor/Footer'
-function Home() {
+import { Outlet } from 'react-router-dom'
+function Layout() {
   return (
     <>
  
@@ -9,8 +10,8 @@ function Home() {
         <div>
           <NavBar/>
         </div>
-        <div className='h-screen'>
-          <h1 className='text-5xl '>DOCTOR DASHBOARD</h1>
+        <div className='h-auto min-h-screen'>
+          <Outlet/>
         </div>
         <div>
           <Footer/>
@@ -20,4 +21,4 @@ function Home() {
   )
 }
 
-export default Home
+export default Layout

@@ -22,7 +22,7 @@ export function Sidebar({ isOpen, closeSidebar }) {
   dispatch(Logoutdetails({
     doctorInfo:{}
   }))
-  navigate('/doctor')
+  navigate('/doctor/login')
  }
  
   return (

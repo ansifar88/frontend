@@ -1,12 +1,11 @@
 import { Outlet } from "react-router-dom"
-import Home from '../pages/Doctor/Home';
-import Login from "../pages/Doctor/Login";
+import { Navigate } from "react-router-dom";
 function DoctorProtected() {
     if (localStorage.getItem('currentDoctor')) {
         return <Outlet/>
       }
       console.log('You have no account, Please Login');
-      return <Login/>
+      return <Navigate to="/doctor/login"/>
 }
 
 export default DoctorProtected

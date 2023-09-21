@@ -5,6 +5,7 @@ import AdminPublic from '../Protected/AdminPublic'
 import AdminProtected from '../Protected/AdminProtected'
 import Layout from '../pages/Admin/Layout'
 import { Users } from '../components/admin/Users'
+import { Department } from '../components/admin/Department'
 function AdminRoutes() {
   return (
     
@@ -19,6 +20,7 @@ function AdminRoutes() {
         <Route  path="/" element={ <Layout> </Layout> }>
           <Route index element={  <Home/> } />
           <Route path="/users" element={ <Users/> } />
+          <Route path="/departments" element={ <Department/> } />
         </Route>
         </Route>
         

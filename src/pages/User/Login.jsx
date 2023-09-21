@@ -20,7 +20,6 @@ import { GenerateError } from '../../toast/GenerateError';
 
 const Login = () =>{
   const navigate = useNavigate()
-  const[value,setValue] = useState({email:"",password:""})
   const[guser,setGUser] = useState([])
   const dispatch = useDispatch()
 

@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom"
-import Home from '../pages/Doctor/Home';
+import { Navigate } from "react-router-dom";
 
 function DoctorPublic() {
     if (localStorage.getItem('currentDoctor')) {
         console.log("public route");
-          return <Home/>
+        return <Navigate to="/doctor"/>
         }
         console.log("return case ");
         return <Outlet/>

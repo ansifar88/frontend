@@ -12,3 +12,8 @@ export const SignupSchema = Yup.object({
     matches(/^\d{10}$/,"Mobile number must have 10 digits"),
     password: Yup.string().min(4).required("Please enter password")
 })
+
+export const DepartmentSchema = Yup.object({
+    departmentName:Yup.string().min(2).max(30).required("Please enter department Name"),
+    description:Yup.string().min(2).max(30).required("Please enter description")
+})

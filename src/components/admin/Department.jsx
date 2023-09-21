@@ -1,5 +1,6 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import {  UserPlusIcon,NoSymbolIcon } from "@heroicons/react/24/solid";
+import {  UserPlusIcon,NoSymbolIcon,AcademicCapIcon } from "@heroicons/react/24/solid";
+import { ModalDepartment } from "./ModalDepartment";
 import {
   Card,
   CardHeader,
@@ -33,22 +34,19 @@ const TABS = [
   },
 ];
  
-const TABLE_HEAD = ["Name", "Status", "joined", "Actions"];
+const TABLE_HEAD = ["Name", "Description", "Status", "Actions"];
   
-export function Users() {
+export function Department() {
   const queryClient = useQueryClient()
   const {isLoading , error, data } = useQuery({
-    queryKey:['users'],
-    queryFn :() => adminRequest.get('/users').then((res) => res.data )
+    queryKey:['department'],
+    queryFn :() => adminRequest.get('/department').then((res) => res.data )
   })
 
-  function formatDate(dateString) {
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-  }
-  const handleAction = async(userId)=>{
-    await manageUser(userId)
-    queryClient.invalidateQueries("users")
+
+  const handleAction = async(departmentId)=>{
+    await manageUser(departmentId)
+    queryClient.invalidateQueries("department")
   }
   if(isLoading){
     return <div className="h-screen flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>
@@ -62,19 +60,14 @@ export function Users() {
         <div className="mb-8 flex items-center justify-between gap-8 bg-[#CAF0F8] rounded-md p-3">
           <div>
             <Typography variant="h5" color="blue-gray">
-              Users list
+              DEPARTMENTS
             </Typography>
             <Typography color="gray" className="mt-1 font-normal">
-              See information about all Users
+              See information about all Departments
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <Button variant="outlined" size="sm">
-              view all
-            </Button>
-            <Button className="flex items-center gap-3" size="sm">
-              <UserPlusIcon strokeWidth={2} className="h-4 w-4"  /> Add member
-            </Button>
+            <ModalDepartment/>
           </div>
         </div>
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
@@ -95,6 +88,7 @@ export function Users() {
           </div>
         </div>
       </CardHeader>
+
       <CardBody className="overflow-hidden px-0">
         <table className="mt-4 w-full min-w-max table-auto text-left m-1">
           <thead className="bg-[#5e838b] ">
@@ -117,73 +111,72 @@ export function Users() {
           </thead>
           <tbody className="bg-[#CAF0F8]">
             {data.data.map(
-              ({ photo, name, email,is_blocked, joinDate,_id }, index) => {
+              ({ departmentName, description,status }, index) => {
                 const isLast = index === data.data.length - 1;
                 const classes = isLast
                   ? "p-4"
                   : "p-4 border-b border-blue-gray-50";
-                  const JoinedDate = formatDate(joinDate);
+                 
                 return (
                   <tr key={name}>
                     <td className={classes}>
                       <div className="flex items-center gap-10">
-                        <Avatar src={photo ? photo : "h"} alt={name} size="sm" />
+                        {/* <Avatar src={photo ? photo : "h"} alt={name} size="sm" /> */}
                         <div className="flex flex-col">
                           <Typography
                             variant="small"
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {name}
+                            {departmentName}
                           </Typography>
                           <Typography
                             variant="small"
                             color="blue-gray"
                             className="font-normal opacity-70"
                           >
-                            {email}
+                            
                           </Typography>
                         </div>
                       </div>
                     </td>
                     
                     <td className={classes}>
-                      <div className="w-max">
-                        <Chip
-                          variant="ghost"
-                          size="sm"
-                          value={is_blocked === true ? "blocked" : "a c t i v e"}
-                          color={is_blocked === true ? "red" : "green"}
-                        />
-                      </div>
-                    </td>
-                    <td className={classes}>
                       <Typography
                         variant="small"
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {JoinedDate}
+                        {description}
                       </Typography>
                     </td>
-                      <>
-                    {is_blocked === false ? (
                     <td className={classes}>
-                      <Tooltip content="Block User">
+                      <div className="w-max">
+                        <Chip
+                          variant="ghost"
+                          size="sm"
+                          value={status === false ? "blocked" : "a c t i v e"}
+                          color={status === false ? "red" : "green"}
+                        />
+                      </div>
+                    </td>
+                      <>
+                    {status === true ? (
+                    <td className={classes}>
+                      <Tooltip content="Unlist Department">
                         <Button size="sm" color="red"className="rounded-md flex gap-3" variant="outlined" onClick={() => handleAction(_id)}>
                         <NoSymbolIcon strokeWidth={1.5} stroke="currentColor" className="h-4 w-4"/>
-
-
-                          block
+                          unlist
                           </Button>
                       </Tooltip>
                     </td>
+
                     ) : (
-                    <td className={classes}>
-                      <Tooltip content="unblock User">
-                        <Button size="sm" color="green"className="rounded-md flex px-5" variant="outlined"  onClick={() => handleAction(_id)}>
                         
-                          unblock
+                    <td className={classes}>
+                      <Tooltip content="Show Department">
+                        <Button size="sm" color="green"className="rounded-md flex px-5" variant="outlined"  onClick={() => handleAction(_id)}>
+                          list
                           </Button>
                       </Tooltip>
                     </td>

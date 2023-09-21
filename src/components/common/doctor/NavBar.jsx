@@ -1,7 +1,5 @@
 import React from "react";
 import {
-  Navbar,
-  MobileNav,
   Typography,
   Button,
   Menu,
@@ -9,47 +7,63 @@ import {
   MenuList,
   MenuItem,
   Avatar,
-  Card,
   IconButton,
   Drawer,
 } from "@material-tailwind/react";
 import {
   UserCircleIcon,
-  Square3Stack3DIcon,
   ChevronDownIcon,
-  Cog6ToothIcon,
-  InboxArrowDownIcon,
-  LifebuoyIcon,
   PowerIcon,
-  RocketLaunchIcon,
   Bars3Icon,
 } from "@heroicons/react/24/outline";
 import { Sidebar } from "./Sidebar";
+import { useNavigate } from "react-router-dom";
 
  
 // profile menu component
-const profileMenuItems = [
-  {
-    label: "My Profile",
-    icon: UserCircleIcon,
-  },
-  {
-    label: "Edit Profile",
-    icon: Cog6ToothIcon,
-  },
-  {
-    label: "Inbox",
-    icon: InboxArrowDownIcon,
-  },
-  {
-    label: "Help",
-    icon: LifebuoyIcon,
-  },
-  {
-    label: "Sign Out",
-    icon: PowerIcon,
-  },
-];
+function MenuLists(){
+  const navigate = useNavigate()
+  const profileNavigate = async()=>{
+    navigate("/doctor/profile")
+  }
+  return(
+    <MenuList className="p-1">
+
+      <MenuItem className="flex gap-4" onClick={profileNavigate}>
+      <UserCircleIcon className="h-5 w-5"/>
+          My Profile
+      </MenuItem>
+      <MenuItem className="flex gap-4 text-red-600 hover:text-red-900" >
+      <PowerIcon  className="h-5 w-5"/>
+          Sign Out
+      </MenuItem>
+
+    </MenuList>
+  )
+}
+
+// const profileMenuItems = [
+//   {
+//     label: "My Profile",
+//     icon: UserCircleIcon,
+//   },
+//   {
+//     label: "Edit Profile",
+//     icon: Cog6ToothIcon,
+//   },
+//   {
+//     label: "Inbox",
+//     icon: InboxArrowDownIcon,
+//   },
+//   {
+//     label: "Help",
+//     icon: LifebuoyIcon,
+//   },
+//   {
+//     label: "Sign Out",
+//     icon: PowerIcon,
+//   },
+// ];
  
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -79,35 +93,7 @@ function ProfileMenu() {
           />
         </Button>
       </MenuHandler>
-      <MenuList className="p-1">
-        {profileMenuItems.map(({ label, icon }, key) => {
-          const isLastItem = key === profileMenuItems.length - 1;
-          return (
-            <MenuItem
-              key={label}
-              onClick={closeMenu}
-              className={`flex items-center gap-2 rounded ${
-                isLastItem
-                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-                  : ""
-              }`}
-            >
-              {React.createElement(icon, {
-                className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
-                strokeWidth: 2,
-              })}
-              <Typography
-                as="span"
-                variant="small"
-                className="font-normal"
-                color={isLastItem ? "red" : "inherit"}
-              >
-                {label}
-              </Typography>
-            </MenuItem>
-          );
-        })}
-      </MenuList>
+      <MenuLists/>
     </Menu>
   );
 }

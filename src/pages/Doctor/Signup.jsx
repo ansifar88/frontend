@@ -46,7 +46,7 @@ function Signup() {
         const response = await doctorSignup(values)
         if (response.data.created) {
           localStorage.setItem("currentDoctor",response.data.token)
-          navigate("/doctor/home")
+          navigate("/doctor")
       }else{
         GenerateError(response.data.message)
       }
@@ -78,7 +78,7 @@ function Signup() {
                       }
                       localStorage.setItem("currentDoctor",response.data.token)
                       dispatch(setdoctordetails({doctorInfo : doctorDetails}))
-                      navigate('/doctor/home') 
+                      navigate('/doctor') 
                     }else{
                       GenerateError(response.data.message)
                     }
