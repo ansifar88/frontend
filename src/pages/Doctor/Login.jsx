@@ -68,6 +68,7 @@ function Login() {
                   DoctorLogin({email:res.data.email,password:res.data.id}).then((response)=>{
                     if(response.data.access){
                       const doctorDetails = {
+                        id:response.data.doctor._id,
                         name:response.data.doctor.name,
                         email:response.data.doctor.email,
                       }

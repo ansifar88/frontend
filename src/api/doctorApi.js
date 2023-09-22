@@ -19,3 +19,18 @@ export const DoctorSignupWithGoogle = (data) => {
         withCredentials:true
     })
 }
+
+export const updateProfile =(data,id)=>{
+  try {
+    const response = doctorRequest.put(`/profile/${id}`,data,{
+      withCredentials:true,
+      headers:{
+        "Content-Type":"multipart/form-data"
+      },
+    });
+    console.log(response);
+    return response
+  } catch (error) {
+    console.log(error.message);
+  }
+}

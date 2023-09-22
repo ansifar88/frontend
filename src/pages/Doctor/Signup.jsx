@@ -73,6 +73,7 @@ function Signup() {
                     if(response.data.created){
                       console.log(response);
                       const doctorDetails = {
+                        id:response.data.doctor._id,
                         name:response.data.doctor.name,
                         email:response.data.doctor.email,
                       }
