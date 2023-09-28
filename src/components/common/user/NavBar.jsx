@@ -1,4 +1,5 @@
 import React from "react";
+import dp from '../../../logos/dp.png'
 import {
   Navbar,
   MobileNav,
@@ -25,34 +26,38 @@ import {
   Bars3Icon,
 } from "@heroicons/react/24/outline";
 import { Sidebar } from "../user/Sidebar";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 
-// profile menu component
-const profileMenuItems = [
-  {
-    label: "My Profile",
-    icon: UserCircleIcon,
-  },
-  {
-    label: "Edit Profile",
-    icon: Cog6ToothIcon,
-  },
-  {
-    label: "Inbox",
-    icon: InboxArrowDownIcon,
-  },
-  {
-    label: "Help",
-    icon: LifebuoyIcon,
-  },
-  {
-    label: "Sign Out",
-    icon: PowerIcon,
-  },
-];
+function MenuLists() {
+  const { userInfo } = useSelector(state => state.user)
+  const id = userInfo.id
+  const navigate = useNavigate()
+  const profileNavigate = async () => {
+    navigate(`/profile/${id}`)
+  }
+  return (
+    <MenuList className="p-1">
+
+      <MenuItem className="flex gap-4" onClick={profileNavigate}>
+        <UserCircleIcon className="h-5 w-5" />
+        My Profile
+      </MenuItem>
+      <MenuItem className="flex gap-4 text-red-600 hover:text-red-900" >
+        <PowerIcon className="h-5 w-5" />
+        Sign Out
+      </MenuItem>
+
+    </MenuList>
+  )
+}
 
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+  // const { doctorInfo } = useSelector(state => state.doctor)
+  // const displaypicture = doctorInfo.displaypicture
 
   const closeMenu = () => setIsMenuOpen(false);
 
@@ -69,8 +74,7 @@ function ProfileMenu() {
             size="sm"
             alt="tania andrew"
             className="border border-gray-900 p-0.5"
-            src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
-          />
+            src={ dp} />
           <ChevronDownIcon
             strokeWidth={2.5}
             className={`h-3 w-3 transition-transform ${isMenuOpen ? "rotate-180" : ""
@@ -78,34 +82,7 @@ function ProfileMenu() {
           />
         </Button>
       </MenuHandler>
-      <MenuList className="p-1">
-        {profileMenuItems.map(({ label, icon }, key) => {
-          const isLastItem = key === profileMenuItems.length - 1;
-          return (
-            <MenuItem
-              key={label}
-              onClick={closeMenu}
-              className={`flex items-center gap-2 rounded ${isLastItem
-                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-                  : ""
-                }`}
-            >
-              {React.createElement(icon, {
-                className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
-                strokeWidth: 2,
-              })}
-              <Typography
-                as="span"
-                variant="small"
-                className="font-normal"
-                color={isLastItem ? "red" : "inherit"}
-              >
-                {label}
-              </Typography>
-            </MenuItem>
-          );
-        })}
-      </MenuList>
+      <MenuLists />
     </Menu>
   );
 }

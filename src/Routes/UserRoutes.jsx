@@ -10,6 +10,7 @@ import Layout from '../pages/User/Layout'
 import Banner from '../components/user/Banner'
 import { Doctors } from '../components/user/Doctors'
 import { DoctorSingle } from '../components/user/DoctorSingle'
+import Profile from '../components/user/Profile'
 function UserRoutes() {
   return (
     <Routes>
@@ -23,6 +24,7 @@ function UserRoutes() {
           <Route index element={<Banner />} />
           <Route exact path='/doctorr/:id' element={<DoctorSingle/>} />
           <Route path='/doctors' element={<Doctors />} />
+          <Route path='/profile/:id' element={<Profile />} />
          
 
         </Route>

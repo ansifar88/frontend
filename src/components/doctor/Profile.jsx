@@ -4,14 +4,13 @@ import {
   CardBody,
   Typography,
   Spinner,
-  Alert,
   Badge,
 } from "@material-tailwind/react";
 import dp from '../../logos/dp.png'
 
-import { ExclamationCircleIcon, PencilSquareIcon } from '@heroicons/react/24/solid'
+import { ExclamationCircleIcon } from '@heroicons/react/24/solid'
 import { Form } from "./Form";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import doctorRequest from "../../utils/doctorRequest";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";

@@ -48,29 +48,6 @@ function MenuLists() {
   )
 }
 
-// const profileMenuItems = [
-//   {
-//     label: "My Profile",
-//     icon: UserCircleIcon,
-//   },
-//   {
-//     label: "Edit Profile",
-//     icon: Cog6ToothIcon,
-//   },
-//   {
-//     label: "Inbox",
-//     icon: InboxArrowDownIcon,
-//   },
-//   {
-//     label: "Help",
-//     icon: LifebuoyIcon,
-//   },
-//   {
-//     label: "Sign Out",
-//     icon: PowerIcon,
-//   },
-// ];
-
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 

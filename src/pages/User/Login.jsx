@@ -42,6 +42,12 @@ const Login = () =>{
       const response = await UserLogin(values)
           console.log(response);
           if (response.data.access) {
+            const userDetails = {
+              name:response.data.user.name,
+              email:response.data.user.email,
+              id:response.data.user._id,
+            }
+            dispatch(setuserdetails({userInfo : userDetails}))
             localStorage.setItem("currentUser", response.data.token)
                     navigate("/")
           }else{
@@ -71,6 +77,7 @@ useEffect(
                     const userDetails = {
                       name:response.data.user.name,
                       email:response.data.user.email,
+                      id:response.data.user._id,
                     }
                     dispatch(setuserdetails({userInfo : userDetails}))
                     localStorage.setItem("currentUser",response.data.token)
