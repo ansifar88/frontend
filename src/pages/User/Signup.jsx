@@ -113,7 +113,7 @@ useEffect(
                 className="m-9 object-contain w-6/12 sm:w-6/12 max-w-screen-sm:w-6/12 lg:w-3/4"
               />
             </div>
-            <div className="p-6 flex flex-col bg-[#0c486b8a] justify-center items-center">
+            <div className="p-6 flex flex-col bg-[#0c486b8a] justify-center items-center bg-blur backdrop-blur-lg">
               <Typography variant="h4" color="white" className="text-center mb-4 md:mb-8">
                 SIGN UP
               </Typography>

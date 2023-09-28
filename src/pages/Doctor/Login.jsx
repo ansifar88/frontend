@@ -43,7 +43,16 @@ function Login() {
         console.log(response);
         if (response.data.access) {
           localStorage.setItem("currentDoctor", response.data.token)
-                  navigate("/doctor")
+
+                 const doctorDetails = {
+                        id:response.data.doctor._id,
+                        name:response.data.doctor.name,
+                        email:response.data.doctor.email,
+                        displaypicture: response.data.doctor.displaypicture
+
+                      }
+                      dispatch(setdoctordetails({doctorInfo : doctorDetails}))
+                      navigate('/doctor')
         }else{
           GenerateError(response.data.message)
         }

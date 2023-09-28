@@ -28,7 +28,19 @@ export const updateProfile =(data,id)=>{
         "Content-Type":"multipart/form-data"
       },
     });
-    console.log(response);
+    return response
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+export const dpUpdate =(data,id)=>{
+  try {
+    const response = doctorRequest.put(`/dp/${id}`,data,{
+      withCredentials:true,
+      headers:{
+        "Content-Type":"multipart/form-data"
+      },
+    });
     return response
   } catch (error) {
     console.log(error.message);

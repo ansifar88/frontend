@@ -1,10 +1,9 @@
 import { Outlet } from "react-router-dom"
-import Home from '../pages/User/Home';
+import { Navigate } from "react-router-dom";
 
 function UserPublic() {
     if (localStorage.getItem('currentUser')) {
-        console.log("public route");
-          return <Home/>
+        return <Navigate to="/"/>
         }
         
         console.log("return case ");

@@ -14,7 +14,7 @@ import {
 } from "@material-tailwind/react";
 
 import adminRequest from "../../utils/adminRequest";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { ProfileUpdateSchema } from "../../yup/validation";
 import { updateProfile } from "../../api/doctorApi";
@@ -26,6 +26,7 @@ export function Form() {
   const id = doctorInfo.id;
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(!open);
+  
   const initialValues = {
     currentHospital: "",
     department: "",
@@ -58,14 +59,14 @@ export function Form() {
         formData.append("certificates", values.certificates[i]);
       }
 
-      for (const pair of formData.entries()) {
-        console.log(pair[0], pair[1]);
-      }
-
       const response = await updateProfile(formData, id);
-      console.log(response);
+        if(response){
+          setOpen(!open)
+          queryClient.invalidateQueries(["doctor"]);
+        }
     },
   });
+  const queryClient = useQueryClient()
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["department"],
@@ -97,7 +98,7 @@ export function Form() {
       >
         <DialogHeader>COMPLETE PROFILE AND VERIFY</DialogHeader>
         <DialogBody className="flex justify-center ">
-          <form onSubmit={handleSubmit} encType="multipart/form-data">
+          <form onSubmit={handleSubmit} encType="multipart/form-data" >
             <div className="mt-8 mb-2 w-70 max-w-screen-lg sm:w-96">
               <div className="mb-4 flex flex-col gap-4">
                 <Input
@@ -185,7 +186,7 @@ export function Form() {
                   </div>
                 )}
 
-                <Typography># a short description about you .</Typography>
+                <Typography className="text-xs"># a short description about you .</Typography>
 
                 <Input
                   size="lg"
@@ -200,27 +201,29 @@ export function Form() {
                   }}
                 />
 
-                <Typography>
+                <Typography className="text-xs" >
                   # Upload All of your Certificates including experience and
                   Graduation .
                 </Typography>
               </div>
             </div>
-            <Button variant="gradient" type="submit" color="green">
-              <span>Confirm</span>
-            </Button>
+            <DialogFooter className="flex justify-between">
+              <Button
+                variant="text"
+                color="red"
+                onClick={handleOpen}
+                className="mr-1"
+              >
+                <span>Cancel</span>
+              </Button>
+              <Button variant="filled" type="submit" color="green">
+                <span>update & verify</span>
+              </Button>
+
+            </DialogFooter>
           </form>
         </DialogBody>
-        <DialogFooter>
-          <Button
-            variant="text"
-            color="red"
-            onClick={handleOpen}
-            className="mr-1"
-          >
-            <span>Cancel</span>
-          </Button>
-        </DialogFooter>
+
       </Dialog>
     </>
   );

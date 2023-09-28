@@ -2,7 +2,7 @@
 function Dashboard() {
   return (
     <>
-      <h1>admin dash board</h1>
+      <h1>Doctor dash board</h1>
     </>
   )
 }

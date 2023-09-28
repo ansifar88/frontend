@@ -14,7 +14,8 @@ import {
     Cog6ToothIcon,
     InboxIcon,
     PowerIcon,
-    UserGroupIcon
+    UserGroupIcon,
+    BellIcon
   } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
    
@@ -35,7 +36,7 @@ import { useNavigate } from "react-router-dom";
             </ListItemPrefix>
             Dashboard
           </ListItem>
-          <ListItem>
+          <ListItem onClick={() => navigate('/admin/doctors')}>
             <ListItemPrefix>
               <UserGroupIcon className="h-5 w-5" />
             </ListItemPrefix>
@@ -47,13 +48,13 @@ import { useNavigate } from "react-router-dom";
             </ListItemPrefix>
             Users
           </ListItem>
-          <ListItem>
+          <ListItem onClick={() => navigate('/admin/notifications')} >
             <ListItemPrefix>
-              <InboxIcon className="h-5 w-5" />
+              <BellIcon className="h-5 w-5" />
             </ListItemPrefix>
-            Inbox
+            Notifications
             <ListItemSuffix>
-              <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" />
+              {/* <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" /> */}
             </ListItemSuffix>
           </ListItem>
           <ListItem onClick={() => navigate('/admin/departments')}>

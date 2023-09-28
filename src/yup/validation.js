@@ -14,8 +14,8 @@ export const SignupSchema = Yup.object({
 })
 
 export const DepartmentSchema = Yup.object({
-    departmentName:Yup.string().min(2).max(30).required("Please enter department Name"),
-    description:Yup.string().min(2).max(30).required("Please enter description")
+    departmentName:Yup.string().min(2).max(50).required("Please enter department Name"),
+    description:Yup.string().min(2).max(100).required("Please enter description")
 })
 
 export const ProfileUpdateSchema =Yup.object({
@@ -25,5 +25,10 @@ export const ProfileUpdateSchema =Yup.object({
     experience:Yup.string().required("enter years of experience"),
     description:Yup.string().min(10).max(50).required("please provide a description"),
     certificates: Yup.mixed().required("upload certificates"),
+
+})
+
+export const dpUpdateSchema = Yup.object({
+    dp: Yup.mixed().required("choose a Photo"),
 
 })

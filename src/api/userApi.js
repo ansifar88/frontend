@@ -20,3 +20,9 @@ export const UserSignupWithGoogle = (data) =>{
     withCredentials:true
   })
 } 
+
+// export const doctorSingle = (id) =>{
+//   return userRequest.get(`/doctors/${id}`,{
+//     withCredentials:true
+//   })
+// }

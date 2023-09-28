@@ -26,7 +26,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { Sidebar } from "../user/Sidebar";
 
- 
+
 // profile menu component
 const profileMenuItems = [
   {
@@ -50,12 +50,12 @@ const profileMenuItems = [
     icon: PowerIcon,
   },
 ];
- 
+
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
- 
+
   const closeMenu = () => setIsMenuOpen(false);
- 
+
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
       <MenuHandler>
@@ -73,9 +73,8 @@ function ProfileMenu() {
           />
           <ChevronDownIcon
             strokeWidth={2.5}
-            className={`h-3 w-3 transition-transform ${
-              isMenuOpen ? "rotate-180" : ""
-            }`}
+            className={`h-3 w-3 transition-transform ${isMenuOpen ? "rotate-180" : ""
+              }`}
           />
         </Button>
       </MenuHandler>
@@ -86,11 +85,10 @@ function ProfileMenu() {
             <MenuItem
               key={label}
               onClick={closeMenu}
-              className={`flex items-center gap-2 rounded ${
-                isLastItem
+              className={`flex items-center gap-2 rounded ${isLastItem
                   ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
                   : ""
-              }`}
+                }`}
             >
               {React.createElement(icon, {
                 className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
@@ -111,17 +109,17 @@ function ProfileMenu() {
     </Menu>
   );
 }
- 
+
 // nav list menu
 
- 
 
- 
+
+
 export function NavBar() {
   const [isNavOpen, setIsNavOpen] = React.useState(false);
- 
+
   const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
- 
+
   React.useEffect(() => {
     window.addEventListener(
       "resize",
@@ -132,37 +130,37 @@ export function NavBar() {
   const [open, setOpen] = React.useState(false);
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
- 
+
   return (
     <navbar className="  lg:rounded-none   fixed top-0 left-0 right-0 bg-[#023E8A] z-50">
-   
+
       <div className="relative mx-auto flex items-center text-blue-gray-900 py-3 bg-[#023E8A] ">
-      <Drawer open={open} onClose={closeDrawer} className="bg-[#09264b]">
-        <div className="mb-2 flex items-center justify-between p-4 ">
-          <Typography variant="h5" color="white">
-           VIRTUAL CARE
-          </Typography>
-          <IconButton variant="text" color="white" onClick={closeDrawer}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="h-5 w-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </IconButton>
-        </div>
-        <Sidebar/>
-       </Drawer> 
-      <Bars3Icon onClick={openDrawer} className="h-8 w-8 ms-5 cursor-pointer text-white" />
-      <img src="../../../public/logoImages/logonobackground.png" alt="" className="h-14 ps-7 py-1" />
+        <Drawer open={open} onClose={closeDrawer} className="bg-[#09264b]">
+          <div className="mb-2 flex items-center justify-between p-4 ">
+            <Typography variant="h5" color="white">
+              VIRTUAL CARE
+            </Typography>
+            <IconButton variant="text" color="white" onClick={closeDrawer}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="h-5 w-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </IconButton>
+          </div>
+          <Sidebar />
+        </Drawer>
+        <Bars3Icon onClick={openDrawer} className="h-8 w-8 ms-5 cursor-pointer text-white" />
+        <img src="../../../public/logoImages/logonobackground.png" alt="" className="h-14 ps-7 py-1" />
         {/* <div className="absolute top-2/4 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
          
         </div> */}
@@ -173,11 +171,11 @@ export function NavBar() {
           onClick={toggleIsNavOpen}
           className="ml-auto mr-2 lg:hidden"
         >
-          
+
         </IconButton>
         <ProfileMenu />
       </div>
-      
+
     </navbar>
   );
 }

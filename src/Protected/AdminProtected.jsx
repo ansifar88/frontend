@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom"
 import Home from '../pages/Admin/Home';
 import Login from "../pages/Admin/Login";
 import { Navigate } from "react-router-dom";
-function AdminProtected (props) {
+function AdminProtected () {
     if (localStorage.getItem('currentAdmin')) {
         return <Outlet/>
       }
