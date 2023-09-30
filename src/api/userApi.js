@@ -21,8 +21,27 @@ export const UserSignupWithGoogle = (data) =>{
   })
 } 
 
-// export const doctorSingle = (id) =>{
-//   return userRequest.get(`/doctors/${id}`,{
-//     withCredentials:true
-//   })
-// }
+export const updateProfile =(data,id)=>{
+  try {
+    const response = userRequest.put(`/profile/${id}`,data,{
+      withCredentials:true,
+    });
+    return response
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+export const dpUpdate =(data,id)=>{
+  try {
+    const response = userRequest.put(`/dp/${id}`,data,{
+      withCredentials:true,
+      headers:{
+        "Content-Type":"multipart/form-data"
+      },
+    });
+    return response
+  } catch (error) {
+    console.log(error.message);
+  }
+}

@@ -48,7 +48,7 @@ export function ModalDepartment() {
   return (
     <>
     <Button onClick={handleOpen} className="flex items-center gap-3 bg-[#305861]" size="sm">
-              <AcademicCapIcon strokeWidth={2} className="h-4 w-4 "  /> Add department
+              <AcademicCapIcon strokeWidth={2} className="h-4 w-4 "  /> Add 
             </Button>
       <Dialog open={open} handler={handleOpen} size="sm" className="bg-[#CAF0F8]">
         <form onSubmit={handleSubmit}>

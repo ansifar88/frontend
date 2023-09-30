@@ -10,37 +10,42 @@ import {
 import dp from '../../logos/dp.png'
 
 import { ExclamationCircleIcon, UserIcon, MapPinIcon, CalendarDaysIcon } from '@heroicons/react/24/solid'
-// import { Form } from "./Form";
+import { Form } from "./Form";
 // import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import userRequest from "../../utils/userRequest";
-// import { ChangeDp } from "./ChangeDp";
+import { ChangeDp } from "./changeDp";
 
 export default function Profile() {
-    const { id } = useParams()
-    console.log(id);
-    const { isLoading, error, data } = useQuery({
-      queryKey: ['profile'],
-      queryFn: () => userRequest.get(`/profile/${id}`).then((res) => res.data),
-    });
+  const { id } = useParams()
+  function formatDate(dateString) {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  }
+  const { isLoading, error, data } = useQuery({
+    queryKey: ['profile'],
+    queryFn: () => userRequest.get(`/profile/${id}`).then((res) => res.data),
+  });
   console.log(data);
-    if (isLoading) {
-      return <div className="h-screen flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>
-    }
-    if (error) {
-      return <h1>Something went Wrong</h1>
-    }
+  if (isLoading) {
+    return <div className="h-screen flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>
+  }
+  if (error) {
+    return <h1>Something went Wrong</h1>
+  }
+  const Dob = formatDate(data.data.dob);
+
   return (
     <>
       <Card color="transparent" shadow={false} className="w-full  md:grid grid-cols-3 h-auto py-3 ps-3 md:pb-10 m-b-2  max-h-[60rem] max-w-[94rem] m-3 bg-[#CAF0F8]">
         <div className="col-span-1 flex justify-center items-center">
 
-          <Badge overlap="circular" placement="bottom-end" className=" h-7 w-7 md:h-16 md:w-16 bg-[#5d7582] cursor-pointer" >
+          <Badge overlap="circular" content={<ChangeDp id={data.data._id}/>} placement="bottom-end" className=" h-7 w-7 md:h-16 md:w-16 bg-[#5d7582] cursor-pointer" >
             <div className="h-72 w-72  md:h-72 md:w-72">
               <img
                 size="md"
-                src={dp}
+                src={data.data.displaypicture ? data.data.displaypicture : dp}
                 alt="tania andrew"
                 className="rounded-full h-72 w-72  md:h-72 md:w-72 ms-0"
               />
@@ -61,64 +66,67 @@ export default function Profile() {
 
 
             {data.data.completed === true ? (
-            <>
-              <div className="flex justify-around my-8">
+              <>
+                <div className="flex justify-around my-8">
 
-              <div >
-                <UserIcon className="w-8" />
-                <p>gender</p>
-              </div>
-              <div>
-                <MapPinIcon className="w-8" />
-                <p>location</p>
-              </div>
-              <div>
-                <CalendarDaysIcon className="w-8" />
-                <p>dob</p>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2  h-48 text-[#2457C5]">
-              <div className="flex-col justify-center h-20 rounded-lg border-4 p-1 mx-5 md:mx-10 border-[#023f8aa0] w-32 ">
-                <div className="flex items-end gap-2">
-                <p className="text-4xl font-extrabold">92</p>
-                <p>Kg</p>
+                  <div >
+                    <UserIcon className="w-8 ms-1" />
+                    <p>{data.data.gender}</p>
+                  </div>
+                  <div>
+                    <MapPinIcon className="w-8 ms-5" />
+                    <p>{data.data.city}</p>
+                  </div>
+                  <div>
+                    <CalendarDaysIcon className="w-8 ms-5" />
+                    <p>{Dob}</p>
+                  </div>
                 </div>
 
-                <p>weight</p>
-              </div>
-              <div className="flex-col jutify-center h-20 rounded-lg border-4 p-1 mx-5 md:mx-10 border-[#023f8aa0] w-32 ">
-                <div className="flex items-end gap-2">
-                <p className="text-4xl font-extrabold">275</p>
-                <p>cm</p>
-                </div>
+                <div className="grid grid-cols-2  h-48 text-[#2457C5]">
+                  <div className="flex-col justify-center h-20 rounded-lg border-4 p-1 mx-5 md:mx-10 border-[#023f8aa0] w-32 ">
+                    <div className="flex items-end gap-2">
+                      <p className="text-4xl font-extrabold">{data.data.weight}</p>
+                      <p>Kg</p>
+                    </div>
 
-                <p>height</p>
-              </div>
-              <div className="flex-col justify-center h-20 rounded-lg border-4 p-1 mx-5 md:mx-10 border-[#023f8aa0] w-32 ">
-                <div className="flex items-end gap-2">
-                <p className="text-4xl font-extrabold">B+</p>
-                <p></p>
-                </div>
+                    <p>weight</p>
+                  </div>
+                  <div className="flex-col jutify-center h-20 rounded-lg border-4 p-1 mx-5 md:mx-10 border-[#023f8aa0] w-32 ">
+                    <div className="flex items-end gap-2">
+                      <p className="text-4xl font-extrabold">{data.data.height}</p>
+                      <p>cm</p>
+                    </div>
 
-                <p>Blood</p>
-              </div>
-              <div className="flex-col justify-center h-20 rounded-lg border-4 p-1 mx-5 md:mx-10 border-[#023f8aa0] w-32 ">
-                <div className="flex items-end gap-2">
-                <p className="text-4xl font-extrabold">27</p>
-                <p>years</p>
-                </div>
+                    <p>height</p>
+                  </div>
+                  <div className="flex-col justify-center h-20 rounded-lg border-4 p-1 mx-5 md:mx-10 border-[#023f8aa0] w-32 ">
+                    <div className="flex items-end gap-2">
+                      <p className="text-4xl font-extrabold">{data.data.blood}</p>
+                      <p></p>
+                    </div>
 
-                <p>age</p>
-              </div>
-            </div>
-            </>
+                    <p>Blood</p>
+                  </div>
+                  <div className="flex-col justify-center h-20 rounded-lg border-4 p-1 mx-5 md:mx-10 border-[#023f8aa0] w-32 ">
+                    <div className="flex items-end gap-2">
+                      <p className="text-4xl font-extrabold">27</p>
+                      <p>years</p>
+                    </div>
+
+                    <p>age</p>
+                  </div>
+                </div>
+              </>
             ) : (
               <>
-              <p className="my-10 text-red-700">Please complte profile</p>
-              <Button>complte</Button>
+                <div className="flex mt-10 text-red-700">
+
+                  <ExclamationCircleIcon className="h-7 w-7 me-6" /> <Typography>Please complete your profile </Typography>
+                </div>
+                <Form />
               </>
-            ) 
+            )
             }
 
 
@@ -153,10 +161,7 @@ export default function Profile() {
           </CardBody>
         </div>
         {/* ) : */}
-        <div className="flex justify-center text-red-700">
 
-          <ExclamationCircleIcon className="h-7 w-7 me-6" /> <Typography>Please complete your profile and verify</Typography>
-        </div>
 
         {/* } */}
       </Card>

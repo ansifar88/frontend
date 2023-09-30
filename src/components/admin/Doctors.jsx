@@ -19,7 +19,7 @@ import dp from '../../logos/dp.png'
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import adminRequest from "../../utils/adminRequest";
-import { manageUser } from "../../api/adminApi";
+import { manageDoctor } from "../../api/adminApi";
 const TABS = [
     {
         label: "All",
@@ -43,9 +43,9 @@ export function Doctors() {
         queryKey: ['doctor'],
         queryFn: () => adminRequest.get('/doctors').then((res) => res.data)
     })
-    const handleAction = async (userId) => {
-        await manageUser(userId)
-        queryClient.invalidateQueries("users")
+    const handleAction = async (doctorId) => {
+        await manageDoctor(doctorId)
+        queryClient.invalidateQueries("doctor")
     }
     if (isLoading) {
         return <div className="h-screen flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>
@@ -114,7 +114,7 @@ export function Doctors() {
                     </thead>
                     <tbody className="bg-[#CAF0F8]">
                         {data.data.map(
-                            ({ photo, name, email, is_blocked, verified, joinDate,displaypicture, _id }, index) => {
+                            ({  name, email, is_blocked, verified, displaypicture, _id }, index) => {
                                 const isLast = index === data.data.length - 1;
                                 const classes = isLast
                                     ? "p-4"
@@ -167,20 +167,17 @@ export function Doctors() {
                                         <>
                                             {is_blocked === false ? (
                                                 <td className={classes}>
-                                                    <Tooltip content="Block User">
+                                                    <Tooltip content="Block Doctor">
                                                         <Button size="sm" color="red" className="rounded-md flex gap-3" variant="outlined" onClick={() => handleAction(_id)}>
                                                             <NoSymbolIcon strokeWidth={1.5} stroke="currentColor" className="h-4 w-4" />
-
-
                                                             block
                                                         </Button>
                                                     </Tooltip>
                                                 </td>
                                             ) : (
                                                 <td className={classes}>
-                                                    <Tooltip content="unblock User">
+                                                    <Tooltip content="unblock Doctor">
                                                         <Button size="sm" color="green" className="rounded-md flex px-5" variant="outlined" onClick={() => handleAction(_id)}>
-
                                                             unblock
                                                         </Button>
                                                     </Tooltip>

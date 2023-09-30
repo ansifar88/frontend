@@ -1,5 +1,6 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { UserPlusIcon, NoSymbolIcon } from "@heroicons/react/24/solid";
+import dp from '../../logos/dp.png'
 import {
   Card,
   CardHeader,
@@ -117,7 +118,7 @@ export function Users() {
           </thead>
           <tbody className="bg-[#CAF0F8]">
             {data.data.map(
-              ({ photo, name, email, is_blocked, joinDate, _id }, index) => {
+              ({ photo, name, email, is_blocked, joinDate, _id, displaypicture }, index) => {
                 const isLast = index === data.data.length - 1;
                 const classes = isLast
                   ? "p-4"
@@ -127,7 +128,7 @@ export function Users() {
                   <tr key={name}>
                     <td className={classes}>
                       <div className="flex items-center gap-10">
-                        <Avatar src={photo ? photo : "h"} alt={name} size="sm" />
+                        <Avatar src={displaypicture ? displaypicture : dp} alt={name} size="sm" />
                         <div className="flex flex-col">
                           <Typography
                             variant="small"

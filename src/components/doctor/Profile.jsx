@@ -18,12 +18,10 @@ import { ChangeDp } from "./ChangeDp";
 
 export default function Profile() {
   const { id } = useParams()
-  console.log(id);
   const { isLoading, error, data } = useQuery({
     queryKey: ['doctor'],
     queryFn: () => doctorRequest.get(`/profile/${id}`).then((res) => res.data),
   });
-console.log(data);
   if (isLoading) {
     return <div className="h-screen flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>
   }

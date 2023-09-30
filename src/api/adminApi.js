@@ -26,3 +26,14 @@ export const verifyDoctor = async(id)=>{
     withCredentials:true
   })
 }
+
+export const manageDoctor = async (id) => {
+  return adminRequest.put(`/managedoctor/${id}`, {
+    withCredentials: true,
+  });
+};
+export const manageDepartment = async (id) => {
+  return adminRequest.put(`/managedepartment/${id}`, {
+    withCredentials: true,
+  });
+};

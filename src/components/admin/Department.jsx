@@ -1,5 +1,5 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import {  UserPlusIcon,NoSymbolIcon,AcademicCapIcon } from "@heroicons/react/24/solid";
+import { NoSymbolIcon, ArrowPathIcon } from "@heroicons/react/24/solid";
 import { ModalDepartment } from "./ModalDepartment";
 import {
   Card,
@@ -18,7 +18,7 @@ import {
 } from "@material-tailwind/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import adminRequest from "../../utils/adminRequest";
-import { manageUser } from "../../api/adminApi";
+import { manageDepartment } from "../../api/adminApi";
 const TABS = [
   {
     label: "All",
@@ -33,25 +33,25 @@ const TABS = [
     value: "unmonitored",
   },
 ];
- 
+
 const TABLE_HEAD = ["Name", "Description", "Status", "Actions"];
-  
+
 export function Department() {
   const queryClient = useQueryClient()
-  const {isLoading , error, data } = useQuery({
-    queryKey:['department'],
-    queryFn :() => adminRequest.get('/department').then((res) => res.data )
+  const { isLoading, error, data } = useQuery({
+    queryKey: ['department'],
+    queryFn: () => adminRequest.get('/department').then((res) => res.data)
   })
 
 
-  const handleAction = async(departmentId)=>{
-    await manageUser(departmentId)
+  const handleAction = async (departmentId) => {
+    await manageDepartment(departmentId)
     queryClient.invalidateQueries("department")
   }
-  if(isLoading){
+  if (isLoading) {
     return <div className="h-screen flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>
   }
-  if(error){
+  if (error) {
     return <h1>Something went Wrong</h1>
   }
   return (
@@ -67,7 +67,7 @@ export function Department() {
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <ModalDepartment/>
+            <ModalDepartment />
           </div>
         </div>
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
@@ -111,14 +111,14 @@ export function Department() {
           </thead>
           <tbody className="bg-[#CAF0F8]">
             {data.data.map(
-              ({ departmentName, description,status }, index) => {
+              ({ departmentName, description, status, _id }, index) => {
                 const isLast = index === data.data.length - 1;
                 const classes = isLast
                   ? "p-4"
                   : "p-4 border-b border-blue-gray-50";
-                 
+
                 return (
-                  <tr key={name}>
+                  <tr key={_id}>
                     <td className={classes}>
                       <div className="flex items-center gap-10">
                         {/* <Avatar src={photo ? photo : "h"} alt={name} size="sm" /> */}
@@ -135,12 +135,12 @@ export function Department() {
                             color="blue-gray"
                             className="font-normal opacity-70"
                           >
-                            
+
                           </Typography>
                         </div>
                       </div>
                     </td>
-                    
+
                     <td className={classes}>
                       <Typography
                         variant="small"
@@ -155,32 +155,34 @@ export function Department() {
                         <Chip
                           variant="ghost"
                           size="sm"
-                          value={status === false ? "blocked" : "a c t i v e"}
+                          value={status === false ? "deleted" : "a c t i v e"}
                           color={status === false ? "red" : "green"}
                         />
                       </div>
                     </td>
-                      <>
-                    {status === true ? (
-                    <td className={classes}>
-                      <Tooltip content="Unlist Department">
-                        <Button size="sm" color="red"className="rounded-md flex gap-3" variant="outlined" onClick={() => handleAction(_id)}>
-                        <NoSymbolIcon strokeWidth={1.5} stroke="currentColor" className="h-4 w-4"/>
-                          unlist
-                          </Button>
-                      </Tooltip>
-                    </td>
+                    <>
+                      {status === true ? (
+                        <td className={classes}>
+                          <Tooltip content="Delete Department">
+                            <Button size="sm" color="red" className="rounded-md flex gap-3" variant="outlined" onClick={() => handleAction(_id)}>
+                              <NoSymbolIcon strokeWidth={1.5} stroke="currentColor" className="h-4 w-4" />
+                              unlist
+                            </Button>
+                          </Tooltip>
+                        </td>
 
-                    ) : (
-                        
-                    <td className={classes}>
-                      <Tooltip content="Show Department">
-                        <Button size="sm" color="green"className="rounded-md flex px-5" variant="outlined"  onClick={() => handleAction(_id)}>
-                          list
-                          </Button>
-                      </Tooltip>
-                    </td>
-                    )}
+                      ) : (
+
+                        <td className={classes}>
+                          <Tooltip content="Undo Delete">
+                            <Button size="sm" color="green" className="rounded-md flex gap-2" variant="outlined" onClick={() => handleAction(_id)}>
+                              <ArrowPathIcon strokeWidth={1.5} stroke="currentColor" className="h-4 w-4" />
+
+                              u n d o 
+                            </Button>
+                          </Tooltip>
+                        </td>
+                      )}
                     </>
                   </tr>
                 );

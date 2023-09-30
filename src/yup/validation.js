@@ -18,7 +18,7 @@ export const DepartmentSchema = Yup.object({
     description:Yup.string().min(2).max(100).required("Please enter description")
 })
 
-export const ProfileUpdateSchema =Yup.object({
+export const ProfileUpdateSchema = Yup.object({
     currentHospital:Yup.string().min(3).max(30).required("Please enter your current hospital"),
     department:Yup.string(),
     qualification:Yup.string().min(2).required("enter qualifiation"),
@@ -30,5 +30,15 @@ export const ProfileUpdateSchema =Yup.object({
 
 export const dpUpdateSchema = Yup.object({
     dp: Yup.mixed().required("choose a Photo"),
+
+})
+
+export const userProfileUpdateSchema =Yup.object({
+    gender : Yup.string().required("Choose Gender"),
+    city : Yup.string().required("Choose city"),
+    dob: Yup.string().required("Choose DOB"),
+    height : Yup.number().max(400).required("Enter your Height"),
+    weight : Yup.number().max(300).required("Enter your Weight"),
+    blood : Yup.string().required("Enter your Blood Group"),
 
 })
