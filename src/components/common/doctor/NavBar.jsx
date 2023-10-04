@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import dp from '../../../logos/dp.png'
 import vcIcon from '../../../logos/logonobackground.png'
+import { Logoutdetails } from "../../../Redux/DoctorSlice";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import {
   Typography,
@@ -20,7 +23,6 @@ import {
   Bars3Icon,
 } from "@heroicons/react/24/outline";
 import { Sidebar } from "./Sidebar";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 
@@ -30,7 +32,15 @@ function MenuLists() {
   const id = doctorInfo.id
   const navigate = useNavigate()
   const profileNavigate = async () => {
-    navigate(`/doctor/profile/${id}`)
+    navigate('/doctor/profile',{state :{id}})
+  }
+  const dispatch = useDispatch()
+  const handleLogout = async()=>{
+   localStorage.removeItem("currentDoctor")
+   dispatch(Logoutdetails({
+     doctorInfo:{}
+   }))
+   navigate('/doctor/login')
   }
   return (
     <MenuList className="p-1">
@@ -39,7 +49,7 @@ function MenuLists() {
         <UserCircleIcon className="h-5 w-5" />
         My Profile
       </MenuItem>
-      <MenuItem className="flex gap-4 text-red-600 hover:text-red-900" >
+      <MenuItem className="flex gap-4 text-red-600 hover:text-red-900" onClick={handleLogout} >
         <PowerIcon className="h-5 w-5" />
         Sign Out
       </MenuItem>
@@ -84,6 +94,7 @@ function ProfileMenu() {
 
 export function NavBar() {
   const [isNavOpen, setIsNavOpen] = React.useState(false);
+
 
   const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
 

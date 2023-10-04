@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import {
-
   Input,
   Button,
   Typography,
-  
 } from "@material-tailwind/react";
+import google from '../../logos/google.png'
+
 // import { FcGoogle } from 'react-dom/fc'
 import { UserLogin } from '../../api/userApi';
 import { useGoogleLogin } from '@react-oauth/google';
@@ -17,6 +17,7 @@ import { LoginSchema } from '../../yup/validation';
 import { useFormik } from 'formik';
 import { ToastContainer } from 'react-toastify';
 import { GenerateError } from '../../toast/GenerateError';
+
 
 const Login = () =>{
   const navigate = useNavigate()
@@ -111,7 +112,7 @@ useEffect(
                 className=" object-contain w-6/12 sm:w-4/12 max-w-screen-sm:w-6/12 lg:w-3/4"
               />
             </div>
-            <div className="p-6 flex flex-col bg-[#0c486b8a] justify-center items-center">
+            <div className="p-6 flex flex-col bg-[#0c486b8a] justify-center items-center bg-blur backdrop-blur-lg">
               <Typography variant="h4" color="white" className="text-center mb-4 md:mb-8">
                 LOG IN
               </Typography>
@@ -138,11 +139,11 @@ useEffect(
                     )}
                 </div>
                 <div className="flex items-start justify-between">
-                
-                <Button className="mt-4" color="blue" onClick={() => Glogin()}>
+                <img src={google} className='h-12 w-12 mt-4 cursor-pointer rounded-full bg-white hover:bg-blue-gray-900 p-2' onClick={() => Glogin()} />
+
+                {/* <Button className="mt-4" color="blue" onClick={() => Glogin()}>
                 Sign in with GOOGLE
-                {/* <span> <img src="../../../public/logoImages/7123025_logo_google_g_icon.svg" className='w-12' alt="" /></span> */}
-                </Button>
+                </Button> */}
                 <Button className="mt-4" type='submit' variant="gradient" color="blue">
                 Login
                 </Button>

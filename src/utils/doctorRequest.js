@@ -7,7 +7,7 @@ const doctorRequest = axios.create({
 
 doctorRequest.interceptors.request.use((req)=> {
     if(localStorage.getItem("currentDoctor")){
-        req.headers.Authorization = "Bearer" + localStorage.getItem("currentDoctor")
+        req.headers.authorization = "Bearer " + localStorage.getItem("currentDoctor")
     }
     return req
 })

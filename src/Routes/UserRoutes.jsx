@@ -22,9 +22,9 @@ function UserRoutes() {
         <Route path='/' element={<Layout></Layout>}>
 
           <Route index element={<Banner />} />
-          <Route exact path='/doctorr/:id' element={<DoctorSingle/>} />
           <Route path='/doctors' element={<Doctors />} />
-          <Route path='/profile/:id' element={<Profile />} />
+          <Route exact path='/doctorview' element={<DoctorSingle/>} />
+          <Route path='/profile' element={<Profile />} />
          
 
         </Route>

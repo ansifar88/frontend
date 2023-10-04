@@ -5,19 +5,8 @@ import { Footer } from '../../components/common/admin/Footer'
 function Home() {
   return (
     <>
-    <h1>Homelllllllllllllllllllllllllllllllllllllllllllllllllllllllllll</h1>
-    <h1>Homelllllllllllllllllllllllllllllllllllllllllllllllllllllllllll</h1>
-    <h1>Homelllllllllllllllllllllllllllllllllllllllllllllllllllllllllll</h1>
-    <h1>Homelllllllllllllllllllllllllllllllllllllllllllllllllllllllllll</h1>
-    <h1>Homelllllllllllllllllllllllllllllllllllllllllllllllllllllllllll</h1>
-    <h1>Homelllllllllllllllllllllllllllllllllllllllllllllllllllllllllll</h1>
-    <h1>Homelllllllllllllllllllllllllllllllllllllllllllllllllllllllllll</h1>
-    <h1>Homelllllllllllllllllllllllllllllllllllllllllllllllllllllllllll</h1>
-    <h1>Homelllllllllllllllllllllllllllllllllllllllllllllllllllllllllll</h1>
-    <h1>Homelllllllllllllllllllllllllllllllllllllllllllllllllllllllllll</h1>
-    <h1>Homelllllllllllllllllllllllllllllllllllllllllllllllllllllllllll</h1>
-    <h1>Homelllllllllllllllllllllllllllllllllllllllllllllllllllllllllll</h1>
-    <h1>Homelllllllllllllllllllllllllllllllllllllllllllllllllllllllllll</h1>
+    <h1 className='text-2xl'>ADMIN DASHBOARD WILL APPEAR HERE</h1>
+
     </>
   )
 }

@@ -10,6 +10,7 @@ import { SignupSchema } from '../../yup/validation';
 import { useFormik } from 'formik';
 import { ToastContainer } from 'react-toastify';
 import { GenerateError } from '../../toast/GenerateError';
+import google from '../../logos/google.png'
 
 import {
   Input,
@@ -164,11 +165,11 @@ function Signup() {
                     )}
                   </div>
                   <div className="flex items-start justify-between">
+                  <img src={google} className='h-12 w-12 mt-4 cursor-pointer rounded-full bg-white hover:bg-blue-gray-900 p-2' onClick={() => Gsignup()} />
 
-                    <Button className="mt-4" color="blue" onClick={() => Gsignup()} >
+                    {/* <Button className="mt-4" color="blue" onClick={() => Gsignup()} >
                       Sign in with GOOGLE
-                      {/* <span> <img src="../../../public/logoImages/7123025_logo_google_g_icon.svg" className='w-12' alt="" /></span> */}
-                    </Button>
+                    </Button> */}
                     <Button className="mt-4 text-white bg-476e83" variant='outlined' type='submit' >
                       Sign up
                     </Button>

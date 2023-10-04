@@ -9,16 +9,21 @@ import {
 } from "@material-tailwind/react";
 import dp from '../../logos/dp.png'
 
-import { ExclamationCircleIcon, UserIcon, MapPinIcon, CalendarDaysIcon } from '@heroicons/react/24/solid'
+import { ExclamationCircleIcon, UserIcon, MapPinIcon, CalendarDaysIcon, PencilSquareIcon } from '@heroicons/react/24/solid'
 import { Form } from "./Form";
 // import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import userRequest from "../../utils/userRequest";
 import { ChangeDp } from "./changeDp";
+import { EditProfile } from "./EditProfile";
+import { GenerateError } from "../../toast/GenerateError";
 
 export default function Profile() {
-  const { id } = useParams()
+  // const { id } = useParams();
+  const location = useLocation();
+  const id = location.state && location.state.id;
+  const navigate = useNavigate()
   function formatDate(dateString) {
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
     return new Date(dateString).toLocaleDateString(undefined, options);
@@ -27,13 +32,26 @@ export default function Profile() {
     queryKey: ['profile'],
     queryFn: () => userRequest.get(`/profile/${id}`).then((res) => res.data),
   });
-  console.log(data);
   if (isLoading) {
     return <div className="h-screen flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>
   }
+  // if (error) {
+  //   return <h1>Something went Wrong</h1>
+  // }
   if (error) {
-    return <h1>Something went Wrong</h1>
+    if (error.response) {
+      if (error.response.status === 403) {
+        GenerateError(error.response.data.data.message)
+        localStorage.removeItem("currentUser")
+        navigate("/login")
+      }
+
+    } else {
+      return <p>somthing went wrong</p>
+    }
+
   }
+
   const Dob = formatDate(data.data.dob);
 
   return (
@@ -41,7 +59,7 @@ export default function Profile() {
       <Card color="transparent" shadow={false} className="w-full  md:grid grid-cols-3 h-auto py-3 ps-3 md:pb-10 m-b-2  max-h-[60rem] max-w-[94rem] m-3 bg-[#CAF0F8]">
         <div className="col-span-1 flex justify-center items-center">
 
-          <Badge overlap="circular" content={<ChangeDp id={data.data._id}/>} placement="bottom-end" className=" h-7 w-7 md:h-16 md:w-16 bg-[#5d7582] cursor-pointer" >
+          <Badge overlap="circular" content={<ChangeDp id={data.data._id} />} placement="bottom-end" className=" h-7 w-7 md:h-16 md:w-16 bg-[#5d7582] cursor-pointer" >
             <div className="h-72 w-72  md:h-72 md:w-72">
               <img
                 size="md"
@@ -57,10 +75,13 @@ export default function Profile() {
         <div className="col-span-2 text-[#2457C5]">
           <div>
             <div className="h-10 my-8  flex-col justify-start mt-7 items-center">
-              <p className="text-5xl ">
-                Mr {data.data.name}
-              </p>
-              <p className="text-[#648ce2]">{data.data.email}</p>
+              <div className="flex justify-between items-center ">
+                <p className="md:text-5xl ">
+                  {data.data.name}
+                </p>
+                <EditProfile user={data.data} />
+              </div>
+              <p className="text-[#648ce2] ">{data.data.email}</p>
             </div>
 
 

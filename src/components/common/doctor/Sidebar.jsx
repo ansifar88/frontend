@@ -9,25 +9,16 @@ import {
   ListItemPrefix,
   ListItemSuffix, 
 } from "@material-tailwind/react";
-import { useDispatch } from "react-redux";
-import { Logoutdetails } from "../../../Redux/DoctorSlice";
 import { useNavigate } from "react-router-dom";
 
 export function Sidebar({ isOpen, closeSidebar }) {
- const dispatch = useDispatch()
  const navigate = useNavigate()
 
- const handleLogout = async()=>{
-  localStorage.removeItem("currentDoctor")
-  dispatch(Logoutdetails({
-    doctorInfo:{}
-  }))
-  navigate('/doctor/login')
- }
+
  
   return (
         <List className="text-white">
-          <ListItem>
+          <ListItem onClick={()=> navigate('/doctor')}>
             <ListItemPrefix>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
@@ -87,23 +78,7 @@ export function Sidebar({ isOpen, closeSidebar }) {
             </ListItemPrefix>
             Chats
           </ListItem>
-          <ListItem onClick={handleLogout}>
-            <ListItemPrefix>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="h-5 w-5"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M12 2.25a.75.75 0 01.75.75v9a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM6.166 5.106a.75.75 0 010 1.06 8.25 8.25 0 1011.668 0 .75.75 0 111.06-1.06c3.808 3.807 3.808 9.98 0 13.788-3.807 3.808-9.98 3.808-13.788 0-3.808-3.807-3.808-9.98 0-13.788a.75.75 0 011.06 0z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </ListItemPrefix>
-            Log Out
-          </ListItem>
+
         </List>
   );
 }

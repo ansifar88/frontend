@@ -1,5 +1,7 @@
 import React from "react";
 import dp from '../../../logos/dp.png'
+import { useDispatch } from "react-redux";
+import { Logoutdetails } from "../../../Redux/UserSlice";
 import {
   Navbar,
   MobileNav,
@@ -34,8 +36,18 @@ function MenuLists() {
   const { userInfo } = useSelector(state => state.user)
   const id = userInfo.id
   const navigate = useNavigate()
+
   const profileNavigate = async () => {
-    navigate(`/profile/${id}`)
+    navigate('/profile/', { state: { id } })
+  }
+  const dispatch = useDispatch()
+
+  const handleLogout = async () => {
+    localStorage.removeItem("currentUser")
+    dispatch(Logoutdetails({
+      userInfo: {}
+    }))
+    navigate('/login')
   }
   return (
     <MenuList className="p-1">
@@ -44,7 +56,7 @@ function MenuLists() {
         <UserCircleIcon className="h-5 w-5" />
         My Profile
       </MenuItem>
-      <MenuItem className="flex gap-4 text-red-600 hover:text-red-900" >
+      <MenuItem className="flex gap-4 text-red-600 hover:text-red-900" onClick={handleLogout}>
         <PowerIcon className="h-5 w-5" />
         Sign Out
       </MenuItem>

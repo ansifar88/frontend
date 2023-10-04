@@ -7,6 +7,8 @@ import { useDispatch } from 'react-redux';
 import { setuserdetails } from '../../Redux/UserSlice';
 import { ToastContainer } from 'react-toastify';
 import { GenerateError , GenerateSuccess } from '../../toast/GenerateError';
+import google from '../../logos/google.png'
+
 
 import {
 
@@ -160,13 +162,13 @@ useEffect(
                   )}
                 </div>
                 <div className="flex items-start justify-between">
-                
-                <Button className="mt-4" color="blue" onClick={() => Gsignup()} >
+                <img src={google} className='h-12 w-12 mt-4 cursor-pointer rounded-full bg-white hover:bg-blue-gray-900 p-2' onClick={() => Gsignup()} />
+
+                {/* <Button className="mt-4" color="blue" onClick={() => Gsignup()} >
                   
                 Sign in with GOOGLE
-                {/* <span> <img src="../../../public/logoImages/7123025_logo_google_g_icon.svg" className='w-12' alt="" /></span> */}
-                </Button>
-                <Button className="mt-4" variant="gradient" type='submit' color="blue">
+                </Button> */}
+                <Button className="mt-4" variant="filled" type='submit' color="blue">
                 Sign up
                 </Button>
                 </div>

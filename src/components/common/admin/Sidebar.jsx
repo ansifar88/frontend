@@ -22,10 +22,7 @@ import { useNavigate } from "react-router-dom";
   export function Sidebar() {
     const navigate = useNavigate()
 
-    const handleLogout = async()=>{
-      localStorage.removeItem("currentAdmin")
-      navigate('/admin/login')
-    }
+
     return (
       <Card className="h-[calc(100vh-2rem)]  w-full fixed bg-[#2c7c8d] rounded-none max-w-[18.7rem] p-4 text-red shadow-xl shadow-blue-gray-900/5">
         
@@ -63,12 +60,7 @@ import { useNavigate } from "react-router-dom";
             </ListItemPrefix>
             Departments
           </ListItem>
-          <ListItem onClick={handleLogout}>
-            <ListItemPrefix>
-              <PowerIcon className="h-5 w-5" />
-            </ListItemPrefix>
-            Log Out
-          </ListItem>
+         
         </List>
       </Card>
     );

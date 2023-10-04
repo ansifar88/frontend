@@ -5,6 +5,7 @@ import {
   Typography,
   Spinner,
   Badge,
+  Button,
 } from "@material-tailwind/react";
 import dp from '../../logos/dp.png'
 
@@ -13,11 +14,15 @@ import { Form } from "./Form";
 // import { useSelector } from "react-redux";
 import doctorRequest from "../../utils/doctorRequest";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ChangeDp } from "./ChangeDp";
+import { EditProfile } from "./EditProfile";
+import { GenerateError } from "../../toast/GenerateError";
 
 export default function Profile() {
-  const { id } = useParams()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const id =location.state.id
   const { isLoading, error, data } = useQuery({
     queryKey: ['doctor'],
     queryFn: () => doctorRequest.get(`/profile/${id}`).then((res) => res.data),
@@ -25,13 +30,29 @@ export default function Profile() {
   if (isLoading) {
     return <div className="h-screen flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>
   }
+  // if (error) {
+  //   return <h1>Something went Wrong</h1>
+  // }
   if (error) {
-    return <h1>Something went Wrong</h1>
+    if (error.response) {
+      if (error.response.status === 403) {
+        GenerateError(error.response.data.data.message)
+        localStorage.removeItem("currentDoctor")
+        navigate("/doctor/login")
+      }
+
+    } else {
+      return <p>somthing went wrong</p>
+    }
+
   }
   return (
     <>
       <Card color="transparent" shadow={false} className="w-full  m-b-2 max-h-[45rem] max-w-[94rem] m-3 bg-[#A8C2D0]">
         <div className="p-5  ">
+          <div className="flex justify-end me-5 md:me-10">
+            <EditProfile doctor={data.data}/>
+          </div>
           <div className="flex justify-center">
             <CardHeader
               color="transparent"
@@ -39,15 +60,15 @@ export default function Profile() {
               shadow={false}
               className="mx-0 flex  items-center gap-4 pt-0 pb-8 max-w-[70rem]"
             >
-              <Badge content={<ChangeDp id={data.data._id}/>} overlap="circular" placement="bottom-end" className="h-16 w-16 bg-[#5d7582] cursor-pointer" >
+              <Badge content={<ChangeDp id={data.data._id} />} overlap="circular" placement="bottom-end" className="h-16 w-16 hover:bg-white hover:text-[#5d7582] bg-[#5d7582] cursor-pointer" >
                 <div className="h-28 w-28  md:h-72 md:w-72">
                   <img
                     size="md"
                     src={data.data.displaypicture ? data.data.displaypicture : dp}
                     alt="tania andrew"
                     className="rounded-full h-28 w-28  md:h-72 md:w-72 ms-0"
-                    />
-                    
+                  />
+
                 </div>
               </Badge>
               <div className="flex w-full flex-col gap-5">
@@ -55,7 +76,6 @@ export default function Profile() {
                   <Typography variant="h5" color="blue-gray" className="text-4xl">
                     {data.data.name}
                   </Typography>
-
                 </div>
                 <Typography color="blue-gray">{data.data.email} </Typography>
                 <Typography>
@@ -104,12 +124,12 @@ export default function Profile() {
 
               </div>
             </CardBody>
-          </div>) :
+          </div>) : (
           <div className="flex justify-center text-red-700">
 
             <ExclamationCircleIcon className="h-7 w-7 me-6" /> <Typography>Please complete your profile and verify</Typography>
           </div>
-
+)
         }
       </Card>
 

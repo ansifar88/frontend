@@ -31,6 +31,16 @@ export const updateProfile =(data,id)=>{
     console.log(error.message);
   }
 }
+export const editProfile =(data,id)=>{
+  try {
+    const response = userRequest.put(`/editProfile/${id}`,data,{
+      withCredentials:true,
+    });
+    return response
+  } catch (error) {
+    console.log(error.message);
+  }
+}
 
 export const dpUpdate =(data,id)=>{
   try {

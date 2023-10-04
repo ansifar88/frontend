@@ -66,12 +66,12 @@ export function Doctors() {
                         </Typography>
                     </div>
                     <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-                        <Button variant="outlined" size="sm">
+                        {/* <Button variant="outlined" size="sm">
                             view all
                         </Button>
                         <Button className="flex items-center gap-3" size="sm">
                             <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
-                        </Button>
+                        </Button> */}
                     </div>
                 </div>
                 <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
@@ -93,7 +93,7 @@ export function Doctors() {
                 </div>
             </CardHeader>
             <CardBody className="overflow-hidden px-0">
-                <table className="mt-4 w-full min-w-max table-auto text-left m-1">
+                <table className="mt-4 w-full min-w-max table-auto text-left m-1 ">
                     <thead className="bg-[#5e838b] ">
                         <tr>
                             {TABLE_HEAD.map((head) => (

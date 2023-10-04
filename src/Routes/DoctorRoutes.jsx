@@ -19,7 +19,7 @@ function DoctorRoutes() {
       <Route element={<DoctorProtected />} >
         <Route path='/' element={<Layout></Layout>} >
           <Route index element={<Dashboard />} />
-          <Route path='/profile/:id' element={<Profile />} />
+          <Route path='/profile' element={<Profile />} />
         </Route>
       </Route>
     </Routes>

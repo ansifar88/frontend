@@ -89,8 +89,8 @@ export function Department() {
         </div>
       </CardHeader>
 
-      <CardBody className="overflow-hidden px-0">
-        <table className="mt-4 w-full min-w-max table-auto text-left m-1">
+      <CardBody className="overflow-hidden   px-0">
+        <table className="mt-4 w-full min-w-max table-auto text-left m-1 sm:overflow-x-scroll" >
           <thead className="bg-[#5e838b] ">
             <tr>
               {TABLE_HEAD.map((head) => (
@@ -178,7 +178,7 @@ export function Department() {
                             <Button size="sm" color="green" className="rounded-md flex gap-2" variant="outlined" onClick={() => handleAction(_id)}>
                               <ArrowPathIcon strokeWidth={1.5} stroke="currentColor" className="h-4 w-4" />
 
-                              u n d o 
+                              u n d o
                             </Button>
                           </Tooltip>
                         </td>

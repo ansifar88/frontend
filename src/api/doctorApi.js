@@ -33,6 +33,16 @@ export const updateProfile =(data,id)=>{
     console.log(error.message);
   }
 }
+export const editProfile =(data,id)=>{
+  try {
+    const response = doctorRequest.put(`/editprofile/${id}`,data,{
+      withCredentials:true,
+    });
+    return response
+  } catch (error) {
+    console.log(error.message);
+  }
+}
 export const dpUpdate =(data,id)=>{
   try {
     const response = doctorRequest.put(`/dp/${id}`,data,{
