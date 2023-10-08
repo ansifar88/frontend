@@ -56,3 +56,14 @@ export const dpUpdate =(data,id)=>{
     console.log(error.message);
   }
 }
+
+export const setSlot = (data,id)=>{
+  try {
+    const response = doctorRequest.post(`/addslot/${id}`,data,{
+      withCredentials:true
+    })
+    return response
+  } catch (error) {
+    console.log(error.message);
+  }
+}

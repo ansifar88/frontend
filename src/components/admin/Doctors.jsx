@@ -1,5 +1,5 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { UserPlusIcon, NoSymbolIcon } from "@heroicons/react/24/solid";
+import { UserPlusIcon, NoSymbolIcon, ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/solid";
 import {
     Card,
     CardHeader,
@@ -13,36 +13,57 @@ import {
     Tab,
     Avatar,
     Tooltip,
-    Spinner
+    Spinner,
+    CardFooter
 } from "@material-tailwind/react";
 import dp from '../../logos/dp.png'
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import adminRequest from "../../utils/adminRequest";
 import { manageDoctor } from "../../api/adminApi";
-const TABS = [
-    {
-        label: "All",
-        value: "all",
-    },
-    {
-        label: "Monitored",
-        value: "monitored",
-    },
-    {
-        label: "Unmonitored",
-        value: "unmonitored",
-    },
-];
+import { useEffect, useState } from "react";
+import { allDoctors } from "../../api/adminApi";
 
 const TABLE_HEAD = ["Name", "Status", "verified", "Actions"];
 
 export function Doctors() {
+    const [filter, setFilter] = useState('');
+    const [search, setSearch] = useState("");
+    const [page, setPage] = useState(1);
+    const [debouncedSearch, setDebouncedSearch] = useState("");
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            setDebouncedSearch(search);
+        }, 1000);
+
+        return () => clearTimeout(timeoutId);
+    }, [search]);
+
     const queryClient = useQueryClient()
     const { isLoading, error, data } = useQuery({
-        queryKey: ['doctor'],
-        queryFn: () => adminRequest.get('/doctors').then((res) => res.data)
+        queryKey: ['doctor', { page: page, filter, search: debouncedSearch }],
+        queryFn: () => allDoctors({ page: page, filter, search: debouncedSearch }).then((res) => res.data)
     })
+    //TAB CHANGE
+
+    const handleTabChange = (tabValue) => {
+        setFilter(tabValue);
+    };
+    //SEARCH HANDLE
+
+    const handleSearchChange = (event) => {
+        setSearch(event.target.value);
+    };
+
+    //PAGINATION HANDLE
+
+    const handlePageChange = (newPage) => {
+        const totalPages = Math.ceil(data.count / data.pageSize);
+        if (newPage < 1 || newPage > totalPages) {
+            return;
+        }
+        setPage(newPage);
+    };
+
     const handleAction = async (doctorId) => {
         await manageDoctor(doctorId)
         queryClient.invalidateQueries("doctor")
@@ -66,28 +87,28 @@ export function Doctors() {
                         </Typography>
                     </div>
                     <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-                        {/* <Button variant="outlined" size="sm">
-                            view all
-                        </Button>
-                        <Button className="flex items-center gap-3" size="sm">
-                            <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
-                        </Button> */}
                     </div>
                 </div>
                 <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-                    <Tabs value="all" className="w-full md:w-max">
+                    <Tabs
+                        value={filter}
+                        className="w-full md:w-96 bg-[#CAF0F8] rounded-lg "
+                        onChange={handleTabChange}
+                    >
                         <TabsHeader>
-                            {TABS.map(({ label, value }) => (
-                                <Tab key={value} value={value}>
-                                    &nbsp;&nbsp;{label}&nbsp;&nbsp;
-                                </Tab>
-                            ))}
+                            <Tab value="" onClick={() => setFilter('all')}>All Doctors</Tab>
+                            <Tab value="active" onClick={() => setFilter("active")}>Active</Tab>
+                            <Tab value="blocked" onClick={() => setFilter("blocked")}>Blocked</Tab>
+                            <Tab value="notVerified" onClick={() => setFilter("notVerified")}>Pending</Tab>
                         </TabsHeader>
                     </Tabs>
                     <div className="w-full md:w-72">
                         <Input
                             label="Search"
                             icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+                            value={search}
+                            onChange={handleSearchChange}
+                            variant="standard"
                         />
                     </div>
                 </div>
@@ -114,7 +135,7 @@ export function Doctors() {
                     </thead>
                     <tbody className="bg-[#CAF0F8]">
                         {data.data.map(
-                            ({  name, email, is_blocked, verified, displaypicture, _id }, index) => {
+                            ({ name, email, is_blocked, verified, displaypicture, _id }, index) => {
                                 const isLast = index === data.data.length - 1;
                                 const classes = isLast
                                     ? "p-4"
@@ -191,19 +212,34 @@ export function Doctors() {
                     </tbody>
                 </table>
             </CardBody>
-            {/* <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-        <Typography variant="small" color="blue-gray" className="font-normal">
-          Page 1 of 10
-        </Typography>
-        <div className="flex gap-2">
-          <Button variant="outlined" size="sm">
-            Previous
-          </Button>
-          <Button variant="outlined" size="sm">
-            Next
-          </Button>
-        </div>
-      </CardFooter> */}
+            <CardFooter className="flex items-center justify-between border-t bg-[#78989f]  p-4">
+                <Typography variant="small" color="blue-gray" className="font-normal">
+                </Typography>
+                <div className="flex items-center gap-2 ">
+
+                    <Button
+                        variant="text"
+                        className="flex items-center gap-2 text-white"
+                    onClick={() => handlePageChange(page - 1)}
+                    disabled={page === 1}
+                    >
+                        <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+                    </Button>
+                    <Typography color="gray" className="font-normal text-white">
+                        Page <strong className="text-white mx-4">{page}</strong> of{" "}
+                        <strong className="text-white mx-4">{Math.ceil(data.count / data.pageSize)}</strong>
+                    </Typography>
+                    <Button
+                        variant="text"
+                        className="flex items-center gap-2 text-white"
+                    onClick={() => handlePageChange(page + 1)}
+                    disabled={page === Math.ceil(data.count / data.pageSize)}
+                    >
+                        Next
+                        <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+                    </Button>
+                </div>
+            </CardFooter>
         </Card>
     );
 }

@@ -61,3 +61,17 @@ export const userEditProfileSchema =Yup.object({
     blood : Yup.string().required("Enter your Blood Group"),
 
 })
+
+export const rejectDoctorSchema = Yup.object({
+    reason : Yup.string().max(100).required("Please Give a Reason for Rejection")
+})
+
+export const slotSchema = Yup.object().shape({
+    date: Yup.date().required('Date is required'),
+    startTimeHour: Yup.string().required('Start Time Hour is required'),
+    startTimeMinute: Yup.string().required('Start Time Minute is required'),
+    startTimeAmPm: Yup.string().required('Start Time AM/PM is required'),
+    endTimeHour: Yup.string().required('End Time Hour is required'),
+    endTimeMinute: Yup.string().required('End Time Minute is required'),
+    endTimeAmPm: Yup.string().required('End Time AM/PM is required'),
+  });

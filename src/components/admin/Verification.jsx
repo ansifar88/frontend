@@ -11,13 +11,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import adminRequest from "../../utils/adminRequest";
 import { verifyDoctor } from "../../api/adminApi";
-
+import { Reject } from "./Reject";
 export const Verification = () => {
     const { id } = useParams();
     const navigate = useNavigate()
     // const queryClient = useQueryClient();
     const { isLoading, error, data } = useQuery({
-        queryKey: ['doctor'],
+        queryKey: ['doctorverification'],
         queryFn: () => adminRequest.get(`/doctor/${id}`).then((res) => res.data),
     });
 
@@ -79,7 +79,9 @@ export const Verification = () => {
                                     <Typography className="font-bold">{data.data.qualification}</Typography>
                                 </div>
                                 <div>
-                                    <Button onClick={() => handleVerify(data.data._id)}>approve</Button>
+                                    <Button variant="filled" className="rounded-none text-xs hover:bg-green-800 text-white me-4 bg-green-600" onClick={() => handleVerify(data.data._id)}>approve</Button>
+                                    
+                                    <Reject id={data.data._id}/>
                                 </div>
                             </div>
                         </CardBody>

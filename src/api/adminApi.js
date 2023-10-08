@@ -9,6 +9,34 @@ export async function AdminLogin(value) {
   }
 }
 
+export const allUsers = async ({ page, filter, search }) => {
+  return adminRequest.get("/users", {
+    params: {
+      page,
+      filter,
+      search,
+    },
+  });
+};
+export const allDoctors = async ({ page, filter, search }) => {
+  return adminRequest.get("/doctors", {
+    params: {
+      page,
+      filter,
+      search,
+    },
+  });
+};
+export const allDepartments = async ({ page, filter, search }) => {
+  return adminRequest.get("/department", {
+    params: {
+      page,
+      filter,
+      search,
+    },
+  });
+};
+
 export const manageUser = async (id) => {
   return adminRequest.put(`/manageuser/${id}`, {
     withCredentials: true,
@@ -21,11 +49,11 @@ export const addDepartment = async (details) => {
   });
 };
 
-export const verifyDoctor = async(id)=>{
-  return adminRequest.put(`/verify/${id}`,{
-    withCredentials:true
-  })
-}
+export const verifyDoctor = async (id) => {
+  return adminRequest.put(`/verify/${id}`, {
+    withCredentials: true,
+  });
+};
 
 export const manageDoctor = async (id) => {
   return adminRequest.put(`/managedoctor/${id}`, {
@@ -34,6 +62,12 @@ export const manageDoctor = async (id) => {
 };
 export const manageDepartment = async (id) => {
   return adminRequest.put(`/managedepartment/${id}`, {
+    withCredentials: true,
+  });
+};
+
+export const rejectDoctor = async (data, id) => {
+  return adminRequest.put(`/rejectDoctor/${id}`, data, {
     withCredentials: true,
   });
 };

@@ -1,5 +1,5 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { NoSymbolIcon, ArrowPathIcon } from "@heroicons/react/24/solid";
+import { NoSymbolIcon, ArrowPathIcon, ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/solid";
 import { ModalDepartment } from "./ModalDepartment";
 import {
   Card,
@@ -14,35 +14,56 @@ import {
   Tab,
   Avatar,
   Tooltip,
-  Spinner
+  Spinner,
+  CardFooter
 } from "@material-tailwind/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import adminRequest from "../../utils/adminRequest";
 import { manageDepartment } from "../../api/adminApi";
-const TABS = [
-  {
-    label: "All",
-    value: "all",
-  },
-  {
-    label: "Monitored",
-    value: "monitored",
-  },
-  {
-    label: "Unmonitored",
-    value: "unmonitored",
-  },
-];
+import { allDepartments } from "../../api/adminApi";
+import { useEffect, useState } from "react";
+
 
 const TABLE_HEAD = ["Name", "Description", "Status", "Actions"];
 
 export function Department() {
+  const [filter, setFilter] = useState('');
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 1000);
+
+    return () => clearTimeout(timeoutId);
+  }, [search]);
+
   const queryClient = useQueryClient()
   const { isLoading, error, data } = useQuery({
-    queryKey: ['department'],
-    queryFn: () => adminRequest.get('/department').then((res) => res.data)
+    queryKey: ['department', { page: page, filter, search: debouncedSearch }],
+    queryFn: () => allDepartments({ page: page, filter, search: debouncedSearch }).then((res) => res.data)
   })
 
+  const handleTabChange = (tabValue) => {
+    setFilter(tabValue);
+  };
+
+  //SEARCH HANDLE
+
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value);
+  };
+
+  //PAGINATION HANDLE
+
+  const handlePageChange = (newPage) => {
+    const totalPages = Math.ceil(data.count / data.pageSize);
+    if (newPage < 1 || newPage > totalPages) {
+      return;
+    }
+    setPage(newPage);
+  };
 
   const handleAction = async (departmentId) => {
     await manageDepartment(departmentId)
@@ -71,19 +92,24 @@ export function Department() {
           </div>
         </div>
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-          <Tabs value="all" className="w-full md:w-max">
+          <Tabs
+            value={filter}
+            className="w-full md:w-80 bg-[#5e838b] rounded-lg "
+            onChange={handleTabChange}
+          >
             <TabsHeader>
-              {TABS.map(({ label, value }) => (
-                <Tab key={value} value={value}>
-                  &nbsp;&nbsp;{label}&nbsp;&nbsp;
-                </Tab>
-              ))}
+              <Tab value="" onClick={() => setFilter('all')}>A l l </Tab>
+              <Tab value="active" onClick={() => setFilter("active")}>Active</Tab>
+              <Tab value="deleted" onClick={() => setFilter("deleted")}>Deleted</Tab>
             </TabsHeader>
           </Tabs>
           <div className="w-full md:w-72">
             <Input
               label="Search"
               icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+              value={search}
+              onChange={handleSearchChange}
+              variant="standard"
             />
           </div>
         </div>
@@ -191,19 +217,34 @@ export function Department() {
           </tbody>
         </table>
       </CardBody>
-      {/* <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+      <CardFooter className="flex items-center justify-between border-t bg-[#5e838b]  p-4">
         <Typography variant="small" color="blue-gray" className="font-normal">
-          Page 1 of 10
         </Typography>
-        <div className="flex gap-2">
-          <Button variant="outlined" size="sm">
-            Previous
+        <div className="flex items-center gap-2 text-white">
+
+          <Button
+            variant="text"
+            className="flex items-center gap-2 text-white"
+            onClick={() => handlePageChange(page - 1)}
+            disabled={page === 1}
+          >
+            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
           </Button>
-          <Button variant="outlined" size="sm">
+          <Typography color="gray" className="font-normal text-white">
+            Page <strong className="text-white mx-4">{page}</strong> of{" "}
+            <strong className="text-white mx-4">{Math.ceil(data.count / data.pageSize)}</strong>
+          </Typography>
+          <Button
+            variant="text"
+            className="flex items-center gap-2 text-white"
+            onClick={() => handlePageChange(page + 1)}
+            disabled={page === Math.ceil(data.count / data.pageSize)}
+          >
             Next
+            <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
           </Button>
         </div>
-      </CardFooter> */}
+      </CardFooter>
     </Card>
   );
 }
