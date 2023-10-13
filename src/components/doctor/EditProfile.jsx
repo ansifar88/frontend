@@ -18,7 +18,7 @@ import { doctorEditProfileSchema } from "../../yup/validation";
 import { editProfile } from "../../api/doctorApi";
 import { useFormik } from "formik";
 import { useSelector } from "react-redux";
-import adminRequest from "../../utils/adminRequest";
+import doctorRequest from "../../utils/doctorRequest";
 
 export function EditProfile({ doctor }) {
     const { doctorInfo } = useSelector((state) => state.doctor);
@@ -59,7 +59,7 @@ export function EditProfile({ doctor }) {
     const handleOpen = () => setOpen(!open);
     const { isLoading, error, data } = useQuery({
         queryKey: ["department"],
-        queryFn: () => adminRequest.get("/department").then((res) => res.data),
+        queryFn: () => doctorRequest.get("/department").then((res) => res.data),
     });
 
     if (isLoading) {

@@ -57,9 +57,9 @@ export const dpUpdate =(data,id)=>{
   }
 }
 
-export const setSlot = (data,id)=>{
+export const setSlot = (data)=>{
   try {
-    const response = doctorRequest.post(`/addslot/${id}`,data,{
+    const response = doctorRequest.post(`/addslots`,data,{
       withCredentials:true
     })
     return response

@@ -22,6 +22,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { manageDoctor } from "../../api/adminApi";
 import { useEffect, useState } from "react";
 import { allDoctors } from "../../api/adminApi";
+import { ManageDoctor } from "./ManageDoctor";
 
 const TABLE_HEAD = ["Name", "Status", "verified", "Actions"];
 
@@ -186,24 +187,12 @@ export function Doctors() {
                                             </div>
                                         </td>
                                         <>
-                                            {is_blocked === false ? (
-                                                <td className={classes}>
-                                                    <Tooltip content="Block Doctor">
-                                                        <Button size="sm" color="red" className="rounded-md flex gap-3" variant="outlined" onClick={() => handleAction(_id)}>
-                                                            <NoSymbolIcon strokeWidth={1.5} stroke="currentColor" className="h-4 w-4" />
-                                                            block
-                                                        </Button>
-                                                    </Tooltip>
-                                                </td>
-                                            ) : (
-                                                <td className={classes}>
-                                                    <Tooltip content="unblock Doctor">
-                                                        <Button size="sm" color="green" className="rounded-md flex px-5" variant="outlined" onClick={() => handleAction(_id)}>
-                                                            unblock
-                                                        </Button>
-                                                    </Tooltip>
-                                                </td>
-                                            )}
+
+                                            <td className={classes}>
+                                                <ManageDoctor data={{ is_blocked: is_blocked, _id: _id ,name:name}}/>
+                                            </td>
+
+
                                         </>
                                     </tr>
                                 );
@@ -220,8 +209,8 @@ export function Doctors() {
                     <Button
                         variant="text"
                         className="flex items-center gap-2 text-white"
-                    onClick={() => handlePageChange(page - 1)}
-                    disabled={page === 1}
+                        onClick={() => handlePageChange(page - 1)}
+                        disabled={page === 1}
                     >
                         <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
                     </Button>
@@ -232,8 +221,8 @@ export function Doctors() {
                     <Button
                         variant="text"
                         className="flex items-center gap-2 text-white"
-                    onClick={() => handlePageChange(page + 1)}
-                    disabled={page === Math.ceil(data.count / data.pageSize)}
+                        onClick={() => handlePageChange(page + 1)}
+                        disabled={page === Math.ceil(data.count / data.pageSize)}
                     >
                         Next
                         <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />

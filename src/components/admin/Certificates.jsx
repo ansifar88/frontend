@@ -21,7 +21,7 @@ export function Certificates({ certificates }) {
             {certificates.map((certificate, index) => (
                 <div key={index}>
                     <Card
-                        className="h-44 w-64 m-2 cursor-pointer overflow-hidden transition-opacity hover:opacity-90"
+                        className="h-44 w-64 m-2 cursor-pointer overflow-hidden shadow-lg transition-opacity hover:opacity-90 rounded-sm "
                         onClick={() => handleOpen(index)}
                     >
                         <img

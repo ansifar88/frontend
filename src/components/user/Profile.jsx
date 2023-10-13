@@ -56,6 +56,7 @@ export default function Profile() {
 
   return (
     <>
+    <div className="container mx-auto">
       <Card color="transparent" shadow={false} className="w-full  md:grid grid-cols-3 h-auto py-3 ps-3 md:pb-10 m-b-2  max-h-[60rem] max-w-[94rem] m-3 bg-[#CAF0F8]">
         <div className="col-span-1 flex justify-center items-center">
 
@@ -161,7 +162,7 @@ export default function Profile() {
         <div className=" flex justify-center ">
           <CardBody className="mb-6 p-0 max-w-[70rem] w-1/2 b">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="md:mb-7">
+              {/* <div className="md:mb-7">
                 <Typography className="text-gray-900">WORKING AT</Typography>
                 <Typography className="font-bold">dfdfdfd</Typography>
               </div>
@@ -176,7 +177,7 @@ export default function Profile() {
               <div>
                 <Typography className="text-gray-900">DEPARTMENT</Typography>
                 <Typography className="font-bold">ghfghfghfgh</Typography>
-              </div>
+              </div> */}
 
             </div>
           </CardBody>
@@ -186,7 +187,7 @@ export default function Profile() {
 
         {/* } */}
       </Card>
-
+</div>
     </>
   );
 }

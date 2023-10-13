@@ -21,7 +21,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { manageUser } from "../../api/adminApi";
 import { useEffect, useState } from "react";
 import { allUsers } from "../../api/adminApi";
-
+import { ManageUser } from "./ManageUser";
 const TABLE_HEAD = ["Name", "Status", "joined", "Actions"];
 
 export function Users() {
@@ -87,6 +87,7 @@ export function Users() {
             <Typography variant="h5" color="blue-gray">
               USERS
             </Typography>
+
             <Typography color="gray" className="mt-1 font-normal">
               See information about all Users
             </Typography>
@@ -103,7 +104,7 @@ export function Users() {
             <TabsHeader>
               <Tab value="" onClick={() => setFilter('all')}>All Users</Tab>
               <Tab value="active" onClick={() => setFilter("active")}>Active</Tab>
-              <Tab className="flex items-center" icon={<NoSymbolIcon/>} value="blocked" onClick={() => setFilter("blocked")}>Blocked</Tab>
+              <Tab value="blocked" onClick={() => setFilter("blocked")}>Blocked</Tab>
             </TabsHeader>
           </Tabs>
           <div className="w-full md:w-72">
@@ -189,26 +190,25 @@ export function Users() {
                       </Typography>
                     </td>
                     <>
-                      {is_blocked === false ? (
-                        <td className={classes}>
-                          <Tooltip content="Block User">
-                            <Button size="sm" color="red" className="rounded-md flex gap-3" variant="outlined" onClick={() => handleAction(_id)}>
-                              <NoSymbolIcon strokeWidth={1.5} stroke="currentColor" className="h-4 w-4" />
-                              block
-                            </Button>
-                          </Tooltip>
-                        </td>
+                      {/* {is_blocked === false ? ( */}
+                      <td className={classes}>
+                        {/* <Tooltip content={is_blocked ? "unblock User" : "Block User"}>
+                          <Button
+                            size="sm"
+                            color={is_blocked ? "green" : "red"}
+                            className="rounded-md flex gap-3"
+                            variant="outlined"
+                            onClick={() => handleAction(_id)}>
 
-                      ) : (
+                            {is_blocked ? ""
+                              : <NoSymbolIcon strokeWidth={1.5} stroke="currentColor" className="h-4 w-4" />
+                            }
+                            {is_blocked ? 'Unblock' : 'Block'}
+                          </Button>
+                        </Tooltip> */}
+                        <ManageUser data={{ is_blocked: is_blocked, _id: _id ,name:name}} />
 
-                        <td className={classes}>
-                          <Tooltip content="unblock User">
-                            <Button size="sm" color="green" className="rounded-md flex px-5" variant="outlined" onClick={() => handleAction(_id)}>
-                              unblock
-                            </Button>
-                          </Tooltip>
-                        </td>
-                      )}
+                      </td>
                     </>
                   </tr>
                 );

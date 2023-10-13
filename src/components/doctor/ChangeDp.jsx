@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import dp from '../../logos/dp.png'
+import Dp from '../../logos/dp.png'
 import {
     Button,
     Dialog,
@@ -32,6 +32,8 @@ export function ChangeDp({ id }) {
         values,
         handleSubmit,
         setFieldValue,
+        errors,
+        touched
     } = useFormik({
         initialValues: initialValue,
         validationSchema: dpUpdateSchema,
@@ -46,7 +48,7 @@ export function ChangeDp({ id }) {
                 dispatch(setdoctordetails({
                     doctorInfo: {
                         ...doctorInfo,
-                        displaypicture: response.data.displaypicture 
+                        displaypicture: response.data.displaypicture
                     }
                 }));
 
@@ -67,8 +69,10 @@ export function ChangeDp({ id }) {
             <Dialog open={open} handler={handleOpen} size="xs">
                 <DialogHeader>Change profile picture</DialogHeader>
                 <DialogBody divider className="flex-col justify-center items-center">
+                    <div className="flex justify-center">
 
-                    {/* <img src={photo ? URL.createObjectURL(photo) : dp} alt="dp" className="h-90 rounded-full" /> */}
+                        <img src={values.dp ? URL.createObjectURL(values.dp) : Dp} alt="dp" className="h-40 w-40 rounded-full" />
+                    </div>
                     <form onSubmit={handleSubmit} encType="multipart/form-data">
                         {/* <input type="file" name="dp" accept="image/*" onChange={(e) => { setPhoto(e.target.files[0]) }} /> */}
                         <Input
@@ -82,7 +86,11 @@ export function ChangeDp({ id }) {
                                 setFieldValue("dp", selectedFile);
                             }}
                         />
-
+                        {touched.dp && errors.dp && (
+                            <div className="text-red-500 text-xs ">
+                                {errors.dp}
+                            </div>
+                        )}
                         <div className="flex justify-between my-5">
 
                             <Button

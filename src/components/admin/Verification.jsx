@@ -80,8 +80,8 @@ export const Verification = () => {
                                 </div>
                                 <div>
                                     <Button variant="filled" className="rounded-none text-xs hover:bg-green-800 text-white me-4 bg-green-600" onClick={() => handleVerify(data.data._id)}>approve</Button>
-                                    
-                                    <Reject id={data.data._id}/>
+
+                                    <Reject id={data.data._id} />
                                 </div>
                             </div>
                         </CardBody>
@@ -89,8 +89,8 @@ export const Verification = () => {
                 </Card>
 
                 <div>
-
-                    <div className=" md:overflow-x-auto  md:flex w-[76.2rem]">
+                    <Typography variant="h3" className="text-blue-gray-900 m-3">CERTIFICATES</Typography>
+                    <div className=" md:overflow-x-auto  md:flex w-[76.2rem] ">
                         <Certificates certificates={data.data.certificates} />
                     </div>
                 </div>

@@ -26,7 +26,7 @@ export function Form() {
   const id = doctorInfo.id;
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(!open);
-  
+
   const initialValues = {
     currentHospital: "",
     department: "",
@@ -60,10 +60,10 @@ export function Form() {
       }
 
       const response = await updateProfile(formData, id);
-        if(response){
-          setOpen(!open)
-          queryClient.invalidateQueries(["doctor"]);
-        }
+      if (response) {
+        setOpen(!open)
+        queryClient.invalidateQueries(["doctor"]);
+      }
     },
   });
   const queryClient = useQueryClient()
