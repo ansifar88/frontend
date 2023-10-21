@@ -55,3 +55,13 @@ export const dpUpdate =(data,id)=>{
     console.log(error.message);
   }
 }
+export const getAppointmentsUser = async() =>{
+  try {
+    const response = await userRequest.get('/appointments', {
+      withCredentials: true
+    });
+    return response
+  } catch (error) {
+    console.log(error.message);
+  }
+}

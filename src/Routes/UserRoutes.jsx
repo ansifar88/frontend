@@ -11,6 +11,10 @@ import Banner from '../components/user/Banner'
 import { Doctors } from '../components/user/Doctors'
 import { DoctorSingle } from '../components/user/DoctorSingle'
 import Profile from '../components/user/Profile'
+import { Success } from '../components/user/Success'
+import { Appointments } from '../components/user/Appointments'
+import ChatList from '../components/user/Chat/ChatList'
+
 function UserRoutes() {
   return (
     <Routes>
@@ -25,6 +29,9 @@ function UserRoutes() {
           <Route path='/doctors' element={<Doctors />} />
           <Route exact path='/doctorview' element={<DoctorSingle/>} />
           <Route path='/profile' element={<Profile />} />
+          <Route path='/success' element={<Success />} />
+          <Route path='/appointments' element={<Appointments/>} />
+          <Route path='/chats' element={<ChatList/>} />
          
 
         </Route>

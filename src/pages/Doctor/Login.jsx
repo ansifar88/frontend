@@ -144,9 +144,9 @@ function Login() {
                     )}
                   </div>
                   <div className="flex items-start justify-between">
-                    <img src={google} className='h-12 w-12 mt-4 cursor-pointer rounded-full bg-white hover:bg-blue-gray-900 p-2' onClick={() => Glogin()} />
+                    <img src={google} className='h-12 w-12 mt-4 cursor-pointer rounded-full bg-white hover:bg-[#476e83] p-2' onClick={() => Glogin()} />
 
-                    <Button className="mt-4" variant="filled" type='submit' color="blue">
+                    <Button className="mt-4 bg-[#476e83] hover:bg-[#476e839c]" variant="filled" type='submit' >
                       LOGIN
                     </Button>
                   </div>

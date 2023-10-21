@@ -2,27 +2,21 @@ import {
     Card,
     CardBody,
     Typography,
-    Button,
-    Input,
     Select,
     Option,
-    CardFooter,
     Spinner,
     Chip,
 } from "@material-tailwind/react";
 import { ClockIcon, InformationCircleIcon } from '@heroicons/react/24/outline'
-import { useFormik } from "formik";
-import { chooseDateSchema } from "../../yup/validation";
-import { setSlot } from "../../api/doctorApi";
 import { AddSlot } from "./AddSlot";
+import { Appointments } from "./Appointments";
 import { useQuery } from "@tanstack/react-query";
 import doctorRequest from "../../utils/doctorRequest";
-import { useSelector } from "react-redux";
 import { useState } from "react";
 export function Slot() {
     const [selectedDate, setSelectedDate] = useState("");
 
-    console.log(selectedDate, "ssssssssssssssssssss");
+   
     const { isLoading: dateisLoading, error: dateError, data: dateData } = useQuery({
         queryKey: ['slotsDoctor'],
         queryFn: () => doctorRequest.get(`/slotDate`).then((res) => res.data)
@@ -38,124 +32,131 @@ export function Slot() {
     if (dateisLoading) {
         return <div className="h-screen flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>
     }
+    // if (slotDataLoading) {
+    //     return <div className="h-screen flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>
+    // }
     if (dateError) {
         return <h1>Something went Wrong</h1>
     }
     return (
         <>
-            <div className="m-3 flex items-center justify-between gap-8 bg-[#CAF0F8] rounded-md p-3">
-                <div>
-                    <Typography variant="h5" color="blue-gray">
-                        SLOTS AND BOOKINGS
-                    </Typography>
-                    <Typography color="gray" className="mt-1 font-normal">
-                        See information about provided slotes and Bookings
-                    </Typography>
+            <div className="container mx-auto">
+                <div className="m-3 flex items-center justify-between gap-8 bg-[#A8C2D0] rounded-md p-3">
+                    <div>
+                        <Typography variant="h5" color="blue-gray">
+                            SLOTS AND BOOKINGS
+                        </Typography>
+                        <Typography color="gray" className="mt-1 font-normal">
+                            See information about provided slotes and Bookings
+                        </Typography>
+                    </div>
+                    <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+                        <AddSlot />
+                    </div>
                 </div>
-                <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-                    <AddSlot />
-                </div>
-            </div>
 
-            <div className="grid md:grid-cols-2">
-                <div className="col-span-1">
+                <div className="grid md:grid-cols-2">
+                    <div className="col-span-1">
 
-                    <Card className="my-3 mx-3 rounded-md p-3  bg-[#CAF0F8] ">
-                        <Typography variant="h5" className="text-blue-gray-900 ">Given Slotes</Typography>
-                    </Card>
-                    <Card className="my-3 mx-3 rounded-md min-h-[20rem] p-3  bg-[#CAF0F8] ">
-                        <div>
+                        <Card className="my-3 mx-3 rounded-md p-3  bg-[#A8C2D0] ">
+                            <Typography variant="h5" className="text-blue-gray-900 ">Given Slotes</Typography>
+                        </Card>
+                        <Card className="my-3 mx-3 rounded-md min-h-[20rem] p-3  bg-[#A8C2D0] ">
+                            <div className="my-2">
 
-                            <Select
-                                size="md"
-                                className=""
-                                variant="standard"
-                                label="Choose date"
-                                value={selectedDate}
-                                onChange={(val) => {
-                                    const newSelectedDate = val
-                                    setSelectedDate(newSelectedDate);
-                                }}
+                                <Select
+                                    size="md"
 
-                            >
-                                {dateData.data.map((dates, index) => (
-                                    <Option key={index} value={dates}>
-                                        {new Date(dates).toLocaleDateString('en-GB')}
-                                    </Option>
-                                ))}
-                            </Select>
-                        </div>
-                        <div className="grid grid-cols-1 ">
+                                    color='white'
+                                    // variant="static"
+                                    label="Choose date"
+                                    value={selectedDate}
+                                    onChange={(val) => {
+                                        const newSelectedDate = val
+                                        setSelectedDate(newSelectedDate);
+                                    }}
 
-                            {slotData && slotData.data ? (
-                                slotData.data.map((item, dataIndex) => (
-                                    <div className="col-span-1" key={dataIndex}>
-                                        {item.slotes.map((slot, index) => (
-                                            <Card className="mt-6 mx-2 min-w-min bg-white  hover:scale-105 transition-transform " key={index}>
-                                                <CardBody className="sm:flex justify-between items-center">
-                                                    <div>
-                                                        <ClockIcon className={` w-10 sm:w-[4vw]  h-2w-10 sm:h-[4vw]  ${slot.isBooked ? "text-red-400" : "text-green-500"}`} />
-                                                    </div>
-                                                    <div>
-                                                        <Typography color="blue-gray" className="mb-2">
-                                                            Date: {new Date(slot.slotDate).toLocaleDateString('en-GB')}
-                                                        </Typography>
-                                                    </div>
-                                                    <div>
-                                                        <Typography color="blue-gray" className="mb-2">
-                                                            Time: {slot.slotTime}
-                                                        </Typography>
-                                                    </div>
-                                                    <div>
+                                >
+                                    {dateData.data.map((dates, index) => (
+                                        <Option key={index} value={dates}>
+                                            {new Date(dates).toLocaleDateString('en-GB')}
+                                        </Option>
+                                    ))}
+                                </Select>
+                            </div>
+                            <div className="grid grid-cols-1 max-h-[50rem] overflow-y-scroll">
 
-                                                        <Typography color="light-green" className="mb-2">
+                                {slotData && slotData.data ? (
+                                    slotData.data.map((item, dataIndex) => (
+                                        <div className="col-span-1" key={dataIndex}>
+                                            {item.slotes.map((slot, index) => (
+                                                <Card className="mt-6 mx-2 min-w-min bg-white rounded-md hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1" key={index}>
+                                                    <CardBody className="sm:flex justify-between items-center">
+                                                        <div>
+                                                            <ClockIcon className={` w-10 sm:w-[4vw]  h-2w-10 sm:h-[4vw]  ${slot.isBooked ? "text-red-400" : "text-green-500"}`} />
+                                                        </div>
+                                                        <div>
+                                                            <Typography color="blue-gray" className="mb-2">
+                                                                Date: {new Date(slot.slotDate).toLocaleDateString('en-GB')}
+                                                            </Typography>
+                                                        </div>
+                                                        <div>
+                                                            <Typography color="blue-gray" className="mb-2">
+                                                                Time: {slot.slotTime}
+                                                            </Typography>
+                                                        </div>
+                                                        <div>
 
-                                                            <Chip
-                                                                className="text-center my-2"
-                                                                variant="ghost"
-                                                                size="md"
-                                                                value={slot.isBooked === true ? "BOOKED" : "AVAILABLE"}
-                                                                color={slot.isBooked === true ? "red" : "green"}
-                                                            />
-                                                            {/* <Button
+                                                            <Typography color="light-green" className="mb-2">
+
+                                                                <Chip
+                                                                    className="text-center my-2"
+                                                                    variant="ghost"
+                                                                    size="md"
+                                                                    value={slot.isBooked === true ? "BOOKED" : "AVAILABLE"}
+                                                                    color={slot.isBooked === true ? "red" : "green"}
+                                                                />
+                                                                {/* <Button
                                                             className="text-center my-2 cursor-pointer" 
                                                                 variant="ghost"
                                                                 size="sm"
                                                                 value='cancel'
                                                                 color="red"
                                                             >cancel</Button> */}
-                                                        </Typography>
-                                                    </div>
-                                                </CardBody>
+                                                            </Typography>
+                                                        </div>
+                                                    </CardBody>
 
-                                            </Card>
-                                        ))}
+                                                </Card>
+                                            ))}
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="flex-col h-40">
+                                        <div className="flex justify-center">
+
+                                            <InformationCircleIcon className="h-24 w-24 text-white" />
+                                        </div>
+                                        <div className="flex justify-center">
+
+                                            <p className=" text-white">please choose a date to show slots</p>
+                                        </div>
                                     </div>
-                                ))
-                            ) : (
-                                <div className="flex-col h-40">
-                                    <div className="flex justify-center">
+                                )}
 
-                                        <InformationCircleIcon className="h-24 w-24 text-white" />
-                                    </div>
-                                    <div className="flex justify-center">
-
-                                        <p className=" text-white">please choose a date to show slots</p>
-                                    </div>
-                                </div>
-                            )}
-
-                        </div>
-                    </Card>
-                </div >
-                <div className="col-span-1">
-                <Card className="my-3 mx-3 rounded-md p-3  bg-[#CAF0F8] ">
-                    <Typography variant="h5" className="text-blue-gray-900 ">Appointments</Typography>
+                            </div>
                         </Card>
-                    <Card className="mt-3 w-full rounded-md bg-deep-orange-100">available slorts</Card>
-                </div>
-            </div >
-
+                    </div >
+                    <div className="col-span-1">
+                        <Card className="my-3 mx-3 rounded-md p-3  bg-[#A8C2D0] ">
+                            <Typography variant="h5" className="text-blue-gray-900 ">Appointments</Typography>
+                        </Card>
+                        <Card className="my-3 mx-3 rounded-md p-3  bg-[#A8C2D0]">
+                            <Appointments/>
+                        </Card>
+                    </div>
+                </div >
+            </div>
         </>
     );
 }

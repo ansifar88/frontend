@@ -3,12 +3,8 @@ import {
     Button,
     Dialog,
     DialogHeader,
-    DialogBody,
-    DialogFooter,
     Card,
     CardBody,
-    Typography,
-
     Input,
     Select,
     Option,
@@ -84,7 +80,7 @@ const queryClient = useQueryClient()
     return (
 
         <>
-            <Button onClick={handleOpen} variant="filled">
+            <Button onClick={handleOpen} variant="filled" className="bg-[#5d7582]">
                 add slot
             </Button>
             <Dialog open={open} handler={handleOpen}>

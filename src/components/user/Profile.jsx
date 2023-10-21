@@ -73,6 +73,7 @@ export default function Profile() {
           </Badge>
 
         </div>
+        
         <div className="col-span-2 text-[#2457C5]">
           <div>
             <div className="h-10 my-8  flex-col justify-start mt-7 items-center">

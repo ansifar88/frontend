@@ -200,7 +200,11 @@ export function Form() {
                     setFieldValue("certificates", selectedFiles);
                   }}
                 />
-
+                {touched.certificates && errors.certificates && (
+                  <div className="text-red-500 text-sm ">
+                    {errors.certificates}
+                  </div>
+                )}
                 <Typography className="text-xs" >
                   # Upload All of your Certificates including experience and
                   Graduation .

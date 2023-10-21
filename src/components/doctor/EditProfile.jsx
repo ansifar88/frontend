@@ -32,6 +32,7 @@ export function EditProfile({ doctor }) {
         department: doctor ? doctor.department : "",
         qualification: doctor ? doctor.qualification : "",
         experience: doctor ? doctor.experience : "",
+        cunsultationFee: doctor ? doctor.cunsultationFee : "",
         description: doctor ? doctor.description : "",
     };
 
@@ -178,6 +179,23 @@ export function EditProfile({ doctor }) {
                                     {touched.experience && errors.experience && (
                                         <div className="text-red-500 text-xs ">
                                             {errors.experience}
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="my-2">
+
+                                    <Input
+                                        size="md"
+                                        variant="standard"
+                                        name="cunsultationFee"
+                                        label="cunsultation Fee"
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.cunsultationFee}
+                                    />
+                                    {touched.cunsultationFee && errors.cunsultationFee && (
+                                        <div className="text-red-500 text-xs ">
+                                            {errors.cunsultationFee}
                                         </div>
                                     )}
                                 </div>

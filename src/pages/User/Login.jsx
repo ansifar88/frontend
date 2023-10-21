@@ -82,6 +82,7 @@ useEffect(
                     }
                     dispatch(setuserdetails({userInfo : userDetails}))
                     localStorage.setItem("currentUser",response.data.token)
+                    
                     navigate('/')
                   }else{
                     GenerateError(response.data.message)

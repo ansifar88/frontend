@@ -16,6 +16,7 @@ import {
   Input,
   Button,
   Typography,
+  Card,
 } from "@material-tailwind/react";
 
 
@@ -118,7 +119,7 @@ function Signup() {
                 />
               </div>
               <div className="p-6 w-full md:w-2/4 h-screen flex flex-col bg-[#476e83a7] justify-center items-center">
-
+              {/* <Card className='w-3/5 bg-transparent p-3 bg-blur backdrop-blur-lg rounded-none shadow-none'> */}
                 <Typography variant="h4" color="white" className="text-center mb-4 md:mb-8">
                   SIGN UP
                 </Typography>
@@ -165,12 +166,12 @@ function Signup() {
                     )}
                   </div>
                   <div className="flex items-start justify-between">
-                  <img src={google} className='h-12 w-12 mt-4 cursor-pointer rounded-full bg-white hover:bg-blue-gray-900 p-2' onClick={() => Gsignup()} />
+                  <img src={google} className='h-12 w-12 mt-4 cursor-pointer rounded-full bg-white hover:bg-[#476e83] p-2' onClick={() => Gsignup()} />
 
                     {/* <Button className="mt-4" color="blue" onClick={() => Gsignup()} >
                       Sign in with GOOGLE
                     </Button> */}
-                    <Button className="mt-4 text-white bg-476e83" variant='outlined' type='submit' >
+                    <Button className="mt-4 text-white bg-[#476e83] hover:bg-[#476e839c]" variant='filled' type='submit' >
                       Sign up
                     </Button>
                   </div>
@@ -181,6 +182,7 @@ function Signup() {
                     </Link>
                   </Typography>
                 </form>
+                {/* </Card> */}
               </div>
             </div>
           </div>

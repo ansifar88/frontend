@@ -9,7 +9,7 @@ import {
 } from "@material-tailwind/react";
 import dp from '../../logos/dp.png'
 
-import { ExclamationCircleIcon } from '@heroicons/react/24/solid'
+import { ExclamationCircleIcon, CheckBadgeIcon } from '@heroicons/react/24/solid'
 import { Form } from "./Form";
 // import { useSelector } from "react-redux";
 import doctorRequest from "../../utils/doctorRequest";
@@ -22,7 +22,7 @@ import { GenerateError } from "../../toast/GenerateError";
 export default function Profile() {
   const navigate = useNavigate()
   const location = useLocation()
-  const id =location.state.id
+  const id = location.state.id
   const { isLoading, error, data } = useQuery({
     queryKey: ['doctor'],
     queryFn: () => doctorRequest.get(`/profile/${id}`).then((res) => res.data),
@@ -48,10 +48,11 @@ export default function Profile() {
   }
   return (
     <>
+    <div className="container mx-auto">
       <Card color="transparent" shadow={false} className="w-full  m-b-2 max-h-[45rem] max-w-[94rem] m-3 bg-[#A8C2D0]">
         <div className="p-5  ">
           <div className="flex justify-end me-5 md:me-10">
-            <EditProfile doctor={data.data}/>
+            <EditProfile doctor={data.data} />
           </div>
           <div className="flex justify-center">
             <CardHeader
@@ -87,7 +88,11 @@ export default function Profile() {
                 )}
 
                 {data.data.verified && (
-                  <h1 className="text-green-600 font-serif" >Verified</h1>
+                  <div className="bg-blue-500 w-24 flex items-center rounded-full">
+
+                    <CheckBadgeIcon className="text-white h-6 m-1" />
+                    <Typography className="text-white font-extralight " >verified</Typography>
+                  </div>
                 )}
 
                 {!data.data.requested && !data.data.verified && (
@@ -129,10 +134,10 @@ export default function Profile() {
 
             <ExclamationCircleIcon className="h-7 w-7 me-6" /> <Typography>Please complete your profile and verify</Typography>
           </div>
-)
+        )
         }
       </Card>
-
+</div>
     </>
   );
 }

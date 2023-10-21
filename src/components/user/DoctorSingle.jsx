@@ -3,11 +3,7 @@ import {
   CardHeader,
   CardBody,
   Typography,
-  Button,
   Spinner,
-  Tooltip,
-  CardFooter,
-  Avatar,
   Chip,
   Select,
   Option,
@@ -21,17 +17,26 @@ import userRequest from "../../utils/userRequest";
 import dp from '../../logos/dp.png'
 import { GenerateError } from "../../toast/GenerateError";
 import { useState } from "react";
+import { Payment } from "./Payment";
+import { useEffect } from "react";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromise = loadStripe("pk_test_51O11IzSJfBiixPMTXmoUugjdZRkftipLrwEqi3g4tNLnAHnARpN3IRSijAKk4NbRDbaW8Y2kIUa8hJT79i2S00zI00707Kncmo");
 
 export function DoctorSingle() {
   const [selectedDate, setSelectedDate] = useState("");
+  const [clientSecret, setClientSecret] = useState("");
+  const [did, setDid] = useState(null);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const location = useLocation();
   const id = location.state._id;
   const { isLoading: docIsLoading, error: docError, data: docData } = useQuery({
     queryKey: ['doctorsingle'],
     queryFn: () => userRequest.get(`/SnDOC/${id}`).then((res) => res.data),
   });
+
   const { isLoading: dateIsLoading, error: dateError, data: dateData } = useQuery({
     queryKey: ['slotDate'],
     queryFn: () => userRequest.get(`/slotdate?doctorId=${id}`).then((res) => res.data),
@@ -41,68 +46,63 @@ export function DoctorSingle() {
     queryKey: ['slotUser', selectedDate],
     queryFn: () => userRequest.get(`/slotsuser?date=${selectedDate}&doctorId=${id}`).then((res) => res.data),
   });
-  console.log(slotData);
-  if (docIsLoading) {
-    return <div className="h-screen flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>
+  if (slotData) {
+    
+    console.log(slotData,"slloooooooooooooo");
   }
-  // if (error) {
-  //   return <h1>Something went Wrong</h1>
-  // }
+
+  useEffect(() => {
+    if (!docIsLoading && docData) {
+
+      setDid(docData.data._id);
+    }
+  }, [docIsLoading, docData]);
+
+  useEffect(() => {
+    if (did) {
+      const makeRequest = async () => {
+        try {
+          console.log("Before making the request");
+          const res = await userRequest.post(`/payment/${did}`);
+          console.log(res, "clientSecret response");
+          setClientSecret(res.data.clientSecret);
+          console.log("After setting the clientSecret");
+        } catch (error) {
+          console.error("Error while making the request:", error);
+        }
+      };
+
+      makeRequest();
+    }
+  }, [did]);
+  const appearance = {
+    theme: 'stripe',
+  };
+  const options = {
+    clientSecret,
+    appearance,
+  };
+
+  if (docIsLoading) {
+    return <div className="h-screen flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>;
+  }
+
   if (docError) {
     if (docError.response) {
       if (docError.response.status === 403) {
-        GenerateError(docError.response.docData.data.message)
-        localStorage.removeItem("currentUser")
-        navigate("/login")
+        GenerateError(docError.response.docData.data.message);
+        localStorage.removeItem("currentUser");
+        navigate("/login");
+      } else {
+        return <p>Something went wrong</p>;
       }
-
-    } else {
-      return <p>somthing went wrong</p>
     }
-
   }
+
   return (
     <div className="container mx-auto">
       <Card color="transparent" shadow={false} className="w-full md:h-full h-auto  rounded-md max-w-[93rem]  m-3 p-3 text-[#023E8A]">
-        {/* <div
-        color="transparent"
-        // floated={false}
-        // shadow={false}
-        className="mx-0 flex items-center gap-4 pt-0 pb-8"
-      >
-        <img
-          size="lg"
-          src={data.data.displaypicture ? data.data.displaypicture : dp} alt="tania andrew"
-          className="h-20 w-20 md:h-80 md:w-80 rounded-full "
-        />
-        <div className="flex w-full flex-col gap-0.5">
-          <div className="md:flex items-center justify-around">
-            <Typography variant="h5" color="blue-gray" className="md:text-5xl text-[#023E8A]">
-              {data.data.name}
-              <div className="flex items-center">
-                <AcademicCapIcon className="h-8 w-8 me-2 " />
-                <Typography className="md:text-lg my-3 text-[#023E8A]" color="blue-gray">{data.data.qualification}</Typography>
-              </div>
-              <div className="flex items-center">
-                <BuildingLibraryIcon className="h-8 w-8 me-2 " />
-                <Typography className="md:text-lg my-3 text-[#023E8A]" color="blue-gray">{data.data.department.departmentName}</Typography>
-              </div>
-              <Typography className="md:text-lg my-3 text-[#023E8A]" color="blue-gray">Working at {data.data.currentHospital}</Typography>
 
-            </Typography>
-
-            <div className=" flex items-center gap-0">
-              <Button className="invisible md:visible">BOOKING</Button>
-            </div>
-          </div>
-        </div>
-      </div> */}
-        {/* <CardBody className="mb-6 p-0">
-        <Button className="visible md:invisible">BOOKING</Button>
-        <Typography>
-          &quot;{data.data.description}&quot;
-        </Typography>
-      </CardBody> */}
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-[1fr,25rem]">
           <div className="col-span-1">
             <Card className=" rounded-md h-[32.2rem] bg-[#CAF0F8]  w-full px-3">
@@ -115,7 +115,7 @@ export function DoctorSingle() {
                 <img
                   size="lg"
                   src={docData.data.displaypicture ? docData.data.displaypicture : dp} alt="tania andrew"
-                  className="h-20 w-20 md:h-72 md:w-72 rounded-full "
+                  className="h-20 w-20 md:h-72 md:w-72 rounded-full md:ms-14 "
                 />
                 <div className="flex w-full flex-col gap-0.5 ">
                   <div className="flex-col items-center ">
@@ -169,11 +169,12 @@ export function DoctorSingle() {
               </div>
               <div>
               </div>
+              <div className="overflow-y-scroll">
               {slotData ? (
-                slotData.data.map((item, dataIndex) => (
-                  <div className="overflow-y-scroll  mb-2" key={dataIndex}>
-                    {item.slotes.map((slot, index) => (
-                      <Card className={`bg-white h-auto rounded-md m-3 p-2  hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 border border-b-8 ${slot.isBooked === true ? "border-b-red-700" : " border-b-green-500"} `} key={index}>
+                slotData.data.map((slot, dataIndex) => (
+                  <div className="mb-2" key={dataIndex}>
+                    
+                      <Card className={`bg-white h-auto rounded-md m-3 p-2  hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 border border-b-8 ${slot.isBooked === true ? "border-b-red-700" : " border-b-green-500"} `} >
                         <div className="flex justify-between" >
                           <div>
                             <Typography color="blue-gray" className="mb-2">
@@ -185,17 +186,24 @@ export function DoctorSingle() {
                           </div>
                           <div>
                             <Chip
+                            className="mb-2"
                               size="sm"
-                              value={slot.isBooked === true ? "BOOKED" : "AVAILABLE"}
-                              color={slot.isBooked === true ? "red" : "green"} />
+                              value={slot.isBooked === true ? "not available" : "AVAILABLE"}
+                              color={slot.isBooked === true ? "light-blue" : "green"} />
+                            {slot.isBooked === false ? clientSecret && (
+                              <Elements options={options} stripe={stripePromise}>
+                                <Payment Secret={clientSecret} docId={did} slotId={slot._id} slotDate={slot.slotDate} slotTime={slot.slotTime} />
+                              </Elements>
+                            ) : ""
+                            }
                           </div>
                         </div>
                       </Card>
-                    ))}
+                   
                   </div>
                 ))
-              ) : (
-                <div className="flex-col h-40">
+                ) : (
+                  <div className="flex-col h-40">
                   <div className="flex justify-center">
 
                     <InformationCircleIcon className="h-24 w-24 text-[#023E8A]" />
@@ -205,7 +213,9 @@ export function DoctorSingle() {
                     <p className=" text-[#023E8A]">please choose a date to show slots</p>
                   </div>
                 </div>
-              )}
+
+)}
+</div>
             </Card>
           </div>
 

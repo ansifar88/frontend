@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-const imageFormats = ["image/jpeg", "image/png"];
+const imageFormats = ["image/jpeg", "image/png", "image/avif"];
 export const LoginSchema = Yup.object({
   email: Yup.string().email().required("Please Enter Your email id"),
   password: Yup.string().min(4).required("Please enter password"),
@@ -41,7 +41,11 @@ export const ProfileUpdateSchema = Yup.object({
   certificates: Yup.mixed()
     .test("is-image", "Only image files are allowed", (value) => {
       if (value) {
-        return imageFormats.includes(value.type);
+        for (let i = 0; i < value.length; i++) {
+          if (!imageFormats.includes(value[i].type)) {
+            return false;
+          }
+        }
       }
       return true;
     })
@@ -57,6 +61,7 @@ export const doctorEditProfileSchema = Yup.object({
   department: Yup.string().required("choose a department"),
   qualification: Yup.string().min(2).required("enter qualifiation"),
   experience: Yup.string().required("enter years of experience"),
+  cunsultationFee: Yup.string().required("enter your cunsultation Fee"),
   description: Yup.string()
     .min(10)
     .max(100)
@@ -64,12 +69,14 @@ export const doctorEditProfileSchema = Yup.object({
 });
 
 export const dpUpdateSchema = Yup.object({
-  dp: Yup.mixed().test("is-image", "Only image files are allowed", (value) => {
+  dp: Yup.mixed()
+    .test("is-image", "Only image files are allowed", (value) => {
       if (value) {
         return imageFormats.includes(value.type);
       }
       return true;
-    }).required("choose a Photo"),
+    })
+    .required("choose a Photo"),
 });
 
 export const userProfileUpdateSchema = Yup.object({
