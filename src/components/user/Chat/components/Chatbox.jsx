@@ -1,19 +1,25 @@
+import { Box } from "@chakra-ui/react";
 import { ChatState } from "./Context/ChatProvider";
-// import SingleChat from "../SingleChat";
-// import '../style.css'
-import { Card } from "@material-tailwind/react";
+import './style.css'
+import SingleChat from "../SingleChat";
 const Chatbox = ({ fetchAgain, setFetchAgain }) => {
   const { selectedChat } = ChatState();
 
   return (
-    <Card
-    className={`${
-        selectedChat ? 'flex' : 'hidden'
-      } md:flex items-center flex-col p-3 bg-white  md:w-68 rounded-lg border border-gray-200`}>
-        <p>jfdghkjdfh</p>
+    <Box
+      display={{ base: selectedChat ? "flex" : "none", md: "flex" }}
+      alignItems="center"
+      flexDir="column"
+      p={3}
+      bg="white"
+      w={{ base: "100%", md: "68%" }}
+      borderRadius="lg"
+      borderWidth="1px"
+    >
+        
     
-      {/* <SingleChat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} /> */}
-    </Card>
+      <SingleChat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
+    </Box>
   );
 };
 

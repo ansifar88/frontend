@@ -8,6 +8,7 @@ import Dashboard from '../pages/Doctor/Dashboard'
 import Profile from '../components/doctor/Profile'
 import { Slot } from '../components/doctor/Slot'
 import ChatList from '../components/doctor/Chat/ChatList'
+import Room from '../components/doctor/Room'
 
 function DoctorRoutes() {
   return (
@@ -25,10 +26,14 @@ function DoctorRoutes() {
           <Route path='/profile' element={<Profile />} />
           <Route path='/slot' element={<Slot/>} />
           <Route path='/chats' element={<ChatList/>} />
+          
 
           
         </Route>
       </Route>
+      {/* <Route path='/' element={<Layout></Layout>} > */}
+      <Route path='/room/:roomId' element={<Room/>} />
+      {/* </Route> */}
     </Routes>
   )
 }

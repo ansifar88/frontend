@@ -8,7 +8,7 @@ import {
 import dp from '../../logos/dp.png'
 import { useQuery } from "@tanstack/react-query";
 import { getAppointmentsUser } from "../../api/userApi";
-
+import { VideoCameraIcon } from '@heroicons/react/24/outline'
 
 export function Appointments() {
     const { isLoading, error, data } = useQuery({
@@ -21,6 +21,11 @@ export function Appointments() {
     }
     if (error) {
         return <h1>Something went Wrong</h1>
+    }
+    const handleJoin = async(link)=>{
+console.log(link);
+        // navigate(`/doctor/room/${id}`)
+        window.open(link, '_blank');
     }
     return (
         <div className="container mx-auto">
@@ -49,16 +54,16 @@ export function Appointments() {
                             </div>
                         </div>
                         <div className=" ">
-                            <Typography variant="h3"className="my-2">
+                            <Typography variant="h3" className="my-2">
                                 Dr {appointments.doctor.name}
                             </Typography>
-                            <Typography variant="h6"className="my-2">
+                            <Typography variant="h6" className="my-2">
                                 Working @ {appointments.doctor.currentHospital}
                             </Typography>
                             <div className="flex my-2">
 
                                 <Typography>
-                                    Appoints Status :
+                                    Appointment Status :
                                 </Typography>
                                 <Chip variant="ghost" size="sm" color="green" className="mx-2" value={appointments.AppoinmentStatus} />
                             </div>
@@ -80,12 +85,23 @@ export function Appointments() {
                                 className="my-2"
                             />
                             <Chip variant="ghost" size="md" color="cyan" className="mx-2 " value={appointments.status} />
-
+                            {appointments.callId ? (
+                                <Button
+                                    size="sm"
+                                    className="my-1 flex items-center gap-3 bg-green-500 shadow-none me-2"
+                                    variant="filled"
+                                    onClick={() => handleJoin(appointments.callId)}
+                                >
+                                    <VideoCameraIcon className="h-5 w-5" />
+                                    join</Button>
+                            ) : ""
+                            }
                             <Button
                                 size="sm"
-                                className="my-1  bg-red-500 shadow-none"
+                                className="my-1  bg-red-500 shadow-none "
                                 variant="filled"
                             >cancel</Button>
+
 
                         </div>
 

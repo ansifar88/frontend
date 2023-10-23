@@ -1,5 +1,5 @@
 
-// import { useDisclosure } from "@chakra-ui/hooks";
+import { useDisclosure } from "@chakra-ui/hooks";
 // import { Input } from "@chakra-ui/input";
 // import {
 //     Menu,
@@ -36,7 +36,9 @@ import {
     Input,
     Textarea,
     Tooltip,
-    Card
+    Card,
+    List,
+    ListItem
 } from '@material-tailwind/react';
 
 import { ChatState } from "./Context/ChatProvider";
@@ -46,14 +48,16 @@ import userRequest from "../../../../utils/userRequest";
 import doctorRequest from "../../../../utils/doctorRequest";
 
 function SideDrawer() {
-    const [open, setOpen] = useState(false);
-    const openDrawer = () => setOpen(true);
-    const closeDrawer = () => setOpen(false);
+    // const [open, setOpen] = useState(false);
+    // const openDrawer = () => setOpen(true);
+    // const closeDrawer = () => setOpen(false);
 
     const [search, setSearch] = useState("");
     const [searchResult, setSearchResult] = useState([]);
     const [loading, setLoading] = useState(false);
     const [loadingChat, setLoadingChat] = useState(false);
+    const [showSearchResults, setShowSearchResults] = useState(false);
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
     const {
         setSelectedChat,
@@ -66,7 +70,7 @@ function SideDrawer() {
     console.log(user, "doctor");
 
     // const toast = useToast();
-    // const { isOpen, onOpen, onClose } = useDisclosure();
+    const { isOpen, onOpen, onClose } = useDisclosure();
     const navigate = useNavigate();
 
     // const logoutHandler = () => {
@@ -102,6 +106,7 @@ function SideDrawer() {
 
             setLoading(false);
             setSearchResult(data);
+            setShowSearchResults(true);
         } catch (error) {
             // toast({
             //     title: "Error Occured!",
@@ -127,7 +132,7 @@ function SideDrawer() {
             //     },
             // };
             const doctorId = user.id
-            const { data } = await userRequest.post(`/accesschat`, { doctorId, userId }, );
+            const { data } = await userRequest.post(`/accesschat`, { doctorId, userId },);
             console.log(data);
 
             if (!chats.find((c) => c._id === data._id)) {
@@ -138,8 +143,11 @@ function SideDrawer() {
             console.log(chats, 'chat');
             setSelectedChat(data);
             setLoadingChat(false);
-            // onClose();
-            setOpen(!open)
+            onClose();
+            setShowSearchResults(false);
+            setDrawerOpen(false);
+            // setOpen(!open)
+
         } catch (error) {
             // toast({
             //     title: "Error fetching the chat",
@@ -157,38 +165,44 @@ function SideDrawer() {
         <>
 
             <>
-                <Button onClick={openDrawer}>Open Drawer</Button>
-                <Drawer open={open} onClose={closeDrawer}>
-                    <div className='p-5'>
+                {/* <Button onClick={openDrawer}>Open Drawer</Button>
+                <Drawer open={open} onClose={closeDrawer}> */}
+                <div className='p-5 w-64'>
 
 
-                        <Input
-                            className=""
-                            label="Search by name or email:"
+                    {/* <label> */}
+                        {/* Search by name or email: */}
+                        <input
+                        
                             type="text"
-                            variant="standard"
+                            placeholder="Search by name or email"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                         />
+                    {/* </label> */}
 
-                        <button onClick={handleSearch}>Go</button>
-                    </div>
-                    {loading ? (
-                        <div>Loading...</div>
-                    ) : (
-                        <div>
-                            {searchResult?.map((user) => (
-                                <Card key={user._id}>
-                                    <button onClick={() => accessChat(user._id)}>
-                                        {user.name}
-                                    </button>
-                                </Card>
-                            ))}
-                        </div>
-                    )}
-                    {loadingChat && <div>Loading chat...</div>}
-                </Drawer>
-            </>
+                    <button onClick={handleSearch}>Search</button>
+                </div>
+                {loading ? (
+                    <div>Loading...</div>
+                ) : (
+                    showSearchResults && (
+                        <Card className="z-20 w-64 ms-2">
+                    <List>
+                    {searchResult?.map((user) => (
+                      <ListItem key={user._id}>
+                        <button onClick={() => accessChat(user._id)}>
+                          {user.name}
+                        </button>
+                      </ListItem>
+                    ))}
+                  </List>
+                  </Card>
+                    )
+                )}
+                {loadingChat && <div>Loading chat...</div>}
+            {/* </Drawer> */}
+        </>
         </>
     );
 }

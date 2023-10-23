@@ -1,28 +1,26 @@
 import { useState } from "react";
 import { ChatState } from "./components/Context/ChatProvider";
-import { Card } from "@material-tailwind/react";
 import SideDrawer from "./components/SideDrawer";
 import MyChats from "./components/MyChats";
 import Chatbox from "./components/Chatbox";
-// import Chatbox from "./Components/Chatbox";
-
+import { Box } from "@chakra-ui/react";
+// import './ChatList.css'
 const ChatList = () => {
     const [fetchAgain, setFetchAgain] = useState(false);
     const { user } = ChatState();
 
     return (
         <div className="container mx-auto">
+            <div style={{ width: "100%" }}>
             {user && <SideDrawer />}
-            <Card className="flex justify-between w-full h-[91.5vh] ">
+            <Box  w="100%" h="91.5vh" p="10px" className="flex justify-between p-5">
                 
-                {user && <MyChats fetchAgain={fetchAgain} className="flex h-9" />}
+                {user && <MyChats fetchAgain={fetchAgain}  />}
                 {user && (
                     <Chatbox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} className="flex h-9" />
-
-
-
                 )}
-            </Card>
+            </Box>
+        </div>
         </div>
     );
 };

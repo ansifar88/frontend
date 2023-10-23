@@ -6,10 +6,12 @@ import { useEffect, useState } from "react";
 // import ChatLoading from "./ChatLoading";
 // import { Button } from "@chakra-ui/react";
 // import { axiosUserInstance } from "../../../../Constants/axios";
-import userRequest from "../../../../utils/userRequest";
 import { ChatState } from "./Context/ChatProvider";
 // import { getSender } from "../Config/ChatLogistics";
 import { Card, Spinner, Typography } from "@material-tailwind/react";
+import { Box, Stack, Text } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
+import doctorRequest from "../../../../utils/doctorRequest";
 
 const MyChats = ({ fetchAgain }) => {
     const [loggedUser, setLoggedUser] = useState();
@@ -27,8 +29,8 @@ const MyChats = ({ fetchAgain }) => {
                 },
             };
             console.log(selectedChat);
-            const userId = user.user._id
-            const { data } = await userRequest.get(`/fetchchat/${userId}`, config);
+            const userId = user.id
+            const { data } = await doctorRequest.get(`/fetchchat/${userId}`, config);
             console.log(data);
             setChats(data);
         } catch (error) {
@@ -44,64 +46,83 @@ const MyChats = ({ fetchAgain }) => {
         }
     };
 
-
+    const { doctorInfo } = useSelector((state) => state.doctor)
     useEffect(() => {
-        setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
+        setLoggedUser(doctorInfo);
         fetchChats();
         // eslint-disable-next-line
     }, [fetchAgain]);
 
     return (
-        <Card
-            className={`${selectedChat ? 'hidden' : 'flex'
-                } md:flex flex-col items-center p-3 bg-white w-full md:w-1/3 rounded-lg border border-gray-200`}
-
+        <Box
+            display={{ base: selectedChat ? "none" : "flex", md: "flex" }}
+            flexDir="column"
+            alignItems="center"
+            p={3}
+            bg="white"
+            w={{ base: "100%", md: "31%" }}
+            borderRadius="lg"
+            borderWidth="1px"
         >
-            <Card
-                className="pb-3 px-3 font-work-sans text-28 md:text-30 flex w-full justify-between items-center"
+            <Box
+                pb={3}
+                px={3}
+                fontSize={{ base: "28px", md: "30px" }}
+                fontFamily="Work sans"
+                display="flex"
+                w="100%"
+                justifyContent="space-between"
+                alignItems="center"
             >
                 My Chats
-            </Card>
-            <Card
-                className="flex flex-col p-3 bg-gray-200 w-full h-full rounded-lg overflow-hidden"
+            </Box>
+            <Box
+                display="flex"
+                flexDir="column"
+                p={3}
+                bg="#F8F8F8"
+                w="100%"
+                h="100%"
+                borderRadius="lg"
+                overflowY="hidden"
             >
                 {chats ? (
-                    <Card overflowY="scroll">
+                    <Stack overflowY="scroll">
                         {chats.map((chat) => (
-                            <Card
+                            <Box
                                 onClick={() => setSelectedChat(chat)}
                                 className={`cursor-pointer px-3 py-2 rounded-lg
-               ${selectedChat === chat
+                                    ${selectedChat === chat
                                         ? 'bg-teal-500 text-white'
                                         : 'bg-gray-200 text-black'
                                     }`}
                                 key={chat._id}
                             >
-                                <Typography>
+                                <Text>
                                     {chat.users.user.name}
-                                </Typography>
+                                </Text>
                                 {chat.latestMessage && (
-                                    <Typography fontSize="xs">
+                                    <Text fontSize="xs">
                                         <b>
-                                            {chat.latestMessage.sender.user
-                                                ? chat.latestMessage.sender.user.name
+                                            {chat.latestMessage.sender.doctor
+                                                ? chat.latestMessage.sender.doctor.name
                                                 : chat.latestMessage.sender.user.name}
                                             :
                                         </b>
                                         {chat.latestMessage.content.length > 50
                                             ? chat.latestMessage.content.substring(0, 51) + "..."
                                             : chat.latestMessage.content}
-                                    </Typography>
+                                    </Text>
                                 )}
-                            </Card>
+                            </Box>
                         ))}
-                    </Card>
+                    </Stack>
                 ) : (
                     //   <ChatLoading />
-                    <Spinner></Spinner>
+                    <Spinner />
                 )}
-            </Card>
-        </Card>
+            </Box>
+        </Box>
     );
 };
 

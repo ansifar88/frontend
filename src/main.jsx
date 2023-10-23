@@ -7,11 +7,13 @@ import { Store, persistor } from './Redux/store.js'
 import { PersistGate } from 'redux-persist/integration/react'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ChakraBaseProvider } from '@chakra-ui/react';
 const GoogleClientId = import.meta.env.VITE_GAUTHKEY;
 const queryClient = new QueryClient()
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={Store}>
     <PersistGate loading={null} persistor={persistor}>
+    <ChakraBaseProvider >
       <GoogleOAuthProvider clientId={ GoogleClientId }>
       <React.StrictMode>
         <QueryClientProvider client={queryClient}>
@@ -19,6 +21,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         </QueryClientProvider>
       </React.StrictMode>
       </GoogleOAuthProvider>
+    </ChakraBaseProvider>
     </PersistGate>
   </Provider>
 )

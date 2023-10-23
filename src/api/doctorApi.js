@@ -67,3 +67,13 @@ export const setSlot = (data)=>{
     console.log(error.message);
   }
 }
+export const ShareVideoLink = (data) =>{
+  try {
+    const response = doctorRequest.post(`/sharelink`,data,{
+      withCredentials:true
+    })
+    return response
+  } catch (error) {
+    console.log(error.message);
+  }
+}
