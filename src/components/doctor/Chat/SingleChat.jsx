@@ -200,6 +200,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               icon={<ArrowBackIcon />}
               onClick={() => setSelectedChat("")}
             />
+            {selectedChat.users.user && selectedChat.users.user.name}
           </Text>
           <Box
             display="flex"

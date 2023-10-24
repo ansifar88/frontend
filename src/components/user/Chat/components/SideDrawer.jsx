@@ -20,9 +20,11 @@
 // import { Tooltip } from "@chakra-ui/tooltip";
 // import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
 // import { Avatar } from "@chakra-ui/avatar";
+
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import {MagnifyingGlassIcon} from '@heroicons/react/24/outline'
 // import { useToast } from "@chakra-ui/toast";
 
 // import ChatLoading from "../ChatLoading";
@@ -158,7 +160,10 @@ function SideDrawer() {
         <>
 
             <>
-                <Button onClick={openDrawer}>Open Drawer</Button>
+            <div onClick={openDrawer} className="flex bg-blue-gray-400 p-1 rounded-3xl cursor-pointer" >
+                <Typography className="mx-3 ">search</Typography>
+                <MagnifyingGlassIcon className="h-6 w-6 me-3"/>
+            </div>
                 <Drawer open={open} onClose={closeDrawer}>
                     <div className='p-5'>
 

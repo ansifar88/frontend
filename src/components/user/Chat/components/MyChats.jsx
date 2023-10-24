@@ -1,6 +1,6 @@
 // import { AddIcon } from "@chakra-ui/icons";
 import { Stack, Text } from "@chakra-ui/layout";
-// import { useToast } from "@chakra-ui/toast";
+import dp from "../../../../logos/dp.png"
 import axios from "axios";
 import { useEffect, useState } from "react";
 // import ChatLoading from "./ChatLoading";
@@ -11,6 +11,7 @@ import { ChatState } from "./Context/ChatProvider";
 import { Spinner } from "@material-tailwind/react";
 import { Box } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
+import SideDrawer from "./SideDrawer";
 
 const MyChats = ({ fetchAgain }) => {
     const [loggedUser, setLoggedUser] = useState();
@@ -27,7 +28,7 @@ const MyChats = ({ fetchAgain }) => {
                     Authorization: `Bearer ${user.token}`,
                 },
             };
-            console.log(config,selectedChat, "selected chat");
+            console.log(config, selectedChat, "selected chat");
             const userId = user.id
             const { data } = await userRequest.get(`/fetchchat/${userId}`, config);
             console.log(data);
@@ -58,32 +59,44 @@ const MyChats = ({ fetchAgain }) => {
             flexDir="column"
             alignItems="center"
             p={3}
-            bg="white"
+
             w={{ base: "100%", md: "31%" }}
             borderRadius="lg"
             borderWidth="1px"
+            bg="#CAF0F8"
         >
             <Box
-                pb={3}
-                px={3}
-                fontSize={{ base: "28px", md: "30px" }}
-                fontFamily="Work sans"
                 display="flex"
                 w="100%"
-                justifyContent="space-between"
                 alignItems="center"
+                justifyContent="space-around"
             >
-                My Chats
+                <Box
+                    pb={3}
+                    px={3}
+                    fontSize={{ base: "28px", md: "30px" }}
+                    fontFamily="Work sans"
+                    display="flex"
+                    w="100%"
+                    justifyContent="space-between"
+                    alignItems="center"
+                >
+                    My Chats
+                </Box>
+                <Box>
+                    {user && <SideDrawer />}
+                </Box>
             </Box>
             <Box
                 display="flex"
                 flexDir="column"
                 p={3}
-                bg="#F8F8F8"
+                bg="#CAF0F8"
                 w="100%"
                 h="100%"
                 borderRadius="lg"
                 overflowY="hidden"
+
             >
                 {chats ? (
                     <Stack overflowY="scroll">
@@ -91,36 +104,43 @@ const MyChats = ({ fetchAgain }) => {
                             <Box
                                 onClick={() => setSelectedChat(chat)}
                                 cursor="pointer"
-                                bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
+                                bg={selectedChat === chat ? "#38B2AC" : "white"}
                                 color={selectedChat === chat ? "white" : "black"}
                                 px={3}
                                 py={2}
                                 borderRadius="lg"
                                 key={chat._id}
+                                display="flex"
                             >
-                                <Text>
-                                    {chat.users.doctor.name}
-                                </Text>
-                                {chat.latestMessage && (
-                                    <Text fontSize="xs">
-                                        <b>
-                                            {chat.latestMessage.sender.doctor
-                                                ? chat.latestMessage.sender.doctor.name
-                                                : chat.latestMessage.sender.user.name}
-                                            :
-                                        </b>
-                                        {chat.latestMessage.content.length > 50
-                                            ? chat.latestMessage.content.substring(0, 51) + "..."
-                                            : chat.latestMessage.content}
+                                <Box>
+                                    
+                                    <img src={chat.users.doctor ? chat.users.doctor.displaypicture : dp} className="h-10 w-10 me-3 rounded-full"/>
+                                </Box>
+                                <Box>
+                                    <Text>
+                                        {chat.users.doctor.name}
                                     </Text>
-                                )}
+                                    {chat.latestMessage && (
+                                        <Text fontSize="xs">
+                                            <b>
+                                                {chat.latestMessage.sender.doctor
+                                                    ? chat.latestMessage.sender.doctor.name
+                                                    : chat.latestMessage.sender.user.name}
+                                                :
+                                            </b>
+                                            {chat.latestMessage.content.length > 50
+                                                ? chat.latestMessage.content.substring(0, 51) + "..."
+                                                : chat.latestMessage.content}
+                                        </Text>
+                                    )}
+                                </Box>
                             </Box>
                         ))}
                     </Stack>
                 ) : (
                     //   <ChatLoading />
-                    <Spinner/>
-                    
+                    <Spinner />
+
                 )}
             </Box>
         </Box>

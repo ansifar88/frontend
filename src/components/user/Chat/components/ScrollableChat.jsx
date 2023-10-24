@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Avatar } from "@chakra-ui/avatar";
 import { Tooltip } from "@chakra-ui/tooltip";
 import { ChatState } from "./Context/ChatProvider";
+import dp from "../../../../logos/dp.png"
 // import {   
 //     isLastMessage,
 //     isSameSender,
@@ -40,15 +41,17 @@ const ScrollableChat = ({ messages }) => {
           <div style={{ display: "flex" }} key={i}>
             {(isSameSender(messages, m, i, user.id) ||
               isLastMessage(messages, i, user.id)) && (
-              <Tooltip label={m.sender.name} placement="bottom-start" hasArrow>
-                {m.sender.pic ? (
+              <Tooltip label={m.sender.doctor.name} placement="bottom-start" hasArrow>
+                { m.sender.doctor.displaypicture ? (
                   <Avatar
                     mt="7px"
                     mr={1}
                     size="sm"
+                    width={"8"}
+                    height={"8"}
                     cursor="pointer"
                     name={m.sender.name}
-                    src={m.sender.pic}
+                    src={ m.sender.doctor.displaypicture}
                   />
                 ) : (
                   <Avatar
@@ -59,7 +62,8 @@ const ScrollableChat = ({ messages }) => {
                     size="2px"
                     cursor="pointer"
                     name={m.sender.name}
-                    src='https://www.clipartmax.com/png/small/54-546487_a-little-over-a-month-ago-i-had-lasik-surgery-user-profile.png'
+                    src={dp }
+                    // src={m.sender ? m.sender.doctor.displaypicture : dp}
                   />
                 )}
               </Tooltip>

@@ -12,6 +12,7 @@ import { Card, Spinner, Typography } from "@material-tailwind/react";
 import { Box, Stack, Text } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import doctorRequest from "../../../../utils/doctorRequest";
+import SideDrawer from "./SideDrawer";
 
 const MyChats = ({ fetchAgain }) => {
     const [loggedUser, setLoggedUser] = useState();
@@ -65,16 +66,26 @@ const MyChats = ({ fetchAgain }) => {
             borderWidth="1px"
         >
             <Box
-                pb={3}
-                px={3}
-                fontSize={{ base: "28px", md: "30px" }}
-                fontFamily="Work sans"
                 display="flex"
                 w="100%"
-                justifyContent="space-between"
                 alignItems="center"
-            >
-                My Chats
+                justifyContent="space-around"
+                >
+                <Box
+                    pb={3}
+                    px={3}
+                    fontSize={{ base: "28px", md: "30px" }}
+                    fontFamily="Work sans"
+                    display="flex"
+                    w="100%"
+                    justifyContent="space-between"
+                    alignItems="center"
+                >
+                    My Chats
+                </Box>
+                <Box>
+                    {user && <SideDrawer />}
+                </Box>
             </Box>
             <Box
                 display="flex"

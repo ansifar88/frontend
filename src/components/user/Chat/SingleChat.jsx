@@ -68,7 +68,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
       const sendMessage = async (event) => {
         if (event.key === "Enter" && newMessage) {
-          console.log(newMessage,"innnn");
+         
           socket.emit("stop typing", selectedChat._id);
           try {
             const config = {
@@ -190,15 +190,18 @@ selectedChat ? (
             w="100%"
             fontFamily="Work sans"
             display="flex"
-            justifyContent={{ base: "space-between" }}
+            justifyContent={{ base: "start" }}
             alignItems="center"
+            bg="#CAF0F8"
           >
             <IconButton
               display={{ base: "flex", md: "none" }}
               icon={<ArrowBackIcon />}
               onClick={() => setSelectedChat("")}
             />
+            <img src={selectedChat.users.doctor && selectedChat.users.doctor.displaypicture} className='h-10 w-10 rounded-full me-2' />
             
+            {selectedChat.users.doctor && selectedChat.users.doctor.name}
           </Text>
           <Box
             display="flex"
@@ -241,7 +244,7 @@ selectedChat ? (
                   onChange={typingHandler}
                   onKeyDown={sendMessage}
                 />
-                <Button onClick={sendMessage} >Send</Button>
+                {/* <Button onClick={sendMessage} >Send</Button> */}
               </div>
             </FormControl>
           </Box>
