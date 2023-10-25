@@ -5,6 +5,7 @@ import { IconButton, Spinner, useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 // import './style.css'
+import {GenerateError} from '../../../toast/GenerateError'
 import io from "socket.io-client";
 import { ChatState } from "./Components/Context/ChatProvider";
 import Lottie from "lottie-react";
@@ -13,7 +14,8 @@ import userRequest from "../../../utils/userRequest";
 import doctorRequest from "../../../utils/doctorRequest";
 import ScrollableChat from "./Components/ScrollableChat";
 import { Button } from "@material-tailwind/react";
-const ENDPOINT = "http://localhost:8801"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
+import { ToastContainer } from "react-toastify";
+const ENDPOINT = "http://localhost:8801";
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
@@ -23,7 +25,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [socketConnected, setSocketConnected] = useState(false);
   const [typing, setTyping] = useState(false);
   const [istyping, setIsTyping] = useState(false);
-  const toast = useToast();
+  // const toast = useToast();
 
   const defaultOptions = {
     loop: true,
@@ -57,14 +59,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
       socket.emit("join chat", selectedChat._id);
     } catch (error) {
-      toast({
-        title: "Error Occured!",
-        description: "Failed to Load the Messages",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom",
-      });
+      GenerateError(
+       
+         "Failed to Load the Messages"
+        );
     }
   };
 
@@ -89,18 +87,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           },
         //   config
         );
-        console.log(user,"meeeeeeeeeeeeeeeeee");
+       
         socket.emit("new message", data);
         setMessages([...messages, data]);
       } catch (error) {
-        toast({
-          title: "Error Occured!",
-          description: "Failed to send the Message",
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-          position: "bottom",
-        });
+        GenerateError("Failed to send the Message");
       }
     }
   };
@@ -191,8 +182,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             px={2}
             w="100%"
             fontFamily="Work sans"
-            d="flex"
-            justifyContent={{ base: "space-between" }}
+            display="flex"
+            justifyContent={{ base: "start" }}
             alignItems="center"
           >
             <IconButton
@@ -200,6 +191,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               icon={<ArrowBackIcon />}
               onClick={() => setSelectedChat("")}
             />
+             <img src={selectedChat.users.user && selectedChat.users.user.displaypicture} className='h-10 w-10 rounded-full me-2' />
             {selectedChat.users.user && selectedChat.users.user.name}
           </Text>
           <Box
@@ -259,6 +251,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           </Text>
         </Box>
       )}
+      <ToastContainer/>
     </>
   );
 };

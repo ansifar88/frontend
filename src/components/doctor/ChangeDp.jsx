@@ -9,7 +9,7 @@ import {
     IconButton,
     Input,
 } from "@material-tailwind/react";
-import { PencilSquareIcon } from "@heroicons/react/24/solid";
+import { CameraIcon } from "@heroicons/react/24/outline";
 import { dpUpdate } from "../../api/doctorApi";
 import { useFormik } from "formik";
 import { dpUpdateSchema } from "../../yup/validation";
@@ -64,7 +64,7 @@ export function ChangeDp({ id }) {
                 Open Dialog
             </Button> */}
             <p onClick={handleOpen}>
-                <PencilSquareIcon className="h-9 w-9" />
+                <CameraIcon className="h-9 w-9" />
             </p>
             <Dialog open={open} handler={handleOpen} size="xs">
                 <DialogHeader>Change profile picture</DialogHeader>

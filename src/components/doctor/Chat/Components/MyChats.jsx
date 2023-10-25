@@ -2,6 +2,7 @@
 // import { Card, Stack, Text } from "@chakra-ui/layout";
 // import { useToast } from "@chakra-ui/toast";
 import axios from "axios";
+import dp from '../../../../logos/dp.png'
 import { useEffect, useState } from "react";
 // import ChatLoading from "./ChatLoading";
 // import { Button } from "@chakra-ui/react";
@@ -97,18 +98,24 @@ const MyChats = ({ fetchAgain }) => {
                 borderRadius="lg"
                 overflowY="hidden"
             >
+                
                 {chats ? (
                     <Stack overflowY="scroll">
                         {chats.map((chat) => (
                             <Box
                                 onClick={() => setSelectedChat(chat)}
-                                className={`cursor-pointer px-3 py-2 rounded-lg
+                                className={`cursor-pointer px-3 py-2 rounded-lg flex
                                     ${selectedChat === chat
                                         ? 'bg-teal-500 text-white'
                                         : 'bg-gray-200 text-black'
                                     }`}
                                 key={chat._id}
                             >
+                                 <Box>
+                                    
+                                    <img src={chat.users.user ? chat.users.user.displaypicture : dp } className="h-10 w-10 me-3 rounded-full"/>
+                                </Box>
+                                <Box>
                                 <Text>
                                     {chat.users.user.name}
                                 </Text>
@@ -125,6 +132,7 @@ const MyChats = ({ fetchAgain }) => {
                                             : chat.latestMessage.content}
                                     </Text>
                                 )}
+                            </Box>
                             </Box>
                         ))}
                     </Stack>

@@ -26,7 +26,7 @@ import userRequest from "../../utils/userRequest";
 import { useNavigate } from "react-router-dom";
 
 
-export function Payment({ Secret, docId, slotId, slotDate, slotTime }) {
+export function Payment({ Secret, docId, slotId, slotDate, slotTime , fee}) {
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen((cur) => !cur);
@@ -99,13 +99,17 @@ export function Payment({ Secret, docId, slotId, slotDate, slotTime }) {
                         <div className="   p-6 text-white ">
                             <img src={logo} className="h-20 " />
                         </div>
-                        <Typography variant="h4" color="white" className="my-2">
+                        <Typography variant="h4" color="white" className="mb-5">
                             Make your payment
                         </Typography>
                     </CardHeader>
 
 
                     <CardBody>
+                        <div className="flex justify-between">
+                            <Typography>Cunsultation Fee</Typography>
+                            <Typography>₹ {fee}</Typography>
+                        </div>
                         <Tabs value="card" className="overflow-visible">
                             <TabsHeader className="relative z-0 ">
 
@@ -116,16 +120,7 @@ export function Payment({ Secret, docId, slotId, slotDate, slotTime }) {
                             >
                                 <TabPanel value="card" className="p-0">
 
-                                    <div>
-                                        <Typography
-                                            variant="small"
-                                            color="blue-gray"
-                                            className="mb-4 font-medium"
-                                        >
-                                            Personal Details
-                                        </Typography>
-
-                                    </div>
+                                   
 
                                     <main className="flex-grow flex items-center justify-center shadow-none">
                                         <form
@@ -146,7 +141,7 @@ export function Payment({ Secret, docId, slotId, slotDate, slotTime }) {
                                             <button
                                                 disabled={isLoading || !stripe || !elements}
                                                 id="submit"
-                                                className="w-full bg-gradient-to-r from-teal-400 to-blue-500 text-white py-3 rounded-md shadow-md hover:from-teal-500 hover:to-blue-600 focus:outline-none focus:ring focus:ring-teal-300"
+                                                className="w-full bg-gradient-to-r from-teal-400 to-blue-500 text-white py-3 my-1 rounded-md shadow-md hover:from-teal-500 hover:to-blue-600 focus:outline-none focus:ring focus:ring-teal-300"
                                             >
                                                 <span id="button-text">
                                                     {isLoading ? (

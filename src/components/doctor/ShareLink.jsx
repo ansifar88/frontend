@@ -9,8 +9,9 @@ import {
 } from "@material-tailwind/react";
 import { ShareIcon } from '@heroicons/react/24/outline'
 import { useState } from "react";
-import { GenerateError, GenerateSuccess } from "../../toast/GenerateError";
+import {  GenerateSuccess } from "../../toast/GenerateError";
 import { ShareVideoLink } from "../../api/doctorApi";
+import { ToastContainer } from 'react-toastify';
 export function ShareLink({id}) {
     const [open, setOpen] = React.useState(false);
     const [link, setLink] = useState("")
@@ -72,6 +73,7 @@ export function ShareLink({id}) {
                     </DialogFooter>
                 </form>
             </Dialog>
+            <ToastContainer/>
         </>
     );
 }

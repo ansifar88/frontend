@@ -21,12 +21,12 @@ export const Appointments = () => {
         () => doctorRequest.get(`/appointments?date=${selectedDate}`).then((res) => res.data),
         { retry: false }
     );
- 
+
     if (dateisLoading) {
         return <div className="h-20 flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>
     }
 
-    const handleCreate = async(id)=>{
+    const handleCreate = async (id) => {
 
         // navigate(`/doctor/room/${id}`)
         window.open(`/doctor/room/${id}`, '_blank');
@@ -67,7 +67,6 @@ export const Appointments = () => {
                             />
                             <CardBody className="flex justify-around">
                                 <div>
-
                                     <div>
                                         <img src={dp ?? appointment.user.displayPicture} className={` w-10 sm:w-[5vw]  h-2w-10 sm:h-[5vw]  text-green-500`} />
                                     </div>
@@ -78,8 +77,6 @@ export const Appointments = () => {
                                     </div>
                                 </div>
                                 <div>
-
-
                                     <div>
                                         <Typography color="blue-gray" className="mb-2">
                                             Date:
@@ -92,12 +89,13 @@ export const Appointments = () => {
                                         </Typography>
                                     </div>
                                     <div>
-                                        <Typography color="blue-gray" className="mb-2">
+                                        <Typography color={appointment.status == "notCunsulted" ? "blue-gray" : "red"} className="mb-2">
                                             Status: {appointment.status}
                                         </Typography>
                                     </div>
-                                    <div className='flex'>
 
+                                    {/* {appointment.status == "notConsulted" && appointment.AppoinmentStatus == "active" ? ( */}
+                                        <div className='flex'>
                                         <Button
                                             size="sm"
                                             className="my-1 flex items-center gap-3 bg-green-500 shadow-none me-2"
@@ -106,9 +104,11 @@ export const Appointments = () => {
                                         >
                                             <VideoCameraIcon className="h-5 w-5" />
                                             start</Button>
-                                       
-                                            <ShareLink id={appointment._id}/>
+
+                                        <ShareLink id={appointment._id} />
                                     </div>
+                                     {/* ) : ""
+                                     } */}
                                 </div>
 
                             </CardBody>

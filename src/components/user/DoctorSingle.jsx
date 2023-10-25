@@ -192,7 +192,7 @@ export function DoctorSingle() {
                               color={slot.isBooked === true ? "light-blue" : "green"} />
                             {slot.isBooked === false ? clientSecret && (
                               <Elements options={options} stripe={stripePromise}>
-                                <Payment Secret={clientSecret} docId={did} slotId={slot._id} slotDate={slot.slotDate} slotTime={slot.slotTime} />
+                                <Payment Secret={clientSecret} docId={did} slotId={slot._id} slotDate={slot.slotDate} slotTime={slot.slotTime} fee={docData.data.cunsultationFee}/>
                               </Elements>
                             ) : ""
                             }

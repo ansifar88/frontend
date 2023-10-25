@@ -65,3 +65,12 @@ export const getAppointmentsUser = async() =>{
     console.log(error.message);
   }
 }
+
+export const cancelAppointment = async({id}) =>{
+  try {
+    const response = await userRequest.put('/cancelAppointment',{id})
+    return response
+  } catch (error) {
+    console.log(error.mesage);
+  }
+}

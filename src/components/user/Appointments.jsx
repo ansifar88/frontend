@@ -9,6 +9,7 @@ import dp from '../../logos/dp.png'
 import { useQuery } from "@tanstack/react-query";
 import { getAppointmentsUser } from "../../api/userApi";
 import { VideoCameraIcon } from '@heroicons/react/24/outline'
+import { CancelBooking } from "./CancelBooking";
 
 export function Appointments() {
     const { isLoading, error, data } = useQuery({
@@ -22,8 +23,10 @@ export function Appointments() {
     if (error) {
         return <h1>Something went Wrong</h1>
     }
-    const handleJoin = async(link)=>{
-console.log(link);
+
+
+    const handleJoin = async (link) => {
+        console.log(link);
         // navigate(`/doctor/room/${id}`)
         window.open(link, '_blank');
     }
@@ -65,7 +68,7 @@ console.log(link);
                                 <Typography>
                                     Appointment Status :
                                 </Typography>
-                                <Chip variant="ghost" size="sm" color="green" className="mx-2" value={appointments.AppoinmentStatus} />
+                                <Chip variant="ghost" size="sm" color={appointments.AppoinmentStatus === "expired" ? "red" : "cyan"} className="mx-2" value={appointments.AppoinmentStatus} />
                             </div>
                         </div>
                         <div className="flex-col ">
@@ -75,17 +78,25 @@ console.log(link);
                                 variant="ghost"
                                 size="md"
                                 value={`Date : ${new Date(appointments.scheduledAt.slotDate).toLocaleDateString('en-GB')}`}
-                                className="my-2"
+                                className="my-2 text-center"
                             />
                             <Chip
                                 color="cyan"
                                 size="md"
                                 variant="ghost"
                                 value={`time : ${appointments.scheduledAt.slotTime}`}
-                                className="my-2"
+                                className="my-2 text-center"
                             />
-                            <Chip variant="ghost" size="md" color="cyan" className="mx-2 " value={appointments.status} />
-                            {appointments.callId ? (
+                            <Chip
+                                variant="ghost"
+                                size="md"
+                                color={appointments.status === "cancelled" ? "red" : "cyan"}
+                                className=" text-center"
+                                value={appointments.status}
+                                
+                            />
+
+                            {appointments.callId && appointments.status == "notConsulted" && appointments.AppoinmentStatus == "active" ? (
                                 <Button
                                     size="sm"
                                     className="my-1 flex items-center gap-3 bg-green-500 shadow-none me-2"
@@ -96,11 +107,14 @@ console.log(link);
                                     join</Button>
                             ) : ""
                             }
-                            <Button
-                                size="sm"
-                                className="my-1  bg-red-500 shadow-none "
-                                variant="filled"
-                            >cancel</Button>
+
+
+                            {
+                                appointments.status == "cancelled" || appointments.AppoinmentStatus == "expired" ? "" : (
+                                    <CancelBooking id={appointments._id} />
+                                )
+                            }
+
 
 
                         </div>
