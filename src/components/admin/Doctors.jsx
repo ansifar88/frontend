@@ -23,6 +23,7 @@ import { manageDoctor } from "../../api/adminApi";
 import { useEffect, useState } from "react";
 import { allDoctors } from "../../api/adminApi";
 import { ManageDoctor } from "./ManageDoctor";
+import { Loading } from "../common/LoadingDark";
 
 const TABLE_HEAD = ["Name", "Status", "verified", "Actions"];
 
@@ -70,7 +71,7 @@ export function Doctors() {
         queryClient.invalidateQueries("doctor")
     }
     if (isLoading) {
-        return <div className="h-screen flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>
+        return <Loading/>
     }
     if (error) {
         return <h1>Something went Wrong</h1>

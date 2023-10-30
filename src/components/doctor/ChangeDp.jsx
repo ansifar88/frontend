@@ -6,7 +6,7 @@ import {
     DialogHeader,
     DialogBody,
     DialogFooter,
-    IconButton,
+    Spinner,
     Input,
 } from "@material-tailwind/react";
 import { CameraIcon } from "@heroicons/react/24/outline";
@@ -21,6 +21,7 @@ export function ChangeDp({ id }) {
     const { doctorInfo } = useSelector(state => state.doctor)
 
     const [open, setOpen] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
     const dispatch = useDispatch()
     // const [photo, setPhoto] = useState('')
     const handleOpen = () => setOpen(!open);
@@ -40,7 +41,7 @@ export function ChangeDp({ id }) {
         onSubmit: async (values) => {
             const formData = new FormData()
             formData.append("dp", values.dp);
-
+            setLoading(true)
             const response = await dpUpdate(formData, id)
             if (response.data) {
 
@@ -51,7 +52,7 @@ export function ChangeDp({ id }) {
                         displaypicture: response.data.displaypicture
                     }
                 }));
-
+                setLoading(false)
                 setOpen(false);
                 queryClient.invalidateQueries(["doctor"]);
             }
@@ -101,9 +102,15 @@ export function ChangeDp({ id }) {
                             >
                                 <span>Cancel</span>
                             </Button>
-                            <Button variant="fill" className="bg-[#5d7582]" type="submit">
-                                <span>Confirm</span>
-                            </Button>
+
+                            {loading ?
+                                <Button variant="fill" className="bg-[#5d7582] w-24 text-center"> <Spinner className="text-white h-7 w-7" /> </Button>
+                                :
+                                <Button variant="fill" className="bg-[#5d7582]" type="submit">
+                                    <span>Confirm</span>
+                                </Button>
+                            }
+
                         </div>
                     </form>
                 </DialogBody>

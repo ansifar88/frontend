@@ -21,6 +21,7 @@ import { Payment } from "./Payment";
 import { useEffect } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import { Loading } from "../common/Loading";
 
 const stripePromise = loadStripe("pk_test_51O11IzSJfBiixPMTXmoUugjdZRkftipLrwEqi3g4tNLnAHnARpN3IRSijAKk4NbRDbaW8Y2kIUa8hJT79i2S00zI00707Kncmo");
 
@@ -84,7 +85,7 @@ export function DoctorSingle() {
   };
 
   if (docIsLoading) {
-    return <div className="h-screen flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>;
+    return <Loading/>
   }
 
   if (docError) {

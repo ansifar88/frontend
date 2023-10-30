@@ -15,7 +15,8 @@ import {
     InboxIcon,
     PowerIcon,
     UserGroupIcon,
-    BellIcon
+    BellIcon,
+    AcademicCapIcon
   } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
    
@@ -56,7 +57,7 @@ import { useNavigate } from "react-router-dom";
           </ListItem>
           <ListItem onClick={() => navigate('/admin/departments')}>
             <ListItemPrefix>
-              <Cog6ToothIcon className="h-5 w-5" />
+              <AcademicCapIcon className="h-5 w-5" />
             </ListItemPrefix>
             Departments
           </ListItem>

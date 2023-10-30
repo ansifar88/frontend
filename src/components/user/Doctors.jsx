@@ -6,7 +6,8 @@ import {
     Spinner,
 } from "@material-tailwind/react";
 import dp from '../../logos/dp.png'
-
+import{Loading} from '../common/Loading'
+import './Banner.css'
 import { UserIcon } from '@heroicons/react/24/solid'
 import { useQuery } from "@tanstack/react-query";
 import userRequest from "../../utils/userRequest";
@@ -24,7 +25,7 @@ export function Doctors() {
     // }
     // console.log(error.response.status);
     if (isLoading) {
-        return <div className="h-screen flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>
+        return <Loading/>
     }
     if (error) {
         if (error.response) {
@@ -43,14 +44,14 @@ export function Doctors() {
         <>
             <div className="container mx-auto">
                 <div className={`flex justify-center items-center md:h-52 ms-5 mt-4 rounded-lg bg-[url('https://images.unsplash.com/photo-1643780668909-580822430155?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80')]`}>
-                    <Typography variant="h3" color="white" className="font-sans ">WE ARE HERE TO CURE YOU</Typography>
+                    <Typography variant="h3" color="white" className="font-sans animate-head ">WE ARE HERE TO CURE YOU</Typography>
                 </div>
                 <div className="grid sm:grid-cols-2 mb-5">
                     {data.data.map(
                         ({ name, currentHospital, _id, department, qualification, displaypicture }) => (
 
 
-                            <Card  key={_id} shadow={true} className="border-x-8 border-e-[#CAF0F8] border-x-[#023E8A] col-span-1  w-72 h-28 md:w-full md:h-52 max-w-[40rem] bg-[#CAF0F8] mt-5  ms-5 hover:bg-[#84d0fb] cursor-pointer" onClick={() => navigate('/doctorview', { state: { _id } })}>
+                            <Card  key={_id} shadow={true} className=" animate-showcontent border-x-8 border-e-[#CAF0F8] border-x-[#023E8A] col-span-1  w-72 h-28 md:w-full md:h-52 max-w-[40rem] bg-[#CAF0F8] mt-5  ms-5 hover:bg-[#84d0fb] cursor-pointer" onClick={() => navigate('/doctorview', { state: { _id } })}>
                                 <CardHeader
                                     color="transparent"
                                     floated={false}

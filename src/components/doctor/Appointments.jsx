@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import dp from '../../logos/dp.png'
 import { useNavigate } from 'react-router-dom';
 import { ShareLink } from './ShareLink';
+import Prescription from './AddPrescription';
 
 export const Appointments = () => {
     const [selectedDate, setSelectedDate] = useState("");
@@ -93,21 +94,38 @@ export const Appointments = () => {
                                             Status: {appointment.status}
                                         </Typography>
                                     </div>
+                                    {appointment.AppoinmentStatus}
 
                                     {/* {appointment.status == "notConsulted" && appointment.AppoinmentStatus == "active" ? ( */}
+                                    {appointment.AppoinmentStatus === "active" ? (
+                                        <>
                                         <div className='flex'>
-                                        <Button
-                                            size="sm"
-                                            className="my-1 flex items-center gap-3 bg-green-500 shadow-none me-2"
-                                            variant="filled"
-                                            onClick={() => handleCreate(appointment._id)}
-                                        >
-                                            <VideoCameraIcon className="h-5 w-5" />
-                                            start</Button>
+                                            <Button
+                                                size="sm"
+                                                className="my-1 flex items-center gap-3 bg-green-500 shadow-none me-2"
+                                                variant="filled"
+                                                onClick={() => handleCreate(appointment._id)}
+                                            >
+                                                <VideoCameraIcon className="h-5 w-5" />
+                                                start</Button>
 
-                                        <ShareLink id={appointment._id} />
-                                    </div>
-                                     {/* ) : ""
+                                            <ShareLink id={appointment._id} />
+                                        </div>
+                                        <div className='flex'>
+                                           <Prescription id={appointment._id}/>
+                                            <Button
+                                                size="sm"
+                                                className="my-1 flex items-center gap-3 bg-green-500 shadow-none me-2"
+                                                variant="filled"
+                                               
+                                            >
+                                                cunsulted</Button>
+                                        </div>
+                                    </>
+                                    ) : ""
+                                    }
+
+                                    {/* ) : ""
                                      } */}
                                 </div>
 

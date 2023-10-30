@@ -1,6 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
 import Login from '../pages/Admin/Login'
-import Home from '../pages/Admin/Home'
 import AdminPublic from '../Protected/AdminPublic'
 import AdminProtected from '../Protected/AdminProtected'
 import Layout from '../pages/Admin/Layout'
@@ -9,6 +8,7 @@ import { Department } from '../components/admin/Department'
 import { Notifications } from '../components/admin/Notifications'
 import { Verification } from '../components/admin/Verification'
 import { Doctors } from '../components/admin/Doctors'
+import Dashboard from '../components/admin/Dashboard'
 function AdminRoutes() {
   return (
 
@@ -21,7 +21,7 @@ function AdminRoutes() {
       <Route element={<AdminProtected />} >
 
         <Route path="/" element={<Layout> </Layout>}>
-          <Route index element={<Home />} />
+          <Route index element={<Dashboard />} />
           <Route path="/users" element={<Users />} />
           <Route path="/departments" element={<Department />} />
           <Route path="/notifications" element={<Notifications />} />

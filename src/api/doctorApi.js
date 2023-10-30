@@ -77,3 +77,12 @@ export const ShareVideoLink = (data) =>{
     console.log(error.message);
   }
 }
+
+export const addPrescription = (data)=>{
+  try {
+    const response  = doctorRequest.post('/addprescription',data)
+    return response
+  } catch (error) {
+    console.log(error.message);
+  }
+}

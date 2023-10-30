@@ -12,11 +12,10 @@ import {
   Tabs,
   TabsHeader,
   Tab,
-  Avatar,
   Tooltip,
-  Spinner,
   CardFooter
 } from "@material-tailwind/react";
+import {Loading} from '../common/LoadingDark'
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import adminRequest from "../../utils/adminRequest";
 import { manageDepartment } from "../../api/adminApi";
@@ -70,7 +69,7 @@ export function Department() {
     queryClient.invalidateQueries("department")
   }
   if (isLoading) {
-    return <div className="h-screen flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>
+    return <Loading/>
   }
   if (error) {
     return <h1>Something went Wrong</h1>

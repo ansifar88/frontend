@@ -8,7 +8,7 @@ import {
   Button,
 } from "@material-tailwind/react";
 import dp from '../../logos/dp.png'
-
+import {Loading} from "../common/Loading";
 import { ExclamationCircleIcon, UserIcon, MapPinIcon, CalendarDaysIcon, PencilSquareIcon } from '@heroicons/react/24/solid'
 import { Form } from "./Form";
 // import { useSelector } from "react-redux";
@@ -33,7 +33,9 @@ export default function Profile() {
     queryFn: () => userRequest.get(`/profile/${id}`).then((res) => res.data),
   });
   if (isLoading) {
-    return <div className="h-screen flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>
+    return <>
+    <Loading/>
+    </>
   }
   // if (error) {
   //   return <h1>Something went Wrong</h1>

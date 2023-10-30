@@ -6,11 +6,12 @@ import {
     Spinner,
 } from "@material-tailwind/react";
 import dp from '../../logos/dp.png'
+import { Loading } from '../common/Loading'
 import { useQuery } from "@tanstack/react-query";
 import { getAppointmentsUser } from "../../api/userApi";
 import { VideoCameraIcon } from '@heroicons/react/24/outline'
 import { CancelBooking } from "./CancelBooking";
-
+import { Prescription } from "./Prescription";
 export function Appointments() {
     const { isLoading, error, data } = useQuery({
         queryKey: ["appointmentsUser"],
@@ -18,7 +19,7 @@ export function Appointments() {
     })
     console.log(data, 'appointments');
     if (isLoading) {
-        return <div className="h-screen flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>;
+        return <Loading />
     }
     if (error) {
         return <h1>Something went Wrong</h1>
@@ -93,7 +94,7 @@ export function Appointments() {
                                 color={appointments.status === "cancelled" ? "red" : "cyan"}
                                 className=" text-center"
                                 value={appointments.status}
-                                
+
                             />
 
                             {appointments.callId && appointments.status == "notConsulted" && appointments.AppoinmentStatus == "active" ? (
@@ -115,6 +116,9 @@ export function Appointments() {
                                 )
                             }
 
+                            {appointments.status == "consulted" ? (
+                                <Prescription />) : ""
+                            }
 
 
                         </div>

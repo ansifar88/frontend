@@ -8,6 +8,7 @@ import {
     DialogFooter,
     IconButton,
     Input,
+    Spinner,
 } from "@material-tailwind/react";
 import { CameraIcon } from "@heroicons/react/24/outline";
 import { useFormik } from "formik";
@@ -20,6 +21,7 @@ export function ChangeDp({ id }) {
     const { userInfo } = useSelector(state => state.user)
 
     const [open, setOpen] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
     const dispatch = useDispatch()
     // const [photo, setPhoto] = useState('')
     const handleOpen = () => setOpen(!open);
@@ -36,26 +38,23 @@ export function ChangeDp({ id }) {
     } = useFormik({
         initialValues: initialValue,
         validationSchema: dpUpdateSchema,
-        onSubmit: async (values) => {
-            const formData = new FormData()
-            formData.append("dp", values.dp);
+        onSubmit:
 
-            const response = await dpUpdate(formData, id)
-            if (response.data) {
+            async (values) => {
+                const formData = new FormData()
+                formData.append("dp", values.dp);
 
-                console.log(response);
-                // dispatch(setdoctordetails({
-                //     doctorInfo: {
-                //         ...doctorInfo,
-                //         displaypicture: response.data.displaypicture 
-                //     }
-                // }));
+                setLoading(true)
+                const response = await dpUpdate(formData, id)
+                if (response.data) {
 
-                setOpen(false);
-                queryClient.invalidateQueries(["profile"]);
+
+                    setLoading(false)
+                    setOpen(false);
+                    queryClient.invalidateQueries(["profile"]);
+                }
+
             }
-
-        }
     })
     return (
         <>
@@ -84,7 +83,7 @@ export function ChangeDp({ id }) {
                                 setFieldValue("dp", selectedFile);
                             }}
                         />
-  {touched.dp && errors.dp && (
+                        {touched.dp && errors.dp && (
                             <div className="text-red-500 text-xs ">
                                 {errors.dp}
                             </div>
@@ -99,9 +98,15 @@ export function ChangeDp({ id }) {
                             >
                                 <span>Cancel</span>
                             </Button>
-                            <Button variant="fill" className="bg-[#5d7582]" type="submit">
-                                <span>Confirm</span>
-                            </Button>
+
+                            {loading ?
+                                <Button variant="fill" className="bg-[#5d7582] w-24 text-center"> <Spinner className="text-white h-7 w-7" /> </Button>
+
+                                :
+                                <Button variant="fill" className="bg-[#5d7582]" type="submit">
+                                    <span>Confirm</span>
+                                </Button>
+                            }
                         </div>
                     </form>
                 </DialogBody>

@@ -107,7 +107,8 @@ export const slotSchema = Yup.object().shape({
     .test("is-future", "Start date must be in the future", (value) => {
       const now = new Date();
       return value > now;
-    }),
+    })
+    ,
   enddate: Yup.date()
     .required("End date is required")
     .test(
@@ -115,9 +116,10 @@ export const slotSchema = Yup.object().shape({
       "End date must be in the future",
       (value, { parent }) => {
         // Ensure enddate is greater than or equal to startdate
-        return value > parent.startdate;
+        return value >= parent.startdate;
       }
-    ),
+    )
+    ,
   startTimeHour: Yup.string().required("Start Time Hour is required"),
   startTimeMinute: Yup.string().required("Start Time Minute is required"),
   startTimeAmPm: Yup.string().required("Start Time AM/PM is required"),

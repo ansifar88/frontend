@@ -22,6 +22,7 @@ import { manageUser } from "../../api/adminApi";
 import { useEffect, useState } from "react";
 import { allUsers } from "../../api/adminApi";
 import { ManageUser } from "./ManageUser";
+import { Loading } from "../common/LoadingDark";
 const TABLE_HEAD = ["Name", "Status", "joined", "Actions"];
 
 export function Users() {
@@ -74,7 +75,7 @@ export function Users() {
     queryClient.invalidateQueries("users")
   }
   if (isLoading) {
-    return <div className="h-screen flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>
+    return <Loading/>
   }
   if (error) {
     return <h1>Something went Wrong</h1>

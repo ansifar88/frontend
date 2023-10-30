@@ -2,6 +2,7 @@ import { Alert, Spinner, Typography, Button } from "@material-tailwind/react";
 import { useQuery } from "@tanstack/react-query";
 import adminRequest from "../../utils/adminRequest";
 import { useNavigate } from "react-router-dom";
+import { Loading } from "../common/LoadingDark";
 
 function IconOutlined() {
     return (
@@ -31,9 +32,7 @@ export function Notifications() {
     })
     if (isLoading) {
         return (
-            <div className="h-screen w-[75rem] flex justify-center items-center">
-                <Spinner color="blue" className="h-10 w-10 " />
-            </div>
+            <Loading/>
         );
     }
 
