@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import dp from '../../../logos/dp.png'
 import { useDispatch } from "react-redux";
 import { Logoutdetails } from "../../../Redux/UserSlice";
@@ -106,6 +106,7 @@ function ProfileMenu() {
 
 export function NavBar() {
   const [isNavOpen, setIsNavOpen] = React.useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
 
@@ -116,12 +117,15 @@ export function NavBar() {
     );
   }, []);
 
+
+
+  
   const [open, setOpen] = React.useState(false);
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
 
   return (
-    <navbar className="  lg:rounded-none   fixed top-0 left-0 right-0 bg-[#023E8A] z-50">
+    <navbar className={`  lg:roun  ded-none   fixed top-0 left-0 right-0 bg-[#023E8A] z-50`}>
 
       <div className="relative mx-auto flex items-center text-blue-gray-900 py-3 bg-[#023E8A] ">
         <Drawer open={open} onClose={closeDrawer} className="bg-[#09264b]">

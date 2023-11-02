@@ -5,10 +5,13 @@ import DoctorPublic from '../Protected/DoctorPublic'
 import DoctorProtected from '../Protected/DoctorProtected'
 import Layout from '../pages/Doctor/Layout'
 import Dashboard from '../pages/Doctor/Dashboard'
-import Profile from '../components/doctor/Profile'
+// import Profile from '../components/doctor/Profile'
 import { Slot } from '../components/doctor/Slot'
 import ChatList from '../components/doctor/Chat/ChatList'
 import Room from '../components/doctor/Room'
+import Profile from '../components/doctor/Profile'
+
+
 
 function DoctorRoutes() {
   return (
@@ -23,6 +26,7 @@ function DoctorRoutes() {
         <Route path='/' element={<Layout></Layout>} >
 
           <Route index element={<Dashboard />} />
+          
           <Route path='/profile' element={<Profile />} />
           <Route path='/slot' element={<Slot/>} />
           <Route path='/chats' element={<ChatList/>} />

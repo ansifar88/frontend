@@ -6,7 +6,7 @@ import {
     Spinner,
 } from "@material-tailwind/react";
 import dp from '../../logos/dp.png'
-import{Loading} from '../common/Loading'
+import { Loading } from '../common/Loading'
 import './Banner.css'
 import { UserIcon } from '@heroicons/react/24/solid'
 import { useQuery } from "@tanstack/react-query";
@@ -25,7 +25,7 @@ export function Doctors() {
     // }
     // console.log(error.response.status);
     if (isLoading) {
-        return <Loading/>
+        return <Loading />
     }
     if (error) {
         if (error.response) {
@@ -51,7 +51,7 @@ export function Doctors() {
                         ({ name, currentHospital, _id, department, qualification, displaypicture }) => (
 
 
-                            <Card  key={_id} shadow={true} className=" animate-showcontent border-x-8 border-e-[#CAF0F8] border-x-[#023E8A] col-span-1  w-72 h-28 md:w-full md:h-52 max-w-[40rem] bg-[#CAF0F8] mt-5  ms-5 hover:bg-[#84d0fb] cursor-pointer" onClick={() => navigate('/doctorview', { state: { _id } })}>
+                            <Card key={_id} shadow={true} className=" animate-showcontent border-x-8 border-e-[#CAF0F8] border-x-[#023E8A] col-span-1  w-72 h-28 md:w-full md:h-52 max-w-[40rem] bg-[#CAF0F8] mt-5  ms-5 hover:bg-[#84d0fb] cursor-pointer" onClick={() => navigate('/doctorview', { state: { _id } })}>
                                 <CardHeader
                                     color="transparent"
                                     floated={false}
@@ -64,18 +64,13 @@ export function Doctors() {
                                         src={displaypicture ? displaypicture : dp} alt="doctor dp"
                                         className=" h-14 md:h-40 md:w-40 ms-5 rounded-b-full rounded-s-full"
                                     />
-                                    {/* <div className="h-40 w-40 ms-5 rounded-b-full rounded-s-full bg-white">
-                         <UserIcon className="h-40 w-40 "/>
-                                </div> */}
+
                                     <div className="flex w-full flex-col gap-0.5 ">
                                         <div className="flex items-center justify-between">
                                             <Typography variant="h5" className="text-[#023E8A] mt-3 text-xs md:text-3xl">
                                                 Dr. {name} , {qualification}
                                             </Typography>
                                             <div className="5 flex-col items-center  gap-0">
-
-
-
                                             </div>
                                         </div>
                                         <div className="flex justify-between">
@@ -83,11 +78,11 @@ export function Doctors() {
 
                                                 <Typography color="blue-gray" className="text-xs md:text-lg"> {department.departmentName}</Typography>
                                                 <Typography color="blue-gray" className="text-xs md:text-lg" >Working @ {currentHospital}</Typography>
-                                                {/* <StarIcon /> */}
-                                                <p className="text-xs md:text-lg">rating will show here</p>
+                                                <p></p>
+
                                             </div>
                                             <div>
-                                                {/* <Button variant="filled" className=" me-2 md:me-10 invisible md:visible" size="md" onClick={() => navigate(`/doctor`)}> view</Button> */}
+
                                             </div>
                                         </div>
                                     </div>

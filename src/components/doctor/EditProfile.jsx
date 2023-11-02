@@ -76,7 +76,7 @@ export function EditProfile({ doctor }) {
     }
     return (
         <>
-            <p onClick={handleOpen} className="hover:bg-[#5d7582] hover:text-white  me-10 cursor-pointer  rounded-full text-[#5d7582] text-xs"><PencilSquareIcon className="w-8 h-8 m-3" /></p>
+            <p onClick={handleOpen} className="hover:bg-[#5d7582] hover:text-white  me-5cursor-pointer  rounded-full text-[#5d7582] text-xs"><PencilSquareIcon className="w-5 h-5 m-3" /></p>
             <Dialog
                 open={open}
                 handler={handleOpen}

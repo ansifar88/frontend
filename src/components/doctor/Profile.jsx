@@ -1,143 +1,151 @@
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Typography,
-  Spinner,
-  Badge,
-  Button,
-} from "@material-tailwind/react";
+import { Accordion, AccordionBody, AccordionHeader, Badge, Card, CardBody, CardFooter, CardHeader, Chip, Spinner, Tooltip, Typography } from "@material-tailwind/react"
 import dp from '../../logos/dp.png'
+import { ChangeDp } from "./ChangeDp"
+import { useLocation, useNavigate } from "react-router-dom"
 
-import { ExclamationCircleIcon, CheckBadgeIcon } from '@heroicons/react/24/solid'
-import { Form } from "./Form";
-// import { useSelector } from "react-redux";
-import doctorRequest from "../../utils/doctorRequest";
-import { useQuery } from "@tanstack/react-query";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { ChangeDp } from "./ChangeDp";
-import { EditProfile } from "./EditProfile";
-import { GenerateError } from "../../toast/GenerateError";
-
-export default function Profile() {
-  const navigate = useNavigate()
-  const location = useLocation()
-  const id = location.state.id
-  const { isLoading, error, data } = useQuery({
-    queryKey: ['doctor'],
-    queryFn: () => doctorRequest.get(`/profile/${id}`).then((res) => res.data),
-  });
-  if (isLoading) {
-    return <div className="h-screen flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>
-  }
-  // if (error) {
-  //   return <h1>Something went Wrong</h1>
-  // }
-  if (error) {
-    if (error.response) {
-      if (error.response.status === 403) {
-        GenerateError(error.response.data.data.message)
-        localStorage.removeItem("currentDoctor")
-        navigate("/doctor/login")
-      }
-
-    } else {
-      return <p>somthing went wrong</p>
+import doctorRequest from "../../utils/doctorRequest"
+import { GenerateError } from "../../toast/GenerateError"
+import { useQuery } from "@tanstack/react-query"
+import { CheckBadgeIcon, ExclamationCircleIcon } from "@heroicons/react/24/outline"
+import { Form } from "./Form"
+import { useState } from "react"
+import { EditProfile } from "./EditProfile"
+const Profile = () => {
+    const [open, setOpen] = useState(null);
+ 
+  const handleOpen = (value) => setOpen(open === value ? 0 : value);
+    const navigate = useNavigate()
+    const location = useLocation()
+    const id = location.state.id
+    const { isLoading, error, data } = useQuery({
+        queryKey: ['doctor'],
+        queryFn: () => doctorRequest.get(`/profile/${id}`).then((res) => res.data),
+    });
+    if (isLoading) {
+        return <div className="h-screen flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>
     }
+    if (error) {
+        if (error.response) {
+            if (error.response.status === 403) {
+                GenerateError(error.response.data.data.message)
+                localStorage.removeItem("currentDoctor")
+                navigate("/doctor/login")
+            }
 
-  }
-  return (
-    <>
-    <div className="container mx-auto">
-      <Card color="transparent" shadow={false} className="w-full  m-b-2 max-h-[45rem] max-w-[94rem] m-3 bg-[#A8C2D0]">
-        <div className="p-5  ">
-          <div className="flex justify-end me-5 md:me-10">
-            <EditProfile doctor={data.data} />
-          </div>
-          <div className="flex justify-center">
-            <CardHeader
-              color="transparent"
-              floated={false}
-              shadow={false}
-              className="mx-0 flex  items-center gap-4 pt-0 pb-8 max-w-[70rem]"
-            >
-              <Badge content={<ChangeDp id={data.data._id} />} overlap="circular" placement="bottom-end" className="h-16 w-16 hover:bg-white hover:text-[#5d7582] bg-[#5d7582] cursor-pointer" >
-                <div className="h-28 w-28  md:h-72 md:w-72">
-                  <img
-                    size="md"
-                    src={data.data.displaypicture ? data.data.displaypicture : dp}
-                    alt="tania andrew"
-                    className="rounded-full h-28 w-28  md:h-72 md:w-72 ms-0"
-                  />
-
-                </div>
-              </Badge>
-              <div className="flex w-full flex-col gap-5">
-                <div className="flex items-center justify-between">
-                  <Typography variant="h5" color="blue-gray" className="text-4xl">
-                    {data.data.name}
-                  </Typography>
-                </div>
-                <Typography color="blue-gray">{data.data.email} </Typography>
-                <Typography>
-                  {data.data.description}
-                </Typography>
-
-                {data.data.requested && !data.data.verified && (
-                  <h1 className="text-green-600 font-serif">Verification Requested</h1>
-                )}
-
-                {data.data.verified && (
-                  <div className="bg-blue-500 w-24 flex items-center rounded-full">
-
-                    <CheckBadgeIcon className="text-white h-6 m-1" />
-                    <Typography className="text-white font-extralight " >verified</Typography>
-                  </div>
-                )}
-
-                {!data.data.requested && !data.data.verified && (
-                  <Form />
-                )}
-
-              </div>
-            </CardHeader>
-          </div>
-        </div>
-      </Card>
-      <Card color="transparent" shadow={false} className="w-full  m-b-2 max-h-[45rem] max-w-[94rem] m-3 bg-[#A8C2D0] py-10">
-
-        {data.data.requested == true ? (
-          <div className=" flex justify-center ">
-            <CardBody className="mb-6 p-0 max-w-[70rem] w-1/2 b">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="md:mb-7">
-                  <Typography className="text-gray-900">WORKING AT</Typography>
-                  <Typography className="font-bold">{data.data.currentHospital}</Typography>
-                </div>
-                <div>
-                  <Typography className="text-gray-900">EXPERIENCE</Typography>
-                  <Typography className="font-bold">{data.data.experience} years</Typography>
-                </div>
-                <div>
-                  <Typography className="text-gray-900">QUALIFICATION</Typography>
-                  <Typography className="font-bold">{data.data.qualification}</Typography>
-                </div>
-                <div>
-                  <Typography className="text-gray-900">DEPARTMENT</Typography>
-                  <Typography className="font-bold">{data.data.department.departmentName}</Typography>
-                </div>
-
-              </div>
-            </CardBody>
-          </div>) : (
-          <div className="flex justify-center text-red-700">
-
-            <ExclamationCircleIcon className="h-7 w-7 me-6" /> <Typography>Please complete your profile and verify</Typography>
-          </div>
-        )
+        } else {
+            return <p>somthing went wrong</p>
         }
-      </Card>
-</div>
-    </>
-  );
+
+    }
+    return (
+        <>
+            <div className='container mx-auto'>
+                <div className="grid md:grid-cols-[1fr,50rem]  m-3">
+                    <div className=" flex justify-center">
+                        <Card className="w-96 rounded-md h-[35rem] bg-[#A8C2D0]">
+                            <div className="h-80 rounded-full flex justify-center mt-8">
+                                <Badge content={<ChangeDp id={data.data._id} />} overlap="circular" placement="bottom-end" className="h-16 w-16 hover:bg-white hover:text-[#5d7582] bg-[#5d7582] cursor-pointer " >
+                                    <img src={data.data.displaypicture ? data.data.displaypicture : dp} alt="profile-picture" className="rounded-full   md:h-80 md:w-80 ms-0 shadow-lg" />
+
+                                </Badge>
+                            </div>
+                            <CardBody className="text-center">
+                                <div className="flex justify-center items-center">
+
+                                    <Typography variant="h4" color="blue-gray" className="mb-2">
+                                        {data.data.name}
+                                    </Typography>
+                                    {data.data.verified && (
+                                        <CheckBadgeIcon className="text-blue-500 h-8 m-1 rounded-full " />
+                                    )}
+                                </div>
+                                {data.data.requested && !data.data.verified && (
+                                    <h1 className="text-green-600 font-serif">Verification Requested</h1>
+                                )}
+
+
+
+                                {!data.data.requested && !data.data.verified && (
+                                    <Form />
+                                )}
+                                <Typography color="blue-gray" className="font-medium" textGradient>
+                                    {data.data.email}
+                                </Typography>
+                                <Typography color="blue-gray" className="font-medium" textGradient>
+                                    Bio
+                                </Typography>
+                                <Typography color="blue-gray" className="font-medium" textGradient>
+                                    {data.data.description}
+                                </Typography>
+
+                            </CardBody>
+
+                        </Card>
+                    </div>
+                    <div className=" grid md:grid-rows-2">
+                        {data.data.requested == true ? (
+                            <div>
+                                <Card className="w-full md:mb-10 h-96 rounded-md bg-[#A8C2D0]">
+                                    <div className="m-3 p-3 rounded-md flex justify-between items-center shadow-lg shadow-blue-gray-300 ">
+                                        <Typography variant="h5" >Professional Info</Typography>
+                                        <EditProfile doctor={data.data} />
+                                    </div>
+                                    <div className="grid grid-cols-3 mx-10">
+                                        <div className="">
+                                            <Typography variant="h6" color="blue-gray" className="my-2">HOSPITAL</Typography>
+                                            <Typography variant="h6" color="blue-gray" className="my-2">QUALIFICATION</Typography>
+                                            <Typography variant="h6" color="blue-gray" className="my-2">EXPERIENCE</Typography>
+                                            <Typography variant="h6" color="blue-gray" className="my-2">DEPARTMENT</Typography>
+                                            <Typography variant="h6" color="blue-gray" className="my-2">LANGUAGES</Typography>
+                                        </div>
+                                        <div>
+                                            <Typography className="my-2">: {data.data.currentHospital}</Typography>
+                                            <Typography className="my-2">: {data.data.qualification} </Typography>
+                                            <Typography className="my-2">: {data.data.experience} Years</Typography>
+                                            <Typography className="my-2">: {data.data.department.departmentName}</Typography>
+                                            <div className="h-16 max-w-[8rem]  ">
+
+                                                <Chip variant="outlined" value="english" className="rounded-full text-center" />
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </Card>
+                            </div>
+                        ) : (
+                            <div className="flex justify-center text-red-700">
+
+                                <ExclamationCircleIcon className="h-7 w-7 me-6" /> <Typography>Please complete your profile and verify</Typography>
+                            </div>
+                        )
+                        }
+                        <div>
+                            {/* <Card className="w-full  h-96 rounded-md"> */}
+                                <div className=" p-3 bg-white rounded-md flex justify-between shadow-lg">
+                                    {/* <Typography variant="h5" >Transactions</Typography>
+                                    <Typography variant="h5" color="light-green" >Balance  200</Typography> */}
+                                    <Accordion open={open === 1} className="mb-2 rounded-lg  border-blue-gray-100 px-4">
+                                        <AccordionHeader
+                                            onClick={() => handleOpen(1)}
+                                            className={`border-b-0 transition-colors ${open === 1 ? "text-blue-500 hover:!text-blue-700" : ""
+                                                }`}
+                                        >
+                                            Transactions
+                                        </AccordionHeader>
+                                        <AccordionBody className="pt-0 text-base font-normal">
+                                            <Typography>00</Typography>
+                                            <Typography>00</Typography>
+                                        </AccordionBody>
+                                    </Accordion>
+                                </div>
+                            {/* </Card> */}
+
+                        </div>
+                    </div>
+                </div>
+            </div >
+        </>
+    )
 }
+
+export default Profile

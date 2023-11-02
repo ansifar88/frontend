@@ -86,3 +86,12 @@ export const addPrescription = (data)=>{
     console.log(error.message);
   }
 }
+
+export const confirmCunsult = async(id) =>{
+  try {
+    const response = await doctorRequest.put(`/confirm/${id}`)
+    return response
+  } catch (error) {
+    console.log(error.message);
+  }
+}

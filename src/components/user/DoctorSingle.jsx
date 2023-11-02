@@ -22,7 +22,7 @@ import { useEffect } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { Loading } from "../common/Loading";
-
+import Reviews from "./Reviews";
 const stripePromise = loadStripe("pk_test_51O11IzSJfBiixPMTXmoUugjdZRkftipLrwEqi3g4tNLnAHnARpN3IRSijAKk4NbRDbaW8Y2kIUa8hJT79i2S00zI00707Kncmo");
 
 export function DoctorSingle() {
@@ -47,10 +47,7 @@ export function DoctorSingle() {
     queryKey: ['slotUser', selectedDate],
     queryFn: () => userRequest.get(`/slotsuser?date=${selectedDate}&doctorId=${id}`).then((res) => res.data),
   });
-  if (slotData) {
-    
-    console.log(slotData,"slloooooooooooooo");
-  }
+
 
   useEffect(() => {
     if (!docIsLoading && docData) {
@@ -85,7 +82,7 @@ export function DoctorSingle() {
   };
 
   if (docIsLoading) {
-    return <Loading/>
+    return <Loading />
   }
 
   if (docError) {
@@ -101,8 +98,8 @@ export function DoctorSingle() {
   }
 
   return (
-    <div className="container mx-auto">
-      <Card color="transparent" shadow={false} className="w-full md:h-full h-auto  rounded-md max-w-[93rem]  m-3 p-3 text-[#023E8A]">
+    <>    <div className="container mx-auto">
+      <div  className="w-full md:h-full h-auto   max-w-[93rem] p-3 text-[#023E8A]">
 
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-[1fr,25rem]">
           <div className="col-span-1">
@@ -171,10 +168,10 @@ export function DoctorSingle() {
               <div>
               </div>
               <div className="overflow-y-scroll">
-              {slotData ? (
-                slotData.data.map((slot, dataIndex) => (
-                  <div className="mb-2" key={dataIndex}>
-                    
+                {slotData ? (
+                  slotData.data.map((slot, dataIndex) => (
+                    <div className="mb-2" key={dataIndex}>
+
                       <Card className={`bg-white h-auto rounded-md m-3 p-2  hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 border border-b-8 ${slot.isBooked === true ? "border-b-red-700" : " border-b-green-500"} `} >
                         <div className="flex justify-between" >
                           <div>
@@ -187,41 +184,49 @@ export function DoctorSingle() {
                           </div>
                           <div>
                             <Chip
-                            className="mb-2"
+                              className="mb-2"
                               size="sm"
                               value={slot.isBooked === true ? "not available" : "AVAILABLE"}
                               color={slot.isBooked === true ? "light-blue" : "green"} />
                             {slot.isBooked === false ? clientSecret && (
                               <Elements options={options} stripe={stripePromise}>
-                                <Payment Secret={clientSecret} docId={did} slotId={slot._id} slotDate={slot.slotDate} slotTime={slot.slotTime} fee={docData.data.cunsultationFee}/>
+                                <Payment Secret={clientSecret} docId={did} slotId={slot._id} slotDate={slot.slotDate} slotTime={slot.slotTime} fee={docData.data.cunsultationFee} />
                               </Elements>
                             ) : ""
                             }
                           </div>
                         </div>
                       </Card>
-                   
-                  </div>
-                ))
+
+                    </div>
+                  ))
                 ) : (
                   <div className="flex-col h-40">
-                  <div className="flex justify-center">
+                    <div className="flex justify-center">
 
-                    <InformationCircleIcon className="h-24 w-24 text-[#023E8A]" />
+                      <InformationCircleIcon className="h-24 w-24 text-[#023E8A]" />
+                    </div>
+                    <div className="flex justify-center">
+
+                      <p className=" text-[#023E8A]">please choose a date to show slots</p>
+                    </div>
                   </div>
-                  <div className="flex justify-center">
 
-                    <p className=" text-[#023E8A]">please choose a date to show slots</p>
-                  </div>
-                </div>
-
-)}
-</div>
+                )}
+              </div>
             </Card>
           </div>
 
         </div>
-      </Card>
+      </div>
+     
+
+        <Reviews id={docData.data._id}/>
+   
+      
+      
     </div>
+    </>
+
   );
 }

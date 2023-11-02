@@ -8,6 +8,7 @@ import dp from '../../logos/dp.png'
 import { useNavigate } from 'react-router-dom';
 import { ShareLink } from './ShareLink';
 import Prescription from './AddPrescription';
+import { ConfirmCunsult } from './ConfirmCunsult';
 
 export const Appointments = () => {
     const [selectedDate, setSelectedDate] = useState("");
@@ -29,9 +30,10 @@ export const Appointments = () => {
 
     const handleCreate = async (id) => {
 
-        // navigate(`/doctor/room/${id}`)
+   
         window.open(`/doctor/room/${id}`, '_blank');
     }
+
 
     return (
         <>
@@ -94,11 +96,11 @@ export const Appointments = () => {
                                             Status: {appointment.status}
                                         </Typography>
                                     </div>
-                                    {appointment.AppoinmentStatus}
+                                    {/* {appointment.AppoinmentStatus} */}
 
-                                    {/* {appointment.status == "notConsulted" && appointment.AppoinmentStatus == "active" ? ( */}
-                                    {appointment.AppoinmentStatus === "active" ? (
-                                        <>
+                                    
+                                    {appointment.AppoinmentStatus === "active" && appointment.isConsulted === false? (
+                                        
                                         <div className='flex'>
                                             <Button
                                                 size="sm"
@@ -111,22 +113,24 @@ export const Appointments = () => {
 
                                             <ShareLink id={appointment._id} />
                                         </div>
-                                        <div className='flex'>
-                                           <Prescription id={appointment._id}/>
-                                            <Button
-                                                size="sm"
-                                                className="my-1 flex items-center gap-3 bg-green-500 shadow-none me-2"
-                                                variant="filled"
-                                               
-                                            >
-                                                cunsulted</Button>
-                                        </div>
-                                    </>
-                                    ) : ""
+                                        ) : ""
                                     }
+                                        <div className='flex'>
+                                        { appointment.isConsulted === true ? (
+                                           <Prescription id={appointment._id}/>
+                                           )
+                                            : ""
+                                            }
+                                               { appointment.isConsulted === false ? (
+                                               <ConfirmCunsult id={appointment._id}/>
+                                               )
+                                            : ""
+                                            }
+                                        </div>
+                                    
+                                    
 
-                                    {/* ) : ""
-                                     } */}
+                                    
                                 </div>
 
                             </CardBody>
