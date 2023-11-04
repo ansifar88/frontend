@@ -95,3 +95,12 @@ export const confirmCunsult = async(id) =>{
     console.log(error.message);
   }
 }
+
+export const dashBoard = async () =>{
+  try {
+    const res = doctorRequest.get('/dasboard')
+    return res
+  } catch (error) {
+    console.log(error.message);
+  }
+}

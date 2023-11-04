@@ -115,7 +115,7 @@ export function Appointments() {
                                     <CancelBooking id={appointments._id} />
                                 )
                             }
-                            {appointments.status == "consulted" ? (
+                            {appointments.status == "cunsulted" ? (
                                 <Prescription Data={appointments} />) : ""
                             }
 

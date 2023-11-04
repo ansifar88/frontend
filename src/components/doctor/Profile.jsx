@@ -74,7 +74,7 @@ const Profile = () => {
                                 <Typography color="blue-gray" className="font-medium" textGradient>
                                     Bio
                                 </Typography>
-                                <Typography color="blue-gray" className="font-medium" textGradient>
+                                <Typography color="blue-gray" className="font-medium italic text-white" textGradient>
                                     {data.data.description}
                                 </Typography>
 
@@ -130,7 +130,11 @@ const Profile = () => {
                                             className={`border-b-0 transition-colors ${open === 1 ? "text-blue-500 hover:!text-blue-700" : ""
                                                 }`}
                                         >
-                                            Transactions
+                                            <div className="flex justify-between w-full">
+                                                <Typography variant="h4">Transactions</Typography>
+                                                <Typography variant="h4" className="text-green-800">Wallet: ₹{data.data.wallet}</Typography>
+                                            </div>
+                                            
                                         </AccordionHeader>
                                         <AccordionBody className="pt-0 text-base font-normal">
                                             <Typography>00</Typography>

@@ -77,10 +77,10 @@ const handleSaveAsPDF = () => {
                                 <img src={Rx} className="h-16" />
                             </div>
                             <div className="ms-16 min-h-[14rem]">
-                                {Data.prescription.map((medicine,index)=>(
+                                {Data.prescription.length > 0 ? Data.prescription.map((medicine,index)=>(
 
                                     <Typography key={index} >{medicine}</Typography>  
-                                ))
+                                )) : ("Prescription Not Updated")
                                     }
                              
                             </div>

@@ -5,12 +5,10 @@ import {
     DialogHeader,
     DialogBody,
     DialogFooter,
-    Input,
     Textarea,
     Typography,
     Rating,
 } from "@material-tailwind/react";
-import { useEffect } from "react";
 import { addReview } from "../../api/userApi";
 import { GenerateSuccess } from "../../toast/GenerateError";
 import { ToastContainer } from "react-toastify";
@@ -62,7 +60,7 @@ export function Review({ id }) {
 
                     <div className="grid gap-6 ">
 
-                        <Rating value={rating}  className="h-16" onChange={handleRating} />
+                        <Rating value={rating} className="h-16" onChange={handleRating} />
 
                         <Textarea label="Message" value={review} onChange={(e) => setReview(e.target.value)} />
                     </div>

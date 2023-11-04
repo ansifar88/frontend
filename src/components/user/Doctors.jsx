@@ -44,7 +44,7 @@ export function Doctors() {
         <>
             <div className="container mx-auto">
                 <div className={`flex justify-center items-center md:h-52 ms-5 mt-4 rounded-lg bg-[url('https://images.unsplash.com/photo-1643780668909-580822430155?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80')]`}>
-                    <Typography variant="h3" color="white" className="font-sans animate-head ">WE ARE HERE TO CURE YOU</Typography>
+                    <Typography variant="h3" color="white" className="docHead animate-head ">WE ARE HERE TO CURE YOU</Typography>
                 </div>
                 <div className="grid sm:grid-cols-2 mb-5">
                     {data.data.map(
@@ -67,7 +67,7 @@ export function Doctors() {
 
                                     <div className="flex w-full flex-col gap-0.5 ">
                                         <div className="flex items-center justify-between">
-                                            <Typography variant="h5" className="text-[#023E8A] mt-3 text-xs md:text-3xl">
+                                            <Typography variant="h5" className="text-[#023E8A] docName mt-3 text-xs md:text-3xl">
                                                 Dr. {name} , {qualification}
                                             </Typography>
                                             <div className="5 flex-col items-center  gap-0">
@@ -76,8 +76,8 @@ export function Doctors() {
                                         <div className="flex justify-between">
                                             <div>
 
-                                                <Typography color="blue-gray" className="text-xs md:text-lg"> {department.departmentName}</Typography>
-                                                <Typography color="blue-gray" className="text-xs md:text-lg" >Working @ {currentHospital}</Typography>
+                                                <Typography color="blue-gray" className="text-xs md:text-lg contents"> {department.departmentName}</Typography>
+                                                <Typography color="blue-gray" className="text-xs md:text-lg " >Working @ {currentHospital}</Typography>
                                                 <p></p>
 
                                             </div>

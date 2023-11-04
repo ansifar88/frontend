@@ -4,12 +4,13 @@ import Login from '../pages/Doctor/Login'
 import DoctorPublic from '../Protected/DoctorPublic'
 import DoctorProtected from '../Protected/DoctorProtected'
 import Layout from '../pages/Doctor/Layout'
-import Dashboard from '../pages/Doctor/Dashboard'
 // import Profile from '../components/doctor/Profile'
 import { Slot } from '../components/doctor/Slot'
 import ChatList from '../components/doctor/Chat/ChatList'
 import Room from '../components/doctor/Room'
 import Profile from '../components/doctor/Profile'
+import Dashboard from '../components/doctor/Dashboard'
+// import Dashboard from '../components/doctor/Dashboard'
 
 
 

@@ -58,7 +58,7 @@ console.log(data);
                             </div>
                             <div className="">
                             <Rating value={review.rating}  readonly className='h-3'/>
-                                <Typography>{review.reviewText} </Typography>
+                                <Typography className='italic'>{review.reviewText} </Typography>
                             </div>
                         </div>
                         <hr/>

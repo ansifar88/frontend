@@ -71,3 +71,11 @@ export const rejectDoctor = async (data, id) => {
     withCredentials: true,
   });
 };
+
+export const dashboard = async() =>{
+  try {
+    return adminRequest.get('/dashboard')
+  } catch (error) {
+    console.log(error.message);
+  }
+}

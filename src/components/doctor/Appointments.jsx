@@ -99,7 +99,7 @@ export const Appointments = () => {
                                     {/* {appointment.AppoinmentStatus} */}
 
                                     
-                                    {appointment.AppoinmentStatus === "active" && appointment.isConsulted === false? (
+                                    {appointment.AppoinmentStatus === "active" && appointment.isConsulted === false && appointment.status === "notConsulted" ? (
                                         
                                         <div className='flex'>
                                             <Button
@@ -121,7 +121,7 @@ export const Appointments = () => {
                                            )
                                             : ""
                                             }
-                                               { appointment.isConsulted === false ? (
+                                               { appointment.isConsulted === false && appointment.status === "notConsulted" ? (
                                                <ConfirmCunsult id={appointment._id}/>
                                                )
                                             : ""

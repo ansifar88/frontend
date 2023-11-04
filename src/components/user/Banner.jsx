@@ -25,7 +25,7 @@ import {
           <Typography
             
             color="white"
-            className="mb-12 animate-showcontent sm:text-2xl md:text-5xl font-sans leading-[1.5] z-10 text-right pe-16"
+            className="mb-12 animate-showcontent font sm:text-2xl md:text-5xl font-sans leading-[1.5] z-10 text-right pe-16"
             >
             Bringing Quality Healthcare to <br/> Your Doorstep
           </Typography>

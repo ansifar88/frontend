@@ -1,0 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Advent+Pro:wght@200&family=Poppins:wght@200&family=Tourney:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Advent+Pro:wght@200&family=Exo&family=Poppins:wght@200&family=Tourney:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Exo:ital,wght@1,300&display=swap');
+
+.font {
+  font-family: "Poppins", sans-serif !important;
+}
+.docHead {
+    font-family: 'Advent Pro', sans-serif !important;
+    
+}
+.docName {
+    font-family: 'Exo', sans-serif !important;
+}
+.contents {
+    font-family: 'Exo', sans-serif;
+}

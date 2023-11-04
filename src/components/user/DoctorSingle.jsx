@@ -117,10 +117,10 @@ export function DoctorSingle() {
                 />
                 <div className="flex w-full flex-col gap-0.5 ">
                   <div className="flex-col items-center ">
-                    <Typography className="text-[#023E8A]" variant="h2" >
+                    <Typography className="text-[#023E8A] docName" variant="h2" >
                       {docData.data.name}
                     </Typography>
-                    <Typography className="text-[#023E8A]" color="[#023E8A]">Working @ {docData.data.currentHospital}</Typography>
+                    <Typography className="text-[#023E8A] italic" >Working @ {docData.data.currentHospital}</Typography>
                     <Typography variant="h6" color="blue-gray" className="mt-3 text-[#023E8A]">
                       Qualification
                     </Typography>
@@ -132,7 +132,7 @@ export function DoctorSingle() {
                 </div>
               </CardHeader>
               <CardBody className="mb-6 p-0 ">
-                <Typography className="text-[#023E8A]">
+                <Typography className="text-[#023E8A] italic">
                   &quot;{docData.data.description}&quot;
                 </Typography>
               </CardBody>
