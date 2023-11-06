@@ -23,7 +23,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { Loading } from "../common/Loading";
 import Reviews from "./Reviews";
-const stripePromise = loadStripe("pk_test_51O11IzSJfBiixPMTXmoUugjdZRkftipLrwEqi3g4tNLnAHnARpN3IRSijAKk4NbRDbaW8Y2kIUa8hJT79i2S00zI00707Kncmo");
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLICKEY);
 
 export function DoctorSingle() {
   const [selectedDate, setSelectedDate] = useState("");

@@ -10,6 +10,7 @@ import ChatList from '../components/doctor/Chat/ChatList'
 import Room from '../components/doctor/Room'
 import Profile from '../components/doctor/Profile'
 import Dashboard from '../components/doctor/Dashboard'
+import NotFound from '../components/common/doctor/NotFound'
 // import Dashboard from '../components/doctor/Dashboard'
 
 
@@ -39,6 +40,8 @@ function DoctorRoutes() {
       {/* <Route path='/' element={<Layout></Layout>} > */}
       <Route path='/room/:roomId' element={<Room/>} />
       {/* </Route> */}
+      <Route path='*' element={<NotFound />} />
+
     </Routes>
   )
 }

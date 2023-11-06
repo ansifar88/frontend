@@ -10,7 +10,7 @@ function Dashboard() {
         queryKey: ["dashboardAdmin"],
         queryFn: () => dashboard().then((res) => res.data)
     })
-    console.log(data.doctorCounts);
+    // console.log(data.doctorCounts);
     if (isLoading) {
         <Loading />
     }
@@ -19,7 +19,7 @@ function Dashboard() {
     }
 
 
-    const TABLE_HEAD = ["Name", "Department", "Appointments", ""];
+    const TABLE_HEAD = ["Name", "Department", "Appointments"];
 
   
 
@@ -98,7 +98,7 @@ function Dashboard() {
                             </tr>
                         </thead>
                         <tbody className=""> 
-                            {data.doctorCounts.map(({ name, _id, appointmentCount,department }, index) => {
+                            {data ? data.doctorCounts.map(({ name, _id, appointmentCount,department }, index) => {
                                 const isLast = index === data.doctorCounts.length - 1;
                                 const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
 
@@ -119,15 +119,15 @@ function Dashboard() {
                                                 {appointmentCount}
                                             </Typography>
                                         </td>
-                                        <td className={`${classes} bg-blue-gray-50/50  text-center flex ` }>
+                                        {/* <td className={`${classes} bg-blue-gray-50/50  text-center flex ` }>
                                             <Button  variant="text"  size="md"  className="rounded-none flex items-center">
                                         <EyeIcon className="h-6 me-2 "/>
                                                 view
                                             </Button>
-                                        </td>
+                                        </td> */}
                                     </tr>
                                 );
-                            })}
+                            }):""}
                         </tbody>
                     </table>
                 </Card>

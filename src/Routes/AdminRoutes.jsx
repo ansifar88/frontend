@@ -9,6 +9,7 @@ import { Notifications } from '../components/admin/Notifications'
 import { Verification } from '../components/admin/Verification'
 import { Doctors } from '../components/admin/Doctors'
 import Dashboard from '../components/admin/Dashboard'
+import NotFound from '../components/common/admin/NotFound'
 function AdminRoutes() {
   return (
 
@@ -29,7 +30,7 @@ function AdminRoutes() {
           <Route path="/doctors" element={<Doctors />} />
         </Route>
       </Route>
-
+      <Route path='*' element={<NotFound />} />
     </Routes>
 
 

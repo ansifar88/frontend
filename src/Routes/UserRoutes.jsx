@@ -14,6 +14,7 @@ import Profile from '../components/user/Profile'
 import { Success } from '../components/user/Success'
 import { Appointments } from '../components/user/Appointments'
 import ChatList from '../components/user/Chat/ChatList'
+import NotFound from '../components/common/user/NotFound'
 
 function UserRoutes() {
   return (
@@ -31,11 +32,11 @@ function UserRoutes() {
           <Route path='/profile' element={<Profile />} />
           <Route path='/success' element={<Success />} />
           <Route path='/appointments' element={<Appointments/>} />
-          <Route path='/chats' element={<ChatList/>} />
-         
-
+          <Route path='/chats' element={<ChatList/>} />        
         </Route>
       </Route>
+      <Route path='*' element={<NotFound />} />
+
     </Routes>
 
   )
