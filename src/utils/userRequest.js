@@ -1,5 +1,6 @@
 import axios from 'axios'
 const baseUrl = import.meta.env.VITE_USERURL
+
 const userRequest = axios.create({
     baseURL: baseUrl
 })

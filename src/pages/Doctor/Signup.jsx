@@ -11,7 +11,7 @@ import { useFormik } from 'formik';
 import { ToastContainer } from 'react-toastify';
 import { GenerateError } from '../../toast/GenerateError';
 import google from '../../logos/google.png'
-
+import vclogo from '../../logos/logonobackground.png'
 import {
   Input,
   Button,
@@ -113,7 +113,7 @@ function Signup() {
             <div className="md:flex ">
               <div className="md:w-2/4 bg-cover bg-center bg-[#476e83a7] flex items-center justify-center">
                 <img
-                  src="../../../public/logoImages/logonobackground.png"
+                  src={vclogo}
                   alt="card-image"
                   className="m-9 object-contain w-6/12 sm:w-6/12 max-w-screen-sm:w-6/12 lg:w-2/4"
                 />

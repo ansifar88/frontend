@@ -13,6 +13,7 @@ import { LoginSchema } from '../../yup/validation';
 import { useFormik } from 'formik';
 import { ToastContainer } from 'react-toastify';
 import { GenerateError } from '../../toast/GenerateError';
+import vclogo from '../../logos/logonobackground.png'
 
 const Login = () =>{
   const navigate = useNavigate()
@@ -59,7 +60,7 @@ const Login = () =>{
           <div className="md:flex">
             <div className=" md:w-2/5 bg-cover bg-center h-96 bg-[#1a96de71] flex items-center justify-center">
               <img
-                src="../../../public/logoImages/logonobackground.png"
+                src={vclogo}
                 alt="card-image"
                 className=" object-contain w-6/12 sm:w-4/12 max-w-screen-sm:w-6/12 lg:w-3/4"
               />
