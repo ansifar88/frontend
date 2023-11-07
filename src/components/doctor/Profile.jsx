@@ -96,7 +96,7 @@ const Profile = () => {
                                             <Typography variant="h6" color="blue-gray" className="my-2">QUALIFICATION</Typography>
                                             <Typography variant="h6" color="blue-gray" className="my-2">EXPERIENCE</Typography>
                                             <Typography variant="h6" color="blue-gray" className="my-2">DEPARTMENT</Typography>
-                                            <Typography variant="h6" color="blue-gray" className="my-2">LANGUAGES</Typography>
+                                            {/* <Typography variant="h6" color="blue-gray" className="my-2">LANGUAGES</Typography> */}
                                         </div>
                                         <div>
                                             <Typography className="my-2">: {data.data.currentHospital}</Typography>
@@ -105,7 +105,7 @@ const Profile = () => {
                                             <Typography className="my-2">: {data.data.department.departmentName}</Typography>
                                             <div className="h-16 max-w-[8rem]  ">
 
-                                                <Chip variant="outlined" value="english" className="rounded-full text-center" />
+                                                {/* <Chip variant="outlined" value="english" className="rounded-full text-center" /> */}
                                             </div>
                                         </div>
 

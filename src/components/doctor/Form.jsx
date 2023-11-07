@@ -13,13 +13,13 @@ import {
   Spinner,
 } from "@material-tailwind/react";
 
-import adminRequest from "../../utils/adminRequest";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { ProfileUpdateSchema } from "../../yup/validation";
 import { updateProfile } from "../../api/doctorApi";
 import { useFormik } from "formik";
 import { useSelector } from "react-redux";
+import doctorRequest from "../../utils/doctorRequest";
 
 export function Form() {
   const { doctorInfo } = useSelector((state) => state.doctor);
@@ -70,7 +70,7 @@ export function Form() {
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["department"],
-    queryFn: () => adminRequest.get("/department").then((res) => res.data),
+    queryFn: () => doctorRequest.get("/department").then((res) => res.data),
   });
 
   if (isLoading) {
