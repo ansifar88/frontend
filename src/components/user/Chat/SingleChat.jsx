@@ -12,7 +12,9 @@ import animationData from './typing.json'
 import { useEffect } from 'react';
 import ScrollableChat from './components/ScrollableChat';
 var socket, selectedChatCompare;
-const ENDPOINT = "http://localhost:8801";//import.meta.env.VITE_BACKENDURL
+// const ENDPOINT = "http://localhost:8801";
+const ENDPOINT = import.meta.env.VITE_BACKENDURL;
+
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const [messages, setMessages] = useState([]);

@@ -15,7 +15,7 @@ const {roomId} = useParams()
             sharedLinks: [
                 {
                     name :'Copy Link',
-                    url : `http://localhost:5173/doctor/room/${roomId}`
+                    url : `https://vc-green.vercel.app/doctor/room/${roomId}`
                 }
             ],
            

@@ -15,7 +15,8 @@ import doctorRequest from "../../../utils/doctorRequest";
 import ScrollableChat from "./Components/ScrollableChat";
 import { Button } from "@material-tailwind/react";
 import { ToastContainer } from "react-toastify";
-const ENDPOINT = "http://localhost:8801";
+// const ENDPOINT = "http://localhost:8801";
+const ENDPOINT = import.meta.env.VITE_BACKENDURL;
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
