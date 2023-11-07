@@ -1,6 +1,7 @@
 import doctorRequest from "../utils/doctorRequest";
 
 export const doctorSignup = (data)=>{
+  console.log(data,"doctor signup data");
     return doctorRequest.post('/docAuth/signup',data,{
         withCredentials:true
     })
@@ -8,6 +9,7 @@ export const doctorSignup = (data)=>{
 
 export async function DoctorLogin(value) {
     try {
+      console.log(value,"doctor login data");
       const data = await doctorRequest.post("/docAuth/login", { ...value });
       return data;
     } catch (err) {
@@ -15,6 +17,8 @@ export async function DoctorLogin(value) {
     }
   }
 export const DoctorSignupWithGoogle = (data) => {
+  console.log(data,"doctor google signup data");
+
     return doctorRequest.post('/docAuth/googleSignup',data,{
         withCredentials:true
     })
