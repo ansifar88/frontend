@@ -95,7 +95,7 @@ export const addReview = async(data)=>{
 }
 export const getReview = async(id)=>{
   try {
-    console.log(id,"the id");
+    
     const response = await userRequest.get(`/review/${id}`)
     return response
   } catch (error) {

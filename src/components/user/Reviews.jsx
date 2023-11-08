@@ -5,12 +5,12 @@ import { useQuery } from '@tanstack/react-query'
 import { Loading } from '../common/Loading'
 import { getReview } from '../../api/userApi'
 const Reviews = ({id}) => {
-    console.log(id,"the id");
+    
     const {isLoading,error,data} = useQuery({
         queryKey :["review"],
         queryFn : () => getReview(id).then((res) => res.data)
     })
-console.log(data);
+
     if(isLoading){ 
        return <Loading/>
     }

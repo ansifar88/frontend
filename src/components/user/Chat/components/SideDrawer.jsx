@@ -119,7 +119,7 @@ function SideDrawer() {
     const accessChat = async (doctorId) => {
         // console.log(doctorId);
 
-        console.log(user.id,doctorId,"the id");
+        // console.log(user.id,doctorId,"the id");
         try {
             setLoadingChat(true);
             // const config = {

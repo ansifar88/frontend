@@ -60,7 +60,7 @@ export function DoctorSingle() {
     if (did) {
       const makeRequest = async () => {
         try {
-          console.log("Before making the request");
+          console.log(did,"Before making the request");
           const res = await userRequest.post(`/payment/${did}`);
           console.log(res, "clientSecret response");
           setClientSecret(res.data.clientSecret);
