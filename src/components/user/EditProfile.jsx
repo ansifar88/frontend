@@ -98,7 +98,7 @@ export function EditProfile({ user }) {
 
     return (
         <>
-            <p onClick={handleOpen} className="hover:bg-[#2457C5] hover:text-white  me-10 cursor-pointer  rounded-full text-[#2457C5] text-xs"><PencilSquareIcon className="w-8 h-8 m-3" /></p>
+            <p onClick={handleOpen} className="hover:bg-[#2457C5] hover:text-white  cursor-pointer  rounded-full text-[#2457C5] text-xs"><PencilSquareIcon className="w-5 h-5 m-3" /></p>
             <Dialog
                 open={open}
                 handler={handleOpen}

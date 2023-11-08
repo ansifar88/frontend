@@ -9,14 +9,16 @@ import {
 import { cancelAppointment } from "../../api/userApi";
 import { ToastContainer } from 'react-toastify';
 import { GenerateError, GenerateSuccess } from '../../toast/GenerateError';
-
+import { useQueryClient } from "@tanstack/react-query";
 export function CancelBooking({id}) {
-     
+    
+    const queryClient = useQueryClient()
 const handleCancel =async ()=>{
     const response = await cancelAppointment({id})
     console.log(response);
     if(response.data.updated){
         GenerateSuccess(response.data.message)
+        queryClient.invalidateQueries("appointmentsUser")
         setOpen(!open)
     }else{
         GenerateError(response.data.message)

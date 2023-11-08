@@ -17,7 +17,6 @@ export function Appointments() {
         queryKey: ["appointmentsUser"],
         queryFn: () => getAppointmentsUser().then((res) => res.data)
     })
-    console.log(data, 'appointments');
     if (isLoading) {
         return <Loading />
     }

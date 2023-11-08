@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import dp from '../../../logos/dp.png'
+import vclogo from '../../../logos/logonobackground.png' 
 import { useDispatch } from "react-redux";
 import { Logoutdetails } from "../../../Redux/UserSlice";
 import {
@@ -15,6 +16,7 @@ import {
   Card,
   IconButton,
   Drawer,
+  Tooltip,
 } from "@material-tailwind/react";
 import {
   UserCircleIcon,
@@ -25,7 +27,10 @@ import {
   LifebuoyIcon,
   PowerIcon,
   RocketLaunchIcon,
+  UserGroupIcon,
   Bars3Icon,
+  ChatBubbleLeftRightIcon,
+  DocumentCheckIcon
 } from "@heroicons/react/24/outline";
 import { Sidebar } from "../user/Sidebar";
 import { useSelector } from "react-redux";
@@ -86,7 +91,7 @@ function ProfileMenu() {
             size="sm"
             alt="tania andrew"
             className="border border-gray-900 p-0.5"
-            src={ dp} />
+            src={dp} />
           <ChevronDownIcon
             strokeWidth={2.5}
             className={`h-3 w-3 transition-transform ${isMenuOpen ? "rotate-180" : ""
@@ -119,10 +124,26 @@ export function NavBar() {
 
 
 
-  
+
   const [open, setOpen] = React.useState(false);
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
+  const [isHoveredDoctor, setIsHoveredDoctor] = useState(false);
+  const [isHoveredAppointments, setIsHoveredAppointments] = useState(false);
+  const [isHoveredChats, setIsHoveredChats] = useState(false);
+
+  const toggleHoverDoctor = () => {
+    setIsHoveredDoctor(!isHoveredDoctor);
+  };
+
+  const toggleHoverAppointments = () => {
+    setIsHoveredAppointments(!isHoveredAppointments);
+  };
+
+  const toggleHoverChats = () => {
+    setIsHoveredChats(!isHoveredChats);
+  };
+  const navigate = useNavigate()
 
   return (
     <navbar className={`  lg:roun  ded-none   fixed top-0 left-0 right-0 bg-[#023E8A] z-50`}>
@@ -152,11 +173,19 @@ export function NavBar() {
           </div>
           <Sidebar />
         </Drawer>
-        <Bars3Icon onClick={openDrawer} className="h-8 w-8 ms-5 cursor-pointer text-white" />
-        <img src="../../../public/logoImages/logonobackground.png" alt="" className="h-14 ps-7 py-1" />
+        <div className="visible md:invisible">
+
+          <Bars3Icon onClick={openDrawer} className="h-8 w-8 ms-5 cursor-pointer text-white  " />
+        </div>
+        <Tooltip content="Home" placement="bottom-end">
+
+        <img src={vclogo} alt="vc logo" className="h-14 ps-7 py-1 cursor-pointer"onClick={() => navigate("/")} />
+        </Tooltip>
         {/* <div className="absolute top-2/4 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
          
         </div> */}
+
+
         <IconButton
           size="sm"
           color="blue-gray"
@@ -165,10 +194,64 @@ export function NavBar() {
           className="ml-auto mr-2 lg:hidden"
         >
 
+
         </IconButton>
+        <div className="w-full flex justify-around">
+          <div className="flex justify-between w-[40rem]  invisible md:visible">
+            <Button variant="text"
+              onClick={() => navigate('/doctors')}
+              className=" flex items-center"
+              onMouseEnter={toggleHoverDoctor}
+              onMouseLeave={toggleHoverDoctor}
+            >
+              <UserGroupIcon
+                className={`w-6 h-6 text-white me-3 absolute ${isHoveredDoctor ? 'opacity-100' : 'opacity-0'
+                  }`}
+              />
+              <Typography
+                className={`text-white text-lg ${isHoveredDoctor ? 'ml-8' : 'ml-auto'} transition-all`}
+              >
+                Doctors
+              </Typography>
+            </Button>
+
+            <Button variant="text"
+              onClick={() => navigate('/appointments')}
+              className=" flex items-center "
+              onMouseEnter={toggleHoverAppointments}
+              onMouseLeave={toggleHoverAppointments}
+            >
+              <DocumentCheckIcon
+                className={`w-6 h-6 text-white me-3 absolute ${isHoveredAppointments ? 'opacity-100' : 'opacity-0'
+                  }`}
+              />
+              <Typography
+                className={`text-white text-lg ${isHoveredAppointments ? 'ml-8' : 'ml-auto'} transition-all`}
+              >
+                Appointments
+              </Typography>
+            </Button >
+
+            <Button variant="text"
+              onClick={() => navigate('/chats')}
+              className=" flex items-center"
+              onMouseEnter={toggleHoverChats}
+              onMouseLeave={toggleHoverChats}
+            >
+              < ChatBubbleLeftRightIcon
+                className={`w-6 h-6 text-white me-3 absolute ${isHoveredChats ? 'opacity-100' : 'opacity-0'
+                  }`}
+              />
+              <Typography
+                className={`text-white text-lg ${isHoveredChats ? 'ml-8' : 'ml-auto'} transition-all`}
+              >
+                Chats
+              </Typography>
+            </Button>
+          </div>
+        </div>
         <ProfileMenu />
       </div>
-
     </navbar>
   );
 }

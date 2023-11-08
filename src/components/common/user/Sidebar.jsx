@@ -50,7 +50,7 @@ export function Sidebar({ isOpen, closeSidebar }) {
       </ListItem>
       {/* {localStorage.getItem("currentUser") ? ( */}
         <>
-          <ListItem>
+          {/* <ListItem>
             <ListItemPrefix>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -67,15 +67,9 @@ export function Sidebar({ isOpen, closeSidebar }) {
             </ListItemPrefix>
             Inbox
             <ListItemSuffix>
-              {/* <Chip
-                value="14"
-                size="sm"
-                variant="ghost"
-                color="white"
-                className="rounded-full"
-              /> */}
+            
             </ListItemSuffix>
-          </ListItem>
+          </ListItem> */}
           <ListItem onClick={() => navigate('/appointments')}>
             <ListItemPrefix>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">

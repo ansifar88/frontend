@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Advent+Pro:wght@200&family=Poppins:wght@200&family=Tourney:wght@100&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Advent+Pro:wght@200&family=Exo&family=Poppins:wght@200&family=Tourney:wght@100&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Exo:ital,wght@1,300&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 .font {
   font-family: "Poppins", sans-serif !important;
 }
@@ -15,4 +15,7 @@
 }
 .contents {
     font-family: 'Exo', sans-serif;
+}
+.navhead {
+    font-family: 'Roboto', sans-serif;
 }

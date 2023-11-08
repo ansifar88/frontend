@@ -1,4 +1,17 @@
-import { Accordion, AccordionBody, AccordionHeader, Badge, Card, CardBody, CardFooter, CardHeader, Chip, Spinner, Tooltip, Typography } from "@material-tailwind/react"
+import {
+    Accordion,
+    AccordionBody,
+    AccordionHeader,
+    Badge,
+    Card,
+    CardBody,
+    CardFooter,
+    CardHeader,
+    Chip,
+    Spinner,
+    Tooltip,
+    Typography
+} from "@material-tailwind/react"
 import dp from '../../logos/dp.png'
 import { ChangeDp } from "./ChangeDp"
 import { useLocation, useNavigate } from "react-router-dom"
@@ -12,8 +25,8 @@ import { useState } from "react"
 import { EditProfile } from "./EditProfile"
 const Profile = () => {
     const [open, setOpen] = useState(null);
- 
-  const handleOpen = (value) => setOpen(open === value ? 0 : value);
+
+    const handleOpen = (value) => setOpen(open === value ? 0 : value);
     const navigate = useNavigate()
     const location = useLocation()
     const id = location.state.id
@@ -21,6 +34,11 @@ const Profile = () => {
         queryKey: ['doctor'],
         queryFn: () => doctorRequest.get(`/profile/${id}`).then((res) => res.data),
     });
+    const { isLoading: paymentIsLoading, error: paymentError, data: paymentData } = useQuery({
+        queryKey: ['payments'],
+        queryFn: () => doctorRequest.get(`/payments`).then((res) => res.data),
+    });
+
     if (isLoading) {
         return <div className="h-screen flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>
     }
@@ -85,7 +103,7 @@ const Profile = () => {
                     <div className=" grid md:grid-rows-2">
                         {data.data.requested == true ? (
                             <div>
-                                <Card className="w-full md:mb-10 h-96 rounded-md bg-[#A8C2D0]">
+                                <Card className="w-full md:mb-10 h-96 my-2 rounded-md bg-[#A8C2D0]">
                                     <div className="m-3 p-3 rounded-md flex justify-between items-center shadow-lg shadow-blue-gray-300 ">
                                         <Typography variant="h5" >Professional Info</Typography>
                                         <EditProfile doctor={data.data} />
@@ -121,28 +139,40 @@ const Profile = () => {
                         }
                         <div>
                             {/* <Card className="w-full  h-96 rounded-md"> */}
-                                <div className=" p-3 bg-white rounded-md flex justify-between shadow-lg">
-                                    {/* <Typography variant="h5" >Transactions</Typography>
-                                    <Typography variant="h5" color="light-green" >Balance  200</Typography> */}
-                                    <Accordion open={open === 1} className="mb-2 rounded-lg  border-blue-gray-100 px-4">
-                                        <AccordionHeader
-                                            onClick={() => handleOpen(1)}
-                                            className={`border-b-0 transition-colors ${open === 1 ? "text-blue-500 hover:!text-blue-700" : ""
-                                                }`}
-                                        >
-                                            <div className="flex justify-between w-full">
-                                                <Typography variant="h4">Transactions</Typography>
-                                                <Typography variant="h4" className="text-green-800">Wallet: ₹{data.data.wallet}</Typography>
+                            <div className=" p-3 bg-[#A8C2D0] rounded-md flex justify-between shadow-lg">
+
+                                <Accordion open={open === 1} className="mb-2 rounded-lg bg-[#A8C2D0] border-blue-gray-100 px-4">
+                                    <AccordionHeader
+                                        onClick={() => handleOpen(1)}
+                                        className={`border-b-0 transition-colors ${open === 1 ? "text-blue-500 hover:!text-blue-700" : ""
+                                            } h-24`}
+                                    >
+                                        <div className="flex justify-between w-full">
+                                            <Typography variant="h4">Transactions</Typography>
+                                            <Typography variant="h4" className="text-green-800">Wallet: ₹{data.data.wallet}</Typography>
+                                        </div>
+
+                                    </AccordionHeader>
+                                    <AccordionBody className="pt-0 text-base font-normal max-h-[20rem] overflow-y-scroll">
+
+                                        {paymentData ? paymentData.data.map((payment, index) => (
+
+
+                                            <Card className="flex flex-row my-2 rounded-sm bg-[#bbd4e1] p-2 justify-between" key={index} >
+                                                <Typography variant="h6" className="">{new Date(payment.date).toLocaleString()}</Typography>
+                                                <Typography variant="h6" className="">{payment.user.name}</Typography>
+                                                <Typography variant="h6" className="">{payment._id}</Typography>
+                                                <Typography variant="h6" className={`${payment.amount >= 0 ? "text-green-500" : "text-red-500"} pe-5`}>{payment.amount}</Typography>
+                                            </Card>)) : (
+                                            <div className="flex justify-center">
+                                                <Typography>currently You Have No Payments</Typography>
                                             </div>
-                                            
-                                        </AccordionHeader>
-                                        <AccordionBody className="pt-0 text-base font-normal">
-                                            <Typography>00</Typography>
-                                            <Typography>00</Typography>
-                                        </AccordionBody>
-                                    </Accordion>
-                                </div>
-                            {/* </Card> */}
+                                        )}
+
+                                    </AccordionBody>
+                                </Accordion>
+                            </div>
+
 
                         </div>
                     </div>
