@@ -33,9 +33,10 @@ export const ProfileUpdateSchema = Yup.object({
   department: Yup.string(),
   qualification: Yup.string().min(2).required("enter qualifiation"),
   experience: Yup.string().required("enter years of experience"),
+  cunsultationFee: Yup.string().required("enter your cunsultation Fee"),
   description: Yup.string()
     .min(10)
-    .max(100)
+    .max(1000)
     .required("please provide a description"),
 
   certificates: Yup.mixed()
@@ -64,7 +65,7 @@ export const doctorEditProfileSchema = Yup.object({
   cunsultationFee: Yup.string().required("enter your cunsultation Fee"),
   description: Yup.string()
     .min(10)
-    .max(100)
+    .max(1000)
     .required("please provide a description"),
 });
 

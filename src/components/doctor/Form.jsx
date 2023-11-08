@@ -25,6 +25,8 @@ export function Form() {
   const { doctorInfo } = useSelector((state) => state.doctor);
   const id = doctorInfo.id;
   const [open, setOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+
   const handleOpen = () => setOpen(!open);
 
   const initialValues = {
@@ -54,13 +56,15 @@ export function Form() {
       formData.append("qualification", values.qualification);
       formData.append("experience", values.experience);
       formData.append("description", values.description);
+      formData.append("cunsultationFee", values.cunsultationFee);
 
       for (let i = 0; i < values.certificates.length; i++) {
         formData.append("certificates", values.certificates[i]);
       }
-
+      setLoading(true)
       const response = await updateProfile(formData, id);
       if (response) {
+        setLoading(false)
         setOpen(!open)
         queryClient.invalidateQueries(["doctor"]);
       }
@@ -96,10 +100,12 @@ export function Form() {
         size="sm"
         className="rounded-none"
       >
-        <DialogHeader>COMPLETE PROFILE AND VERIFY</DialogHeader>
+        <div className="flex justify-center">
+        <Typography className="mt-8" variant="h5">COMPLETE PROFILE AND VERIFY</Typography>
+        </div>
         <DialogBody className="flex justify-center ">
           <form onSubmit={handleSubmit} encType="multipart/form-data" >
-            <div className="mt-8 mb-2 w-70 max-w-screen-lg sm:w-96">
+            <div className="mt-8 mb-2 w-70 max-w-screen-lg sm:w-96 ">
               <div className="mb-4 flex flex-col gap-4">
                 <Input
                   size="lg"
@@ -115,24 +121,40 @@ export function Form() {
                     {errors.currentHospital}
                   </div>
                 )}
+                <div className="flex justify-between gap-2">
 
-                <Select
-                  variant="standard"
-                  name="department"
-                  label="Select Department"
-                  value={values.department}
-                  onChange={(selectedValue) => {
-                    setFieldValue("department", selectedValue);
-                  }}
-                >
-                  {data.data.map((dep) => (
-                    <Option value={dep._id} key={dep._id}>
-                      {dep.departmentName}
-                    </Option>
-                  ))}
-                </Select>
-
-
+                  <Select
+                    variant="standard"
+                    name="department"
+                    label="Select Department"
+                    value={values.department}
+                    onChange={(selectedValue) => {
+                      setFieldValue("department", selectedValue);
+                    }}
+                  >
+                    {data.data.map((dep) => (
+                      <Option value={dep._id} key={dep._id}>
+                        {dep.departmentName}
+                      </Option>
+                    ))}
+                  </Select>
+                  <div className="flex flex-col">
+                    <Input
+                      size="lg"
+                      variant="standard"
+                      name="cunsultationFee"
+                      label="cunsultation Fee"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.cunsultationFee}
+                    />
+                    {touched.cunsultationFee && errors.cunsultationFee && (
+                      <div className="text-red-500 text-sm ">
+                        {errors.cunsultationFee}
+                      </div>
+                    )}
+                  </div>
+                </div>
                 {touched.department && errors.department && (
                   <div className="text-red-500 text-sm ">
                     {errors.department}
@@ -140,35 +162,38 @@ export function Form() {
                 )}
 
                 <div className="flex justify-between gap-2">
-                  <Input
-                    size="lg"
-                    variant="standard"
-                    name="qualification"
-                    label="Qualification"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.qualification}
-                  />
-                  {touched.qualification && errors.qualification && (
-                    <div className="text-red-500 text-sm ">
-                      {errors.qualification}
-                    </div>
-                  )}
-
-                  <Input
-                    size="lg"
-                    variant="standard"
-                    name="experience"
-                    label="experience"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.experience}
-                  />
-                  {touched.experience && errors.experience && (
-                    <div className="text-red-500 text-sm ">
-                      {errors.experience}
-                    </div>
-                  )}
+                  <div className="flex flex-col">
+                    <Input
+                      size="lg"
+                      variant="standard"
+                      name="qualification"
+                      label="Qualification"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.qualification}
+                    />
+                    {touched.qualification && errors.qualification && (
+                      <div className="text-red-500 text-sm ">
+                        {errors.qualification}
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex flex-col">
+                    <Input
+                      size="lg"
+                      variant="standard"
+                      name="experience"
+                      label="experience"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.experience}
+                    />
+                    {touched.experience && errors.experience && (
+                      <div className="text-red-500 text-sm ">
+                        {errors.experience}
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 <Textarea
@@ -220,9 +245,16 @@ export function Form() {
               >
                 <span>Cancel</span>
               </Button>
-              <Button variant="filled" type="submit" color="green">
+
+              {loading ?
+                <Button variant="filled" color="green" disabled>
+                <span>please wait .......</span>
+              </Button>
+              :
+                <Button variant="filled" type="submit" color="green">
                 <span>update & verify</span>
               </Button>
+              }
 
             </DialogFooter>
           </form>

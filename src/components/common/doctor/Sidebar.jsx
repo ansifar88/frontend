@@ -35,7 +35,7 @@ export function Sidebar({ isOpen, closeSidebar }) {
         </ListItemPrefix>
         Slot and Bookings
       </ListItem>
-      <ListItem>
+      {/* <ListItem>
         <ListItemPrefix>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +54,7 @@ export function Sidebar({ isOpen, closeSidebar }) {
         <ListItemSuffix>
 
         </ListItemSuffix>
-      </ListItem>
+      </ListItem> */}
 
       <ListItem onClick={() => navigate('/doctor/chats')}>
         <ListItemPrefix>

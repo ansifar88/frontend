@@ -43,7 +43,7 @@ export function Notifications() {
     return (
 
         <>
-            {data.data.map(({ name, _id }) => (
+            {data.data.length > 0 ? data.data.map(({ name, _id }) => (
 
                 <div className="flex w-full flex-col gap-2 p-3 " key={_id}>
                     <Alert
@@ -67,7 +67,11 @@ export function Notifications() {
                     </Alert>
 
                 </div>
-            ))}
+            )) : (
+            <div className="flex justify-center items-center h-full">
+                <Typography variant="h5" className="text-[#ef8888] ">! Notification is Empty</Typography>
+            </div>
+            )}
         </>
 
 

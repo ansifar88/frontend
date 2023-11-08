@@ -78,7 +78,7 @@ const Profile = () => {
                                     )}
                                 </div>
                                 {data.data.requested && !data.data.verified && (
-                                    <h1 className="text-green-600 font-serif">Verification Requested</h1>
+                                    <h1 className="text-green-600 animate-bounce">Verification Requested</h1>
                                 )}
 
 
@@ -131,7 +131,7 @@ const Profile = () => {
                                 </Card>
                             </div>
                         ) : (
-                            <div className="flex justify-center text-red-700">
+                            <div className="flex justify-center text-red-700 animate-bounce">
 
                                 <ExclamationCircleIcon className="h-7 w-7 me-6" /> <Typography>Please complete your profile and verify</Typography>
                             </div>
