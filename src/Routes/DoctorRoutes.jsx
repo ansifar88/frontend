@@ -37,9 +37,7 @@ function DoctorRoutes() {
           
         </Route>
       </Route>
-      {/* <Route path='/' element={<Layout></Layout>} > */}
       <Route path='/room/:roomId' element={<Room/>} />
-      {/* </Route> */}
       <Route path='*' element={<NotFound />} />
 
     </Routes>

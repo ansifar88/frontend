@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { googleLogout, useGoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { doctorSignup } from '../../api/doctorApi';
 import { DoctorSignupWithGoogle } from '../../api/doctorApi';
@@ -16,16 +16,12 @@ import {
   Input,
   Button,
   Typography,
-  Card,
 } from "@material-tailwind/react";
-
 
 function Signup() {
   const navigate = useNavigate()
-  const [value, setValue] = useState({ name: '', mobile: '', email: '', password: '' })
   const [guser, setGUser] = useState([]);
   const dispatch = useDispatch()
-
   const initialValues = {
     name: "",
     email: "",
@@ -39,8 +35,6 @@ function Signup() {
     handleBlur,
     handleSubmit,
     handleChange,
-    setFieldValue,
-
   } = useFormik({
     initialValues: initialValues,
     validationSchema: SignupSchema,
@@ -48,7 +42,6 @@ function Signup() {
       const response = await doctorSignup(values)
       if (response.data.created) {
         localStorage.setItem("currentDoctor", response.data.token)
-
         const doctorDetails = {
           id: response.data.doctor._id,
           name: response.data.doctor.name,
@@ -119,11 +112,9 @@ function Signup() {
                 />
               </div>
               <div className="p-6 w-full md:w-2/4 h-screen flex flex-col bg-[#476e83a7] justify-center items-center">
-              {/* <Card className='w-3/5 bg-transparent p-3 bg-blur backdrop-blur-lg rounded-none shadow-none'> */}
                 <Typography variant="h4" color="white" className="text-center mb-4 md:mb-8">
                   SIGN UP
                 </Typography>
-
                 <form className="xl:w-1/2 md:w-2/3 sm:w-2/3" onSubmit={handleSubmit} >
                   <div className="mb-4">
                     <Input size="lg" label="Name" variant="standard" name='name' color='white' className='bg-[#1572a9b6] '
@@ -166,11 +157,7 @@ function Signup() {
                     )}
                   </div>
                   <div className="flex items-start justify-between">
-                  <img src={google} className='h-12 w-12 mt-4 cursor-pointer rounded-full bg-white hover:bg-[#476e83] p-2' onClick={() => Gsignup()} />
-
-                    {/* <Button className="mt-4" color="blue" onClick={() => Gsignup()} >
-                      Sign in with GOOGLE
-                    </Button> */}
+                    <img src={google} className='h-12 w-12 mt-4 cursor-pointer rounded-full bg-white hover:bg-[#476e83] p-2' onClick={() => Gsignup()} />
                     <Button className="mt-4 text-white bg-[#476e83] hover:bg-[#476e839c]" variant='filled' type='submit' >
                       Sign up
                     </Button>
@@ -182,7 +169,6 @@ function Signup() {
                     </Link>
                   </Typography>
                 </form>
-                {/* </Card> */}
               </div>
             </div>
           </div>

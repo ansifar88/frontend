@@ -8,10 +8,8 @@ import {
     Typography,
 } from "@material-tailwind/react";
 import { NoSymbolIcon } from "@heroicons/react/24/solid";
-
 import { useQueryClient } from "@tanstack/react-query";
 import { manageDoctor } from "../../api/adminApi";
-
 export function ManageDoctor({ data }) {
     console.log(data);
     const [open, setOpen] = React.useState(false);
@@ -24,7 +22,6 @@ export function ManageDoctor({ data }) {
     }
     return (
         <>
-
             <Tooltip content={data.is_blocked ? "unblock Doctor" : "Block Doctor"}>
                 <Button
                     size="sm"

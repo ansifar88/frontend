@@ -2,8 +2,7 @@ import React from "react";
 import { AcademicCapIcon } from "@heroicons/react/24/solid";
 import { DepartmentSchema } from "../../yup/validation";
 import { addDepartment } from "../../api/adminApi";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-
+import { useQueryClient } from "@tanstack/react-query";
 import {
   Button,
   Dialog,
@@ -21,7 +20,6 @@ export function ModalDepartment() {
   const handleOpen = () => setOpen(!open);
   const queryClient = useQueryClient();
 
-
   const initialValues = {
     departmentName: "",
     description: ""
@@ -33,7 +31,6 @@ export function ModalDepartment() {
     handleBlur,
     handleSubmit,
     handleChange,
-    setFieldValue,
   } = useFormik({
     initialValues: initialValues,
     validationSchema: DepartmentSchema,
@@ -47,13 +44,12 @@ export function ModalDepartment() {
           GenerateError(response.data.message)
           queryClient.invalidateQueries("department");
         }
-
       }
     }
   })
   return (
     <>
-        <ToastContainer/>
+      <ToastContainer />
       <Button onClick={handleOpen} className="flex items-center gap-3 bg-[#305861]" size="sm">
         <AcademicCapIcon strokeWidth={2} className="h-4 w-4 " /> Add
       </Button>

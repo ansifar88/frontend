@@ -15,11 +15,10 @@ import { setSlot } from "../../api/doctorApi";
 import { useQueryClient } from "@tanstack/react-query";
 export function AddSlot() {
     const [open, setOpen] = React.useState(false);
-const queryClient = useQueryClient()
+    const queryClient = useQueryClient()
     const handleOpen = () => setOpen(!open);
     const constructTime = (hour, minute, amPm) => {
         let formattedTime = `${hour}:${minute}`;
-
         // Adjust for AM/PM
         if (amPm === 'PM') {
             const hourInt = parseInt(hour, 10);
@@ -27,7 +26,6 @@ const queryClient = useQueryClient()
                 formattedTime = `${hourInt + 12}:${minute}`;
             }
         }
-
         return formattedTime;
     };
     const initialValues = {
@@ -66,7 +64,7 @@ const queryClient = useQueryClient()
                 console.log(slotData);
                 const response = await setSlot(slotData);
 
-                if(response){
+                if (response) {
                     setOpen(!open)
                     queryClient.invalidateQueries('slotsDoctor')
                 }
@@ -131,7 +129,6 @@ const queryClient = useQueryClient()
                                         onChange={(selectedValue) => {
                                             setFieldValue("startTimeHour", selectedValue);
                                         }}
-
                                     >
                                         <Option value="1" > 1</Option>
                                         <Option value="2" > 2</Option>
@@ -184,7 +181,6 @@ const queryClient = useQueryClient()
                                     >
                                         <Option value="AM"> AM</Option>
                                         <Option value="PM"> PM</Option>
-
                                     </Select>
                                     {touched.startTimeAmPm && errors.startTimeAmPm && (
                                         <div className="text-red-500 text-xs ">
@@ -205,7 +201,6 @@ const queryClient = useQueryClient()
                                             setFieldValue("endTimeHour", selectedValue);
                                         }}
                                     >
-
                                         <Option value="1" > 1</Option>
                                         <Option value="2" > 2</Option>
                                         <Option value="3" > 3</Option>
@@ -237,7 +232,6 @@ const queryClient = useQueryClient()
                                     >
                                         <Option value="00"> 00</Option>
                                         <Option value="30"> 30</Option>
-
                                     </Select>
                                     {touched.endTimeMinute && errors.endTimeMinute && (
                                         <div className="text-red-500 text-xs ">
@@ -257,7 +251,6 @@ const queryClient = useQueryClient()
                                     >
                                         <Option value="AM"> AM</Option>
                                         <Option value="PM"> PM</Option>
-
                                     </Select>
                                     {touched.endTimeAmPm && errors.endTimeAmPm && (
                                         <div className="text-red-500 text-xs ">
@@ -271,9 +264,7 @@ const queryClient = useQueryClient()
                             </div>
                         </form>
                     </CardBody>
-
                 </Card>
-
             </Dialog>
         </>
     );

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import {
     GetCountries,
     GetState,
     GetCity,
 } from "react-country-state-city";
+
 import {
     Button,
     Dialog,
@@ -14,12 +15,9 @@ import {
     Typography,
     Select,
     Option,
-    Textarea,
     Spinner,
 } from "@material-tailwind/react";
-
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-
 import { userProfileUpdateSchema } from "../../yup/validation";
 import { updateProfile } from "../../api/userApi";
 import { useFormik } from "formik";
@@ -31,7 +29,6 @@ export function Form() {
     const [open, setOpen] = React.useState(false);
     const queryClient = useQueryClient();
 
-    // Use useQuery for fetching data
     const { isLoading, error, data } = useQuery({
         queryKey: ['city'],
         queryFn: async () => {
@@ -82,7 +79,7 @@ export function Form() {
 
     if (isLoading) {
         return (
-            <div className="h-screen flex justify-center items-center">
+            <div className="h-56 flex justify-center items-center">
                 <Spinner color="blue" className="h-10 w-10 " />
             </div>
         );
@@ -94,13 +91,13 @@ export function Form() {
 
     return (
         <>
-            <Button onClick={handleOpen} variant="outlined">
-                Complete Profile
-            </Button>
+            <Typography variant="h4" className="animate-pulse cursor-pointer" onClick={handleOpen} >
+                Here
+            </Typography >
             <Dialog
                 open={open}
                 handler={handleOpen}
-                size="xs"
+                size="sm"
                 className="rounded-none"
             >
                 <DialogHeader>COMPLETE PROFILE</DialogHeader>
@@ -108,11 +105,8 @@ export function Form() {
                     <form onSubmit={handleSubmit} encType="multipart/form-data" >
                         <div className="mt-8 mb-2 w-70 max-w-screen-lg sm:w-96">
                             <div className="mb-4 flex flex-col ">
-
-
                                 <div className="grid md:grid-cols-2 gap-4 ">
                                     <div className="col-span-1 ">
-
                                         <Select
                                             variant="standard"
                                             label="Gender"
@@ -123,7 +117,6 @@ export function Form() {
                                                 setFieldValue("gender", selectedValue);
                                             }}
                                         >
-
                                             <Option value="MALE">
                                                 MALE
                                             </Option >
@@ -133,7 +126,6 @@ export function Form() {
                                             <Option value="OTHER">
                                                 OTHER
                                             </Option>
-
                                         </Select>
                                         {touched.gender && errors.gender && (
                                             <div className="text-red-500 text-xs ">
@@ -167,7 +159,6 @@ export function Form() {
                                 </div>
                                 <div className="grid md:grid-cols-2 gap-4 my-2">
                                     <div className="col-span-1 ">
-
                                         <Input
                                             className="w-5"
                                             size="md"
@@ -204,7 +195,6 @@ export function Form() {
                                 </div>
                                 <div className="grid md:grid-cols-2 gap-4 my-2">
                                     <div className="col-span-1">
-
                                         <Input
                                             size="md"
                                             variant="standard"
@@ -237,10 +227,6 @@ export function Form() {
                                         )}
                                     </div>
                                 </div>
-
-
-
-
                             </div>
                         </div>
                         <DialogFooter className="flex justify-between">
@@ -255,11 +241,9 @@ export function Form() {
                             <Button variant="filled" type="submit" color="green">
                                 <span>update </span>
                             </Button>
-
                         </DialogFooter>
                     </form>
                 </DialogBody>
-
             </Dialog>
         </>
     );

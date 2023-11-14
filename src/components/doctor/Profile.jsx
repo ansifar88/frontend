@@ -5,17 +5,12 @@ import {
     Badge,
     Card,
     CardBody,
-    CardFooter,
-    CardHeader,
-    Chip,
     Spinner,
-    Tooltip,
     Typography
 } from "@material-tailwind/react"
 import dp from '../../logos/dp.png'
 import { ChangeDp } from "./ChangeDp"
 import { useLocation, useNavigate } from "react-router-dom"
-
 import doctorRequest from "../../utils/doctorRequest"
 import { GenerateError } from "../../toast/GenerateError"
 import { useQuery } from "@tanstack/react-query"
@@ -25,7 +20,6 @@ import { useState } from "react"
 import { EditProfile } from "./EditProfile"
 const Profile = () => {
     const [open, setOpen] = useState(null);
-
     const handleOpen = (value) => setOpen(open === value ? 0 : value);
     const navigate = useNavigate()
     const location = useLocation()
@@ -49,11 +43,9 @@ const Profile = () => {
                 localStorage.removeItem("currentDoctor")
                 navigate("/doctor/login")
             }
-
         } else {
             return <p>somthing went wrong</p>
         }
-
     }
     return (
         <>
@@ -64,12 +56,10 @@ const Profile = () => {
                             <div className="h-80 rounded-full flex justify-center mt-8">
                                 <Badge content={<ChangeDp id={data.data._id} />} overlap="circular" placement="bottom-end" className="h-16 w-16 hover:bg-white hover:text-[#5d7582] bg-[#5d7582] cursor-pointer " >
                                     <img src={data.data.displaypicture ? data.data.displaypicture : dp} alt="profile-picture" className="rounded-full   md:h-80 md:w-80 ms-0 shadow-lg" />
-
                                 </Badge>
                             </div>
                             <CardBody className="text-center">
                                 <div className="flex justify-center items-center">
-
                                     <Typography variant="h4" color="blue-gray" className="mb-2">
                                         {data.data.name}
                                     </Typography>
@@ -80,9 +70,6 @@ const Profile = () => {
                                 {data.data.requested && !data.data.verified && (
                                     <h1 className="text-green-600 animate-bounce">Verification Requested</h1>
                                 )}
-
-
-
                                 {!data.data.requested && !data.data.verified && (
                                     <Form />
                                 )}
@@ -95,9 +82,7 @@ const Profile = () => {
                                 <Typography color="blue-gray" className="font-medium italic text-white" textGradient>
                                     {data.data.description}
                                 </Typography>
-
                             </CardBody>
-
                         </Card>
                     </div>
                     <div className=" grid md:grid-rows-2">
@@ -114,33 +99,24 @@ const Profile = () => {
                                             <Typography variant="h6" color="blue-gray" className="my-2">QUALIFICATION</Typography>
                                             <Typography variant="h6" color="blue-gray" className="my-2">EXPERIENCE</Typography>
                                             <Typography variant="h6" color="blue-gray" className="my-2">DEPARTMENT</Typography>
-                                            {/* <Typography variant="h6" color="blue-gray" className="my-2">LANGUAGES</Typography> */}
                                         </div>
                                         <div>
                                             <Typography className="my-2">: {data.data.currentHospital}</Typography>
                                             <Typography className="my-2">: {data.data.qualification} </Typography>
                                             <Typography className="my-2">: {data.data.experience} Years</Typography>
                                             <Typography className="my-2">: {data.data.department.departmentName}</Typography>
-                                            <div className="h-16 max-w-[8rem]  ">
-
-                                                {/* <Chip variant="outlined" value="english" className="rounded-full text-center" /> */}
-                                            </div>
                                         </div>
-
                                     </div>
                                 </Card>
                             </div>
                         ) : (
                             <div className="flex justify-center text-red-700 animate-bounce">
-
                                 <ExclamationCircleIcon className="h-7 w-7 me-6" /> <Typography>Please complete your profile and verify</Typography>
                             </div>
                         )
                         }
                         <div>
-                            {/* <Card className="w-full  h-96 rounded-md"> */}
                             <div className=" p-3 bg-[#A8C2D0] rounded-md flex justify-between shadow-lg">
-
                                 <Accordion open={open === 1} className="mb-2 rounded-lg bg-[#A8C2D0] border-blue-gray-100 px-4">
                                     <AccordionHeader
                                         onClick={() => handleOpen(1)}
@@ -151,13 +127,9 @@ const Profile = () => {
                                             <Typography variant="h4">Transactions</Typography>
                                             <Typography variant="h4" className="text-green-800">Wallet: ₹{data.data.wallet}</Typography>
                                         </div>
-
                                     </AccordionHeader>
-                                    <AccordionBody className="pt-0 text-base font-normal max-h-[20rem] overflow-y-scroll">
-
+                                    <AccordionBody className="pt-0 text-base font-normal max-h-[20rem] overflow-y-scroll scrollBarDoctor">
                                         {paymentData ? paymentData.data.map((payment, index) => (
-
-
                                             <Card className="flex flex-row my-2 rounded-sm bg-[#bbd4e1] p-2 justify-between" key={index} >
                                                 <Typography variant="h6" className="">{new Date(payment.date).toLocaleString()}</Typography>
                                                 <Typography variant="h6" className="">{payment.user.name}</Typography>
@@ -168,12 +140,9 @@ const Profile = () => {
                                                 <Typography>currently You Have No Payments</Typography>
                                             </div>
                                         )}
-
                                     </AccordionBody>
                                 </Accordion>
                             </div>
-
-
                         </div>
                     </div>
                 </div>

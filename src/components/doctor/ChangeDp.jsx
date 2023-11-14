@@ -19,11 +19,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 export function ChangeDp({ id }) {
     const { doctorInfo } = useSelector(state => state.doctor)
-
     const [open, setOpen] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
     const dispatch = useDispatch()
-    // const [photo, setPhoto] = useState('')
     const handleOpen = () => setOpen(!open);
     const queryClient = useQueryClient()
     const initialValue = {
@@ -44,8 +42,6 @@ export function ChangeDp({ id }) {
             setLoading(true)
             const response = await dpUpdate(formData, id)
             if (response.data) {
-
-                console.log(response);
                 dispatch(setdoctordetails({
                     doctorInfo: {
                         ...doctorInfo,
@@ -61,9 +57,6 @@ export function ChangeDp({ id }) {
     })
     return (
         <>
-            {/* <Button onClick={handleOpen} variant="text">
-                Open Dialog
-            </Button> */}
             <p onClick={handleOpen}>
                 <CameraIcon className="h-9 w-9" />
             </p>
@@ -71,11 +64,9 @@ export function ChangeDp({ id }) {
                 <DialogHeader>Change profile picture</DialogHeader>
                 <DialogBody divider className="flex-col justify-center items-center">
                     <div className="flex justify-center">
-
                         <img src={values.dp ? URL.createObjectURL(values.dp) : Dp} alt="dp" className="h-40 w-40 rounded-full" />
                     </div>
                     <form onSubmit={handleSubmit} encType="multipart/form-data">
-                        {/* <input type="file" name="dp" accept="image/*" onChange={(e) => { setPhoto(e.target.files[0]) }} /> */}
                         <Input
                             size="xs"
                             type="file"
@@ -93,7 +84,6 @@ export function ChangeDp({ id }) {
                             </div>
                         )}
                         <div className="flex justify-between my-5">
-
                             <Button
                                 variant="text"
                                 color="red"
@@ -102,7 +92,6 @@ export function ChangeDp({ id }) {
                             >
                                 <span>Cancel</span>
                             </Button>
-
                             {loading ?
                                 <Button variant="fill" className="bg-[#5d7582] w-24 text-center"> <Spinner className="text-white h-7 w-7" /> </Button>
                                 :
@@ -110,12 +99,10 @@ export function ChangeDp({ id }) {
                                     <span>Confirm</span>
                                 </Button>
                             }
-
                         </div>
                     </form>
                 </DialogBody>
                 <DialogFooter>
-
                 </DialogFooter>
             </Dialog>
         </>

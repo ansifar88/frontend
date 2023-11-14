@@ -14,6 +14,14 @@ export async function UserLogin(value) {
       return err;
     }
   }
+export async function UserGoogleLogin(value) {
+    try {
+      const data = await userRequest.post("/auth/googlelogin", { ...value });
+      return data;
+    } catch (err) {
+      return err;
+    }
+  }
 
 export const UserSignupWithGoogle = (data) =>{
   return userRequest.post('/auth/googleSignup',data,{

@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {
-    Button,
     Dialog,
     Card,
     CardHeader,
     CardBody,
     Typography,
-    Input,
     TabPanel,
     TabsBody,
     TabsHeader,
@@ -14,20 +12,15 @@ import {
     Chip,
 } from "@material-tailwind/react";
 import {
-    BanknotesIcon,
-    CreditCardIcon,
     LockClosedIcon,
 } from "@heroicons/react/24/solid";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, PaymentElement, LinkAuthenticationElement, useStripe, useElements } from "@stripe/react-stripe-js";
-
 import logo from '../../logos/logonobackground.png'
 import userRequest from "../../utils/userRequest";
 import { useNavigate } from "react-router-dom";
 
-
 export function Payment({ Secret, docId, slotId, slotDate, slotTime , fee}) {
-
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen((cur) => !cur);
     const [clientSecret, setClientSecret] = useState(Secret);
@@ -37,7 +30,6 @@ export function Payment({ Secret, docId, slotId, slotDate, slotTime , fee}) {
     const [message, setMessage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!stripe || !elements) {
@@ -47,7 +39,6 @@ export function Payment({ Secret, docId, slotId, slotDate, slotTime , fee}) {
         const { error, paymentIntent } = await stripe.confirmPayment({
             elements,
             confirmParams: {
-
             },
             redirect: "if_required"
         })
@@ -91,7 +82,6 @@ export function Payment({ Secret, docId, slotId, slotDate, slotTime , fee}) {
             >
                 <Card className="w-full max-w-[24rem] rounded-none">
                     <CardHeader
-
                         floated={false}
                         shadow={false}
                         className="m-0 grid place-items-center h-45 rounded-b-none py- px-4 text-center rounded-none bg-[#023E8A]"
@@ -103,8 +93,6 @@ export function Payment({ Secret, docId, slotId, slotDate, slotTime , fee}) {
                             Make your payment
                         </Typography>
                     </CardHeader>
-
-
                     <CardBody>
                         <div className="flex justify-between">
                             <Typography>Cunsultation Fee</Typography>
@@ -112,16 +100,11 @@ export function Payment({ Secret, docId, slotId, slotDate, slotTime , fee}) {
                         </div>
                         <Tabs value="card" className="overflow-visible">
                             <TabsHeader className="relative z-0 ">
-
                             </TabsHeader>
                             <TabsBody
                                 className="!overflow-x-hidden !overflow-y-visible"
-
                             >
-                                <TabPanel value="card" className="p-0">
-
-                                   
-
+                                <TabPanel value="card" className="p-0">                                
                                     <main className="flex-grow flex items-center justify-center shadow-none">
                                         <form
                                             id="payment-form"
@@ -158,7 +141,6 @@ export function Payment({ Secret, docId, slotId, slotDate, slotTime , fee}) {
                                             )}
                                         </form>
                                     </main>
-
                                     <Typography
                                         variant="small"
                                         color="gray"
@@ -167,13 +149,10 @@ export function Payment({ Secret, docId, slotId, slotDate, slotTime , fee}) {
                                         <LockClosedIcon className="-mt-0.5 h-4 w-4" /> Payments are
                                         secure and encrypted
                                     </Typography>
-
                                 </TabPanel>
-
                             </TabsBody>
                         </Tabs>
                     </CardBody>
-
                 </Card>
             </Dialog>
         </>

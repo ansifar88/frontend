@@ -1,15 +1,12 @@
 import React, { useState } from "react";
 import {
-    Button,
     Dialog,
-    DialogHeader,
     DialogBody,
     Card,
 } from "@material-tailwind/react";
 
 export function Certificates({ certificates }) {
     const [openDialogs, setOpenDialogs] = useState(certificates.map(() => false));
-
     const handleOpen = (index) => {
         const updatedOpenDialogs = [...openDialogs];
         updatedOpenDialogs[index] = !updatedOpenDialogs[index];
@@ -31,13 +28,6 @@ export function Certificates({ certificates }) {
                         />
                     </Card>
                     <Dialog size="xl" open={openDialogs[index]} handler={() => handleOpen(index)}>
-                        {/* <DialogHeader className="justify-between">
-              <div className="flex items-center gap-2">
-                <Button color="green" size="sm">
-                  Download
-                </Button>
-              </div>
-            </DialogHeader> */}
                         <DialogBody divider={true} className="p-0">
                             <img
                                 alt="nature"

@@ -1,5 +1,5 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { UserPlusIcon, NoSymbolIcon, ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/solid";
+import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/solid";
 import dp from '../../logos/dp.png'
 import {
   Card,
@@ -13,16 +13,14 @@ import {
   TabsHeader,
   Tab,
   Avatar,
-  Tooltip,
-  Spinner,
   CardFooter
 } from "@material-tailwind/react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { manageUser } from "../../api/adminApi";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { allUsers } from "../../api/adminApi";
 import { ManageUser } from "./ManageUser";
 import { Loading } from "../common/LoadingDark";
+
 const TABLE_HEAD = ["Name", "Status", "joined", "Actions"];
 
 export function Users() {
@@ -38,25 +36,18 @@ export function Users() {
     return () => clearTimeout(timeoutId);
   }, [search]);
 
-  const queryClient = useQueryClient()
   const { isLoading, error, data } = useQuery({
     queryKey: ['users', { page: page, filter, search: debouncedSearch }],
     queryFn: () => allUsers({ page: page, filter, search: debouncedSearch }).then((res) => res.data)
   })
-  console.log(data);
-  //TAB CHANGE
 
   const handleTabChange = (tabValue) => {
     setFilter(tabValue);
   };
 
-  //SEARCH HANDLE
-
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
   };
-
-  //PAGINATION HANDLE
 
   const handlePageChange = (newPage) => {
     const totalPages = Math.ceil(data.count / data.pageSize);
@@ -65,17 +56,13 @@ export function Users() {
     }
     setPage(newPage);
   };
-
   function formatDate(dateString) {
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
     return new Date(dateString).toLocaleDateString(undefined, options);
   }
-  const handleAction = async (userId) => {
-    await manageUser(userId)
-    queryClient.invalidateQueries("users")
-  }
+
   if (isLoading) {
-    return <Loading/>
+    return <Loading />
   }
   if (error) {
     return <h1>Something went Wrong</h1>
@@ -88,7 +75,6 @@ export function Users() {
             <Typography variant="h5" color="blue-gray">
               USERS
             </Typography>
-
             <Typography color="gray" className="mt-1 font-normal">
               See information about all Users
             </Typography>
@@ -170,7 +156,6 @@ export function Users() {
                         </div>
                       </div>
                     </td>
-
                     <td className={classes}>
                       <div className="w-max">
                         <Chip
@@ -191,24 +176,8 @@ export function Users() {
                       </Typography>
                     </td>
                     <>
-                      {/* {is_blocked === false ? ( */}
                       <td className={classes}>
-                        {/* <Tooltip content={is_blocked ? "unblock User" : "Block User"}>
-                          <Button
-                            size="sm"
-                            color={is_blocked ? "green" : "red"}
-                            className="rounded-md flex gap-3"
-                            variant="outlined"
-                            onClick={() => handleAction(_id)}>
-
-                            {is_blocked ? ""
-                              : <NoSymbolIcon strokeWidth={1.5} stroke="currentColor" className="h-4 w-4" />
-                            }
-                            {is_blocked ? 'Unblock' : 'Block'}
-                          </Button>
-                        </Tooltip> */}
-                        <ManageUser data={{ is_blocked: is_blocked, _id: _id ,name:name}} />
-
+                        <ManageUser data={{ is_blocked: is_blocked, _id: _id, name: name }} />
                       </td>
                     </>
                   </tr>
@@ -222,7 +191,6 @@ export function Users() {
         <Typography variant="small" color="blue-gray" className="font-normal">
         </Typography>
         <div className="flex items-center gap-2 text-white">
-
           <Button
             variant="text"
             className="flex items-center gap-2 text-white"

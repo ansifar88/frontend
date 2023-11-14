@@ -4,7 +4,6 @@ import vcIcon from '../../../logos/logonobackground.png'
 import { Logoutdetails } from "../../../Redux/DoctorSlice";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-
 import {
   Typography,
   Button,
@@ -25,22 +24,20 @@ import {
 import { Sidebar } from "./Sidebar";
 import { useSelector } from "react-redux";
 
-
-// profile menu component
 function MenuLists() {
   const { doctorInfo } = useSelector(state => state.doctor)
   const id = doctorInfo.id
   const navigate = useNavigate()
   const profileNavigate = async () => {
-    navigate('/doctor/profile',{state :{id}})
+    navigate('/doctor/profile', { state: { id } })
   }
   const dispatch = useDispatch()
-  const handleLogout = async()=>{
-   localStorage.removeItem("currentDoctor")
-   dispatch(Logoutdetails({
-     doctorInfo:{}
-   }))
-   navigate('/doctor/login')
+  const handleLogout = async () => {
+    localStorage.removeItem("currentDoctor")
+    dispatch(Logoutdetails({
+      doctorInfo: {}
+    }))
+    navigate('/doctor/login')
   }
   return (
     <MenuList className="p-1">
@@ -60,10 +57,8 @@ function MenuLists() {
 
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
   const { doctorInfo } = useSelector(state => state.doctor)
   const displaypicture = doctorInfo.displaypicture
-
   const closeMenu = () => setIsMenuOpen(false);
 
   return (
@@ -94,10 +89,7 @@ function ProfileMenu() {
 
 export function NavBar() {
   const [isNavOpen, setIsNavOpen] = React.useState(false);
-
-
   const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
-
   React.useEffect(() => {
     window.addEventListener(
       "resize",
@@ -111,7 +103,6 @@ export function NavBar() {
 
   return (
     <navbar className="  lg:rounded-none   fixed top-0 left-0 right-0 bg-[#023E8A] z-50">
-
       <div className="relative mx-auto flex items-center text-blue-gray-900 py-3 bg-[#5d7582] ">
         <Drawer open={open} onClose={closeDrawer} className="bg-[#5d7582]">
           <div className="mb-2 flex items-center justify-between p-4 ">
@@ -139,9 +130,6 @@ export function NavBar() {
         </Drawer>
         <Bars3Icon onClick={openDrawer} className="h-8 w-8 ms-5 cursor-pointer text-white" />
         <img src={vcIcon} alt="" className="h-14 ps-7 py-1" />
-        {/* <div className="absolute top-2/4 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
-         
-        </div> */}
         <IconButton
           size="sm"
           color="blue-gray"
@@ -149,11 +137,9 @@ export function NavBar() {
           onClick={toggleIsNavOpen}
           className="ml-auto mr-2 lg:hidden"
         >
-
         </IconButton>
         <ProfileMenu />
       </div>
-
     </navbar>
   );
 }

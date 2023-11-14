@@ -19,3 +19,52 @@
 .navhead {
     font-family: 'Roboto', sans-serif;
 }
+
+.scrollBar {
+    --sb-track-color: #ffffff;
+    --sb-thumb-color: #023E8A;
+  
+    --sb-size: 8px;
+  
+    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+  }
+  
+  .scrollBar::-webkit-scrollbar {
+    width: var(--sb-size);
+  }
+  
+  .scrollBar::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+    border-radius: 5px;
+  }
+  
+  .scrollBar::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 5px;
+  }
+
+.scrollBarDoctor {
+    --sb-track-color: #828282;
+    --sb-thumb-color: #fff;
+  
+    --sb-size: 8px;
+  
+    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+  }
+  
+  .scrollBarDoctor::-webkit-scrollbar {
+    width: var(--sb-size);
+  }
+  
+  .scrollBarDoctor::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+    border-radius: 5px;
+  }
+  
+  .scrollBarDoctor::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 5px;
+  }
+
+  
+  

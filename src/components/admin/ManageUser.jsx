@@ -8,10 +8,8 @@ import {
     Typography,
 } from "@material-tailwind/react";
 import { NoSymbolIcon } from "@heroicons/react/24/solid";
-
 import { useQueryClient } from "@tanstack/react-query";
 import { manageUser } from "../../api/adminApi";
-
 export function ManageUser({ data }) {
     console.log(data);
     const [open, setOpen] = React.useState(false);
@@ -24,7 +22,6 @@ export function ManageUser({ data }) {
     }
     return (
         <>
-
             <Tooltip content={data.is_blocked ? "unblock User" : "Block User"}>
                 <Button
                     size="sm"

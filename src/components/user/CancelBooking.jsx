@@ -10,25 +10,22 @@ import { cancelAppointment } from "../../api/userApi";
 import { ToastContainer } from 'react-toastify';
 import { GenerateError, GenerateSuccess } from '../../toast/GenerateError';
 import { useQueryClient } from "@tanstack/react-query";
-export function CancelBooking({id}) {
-    
+export function CancelBooking({ id }) {
     const queryClient = useQueryClient()
-const handleCancel =async ()=>{
-    const response = await cancelAppointment({id})
-    console.log(response);
-    if(response.data.updated){
-        GenerateSuccess(response.data.message)
-        queryClient.invalidateQueries("appointmentsUser")
-        setOpen(!open)
-    }else{
-        GenerateError(response.data.message)
-        setOpen(!open)
+    const handleCancel = async () => {
+        const response = await cancelAppointment({ id })
+        console.log(response);
+        if (response.data.updated) {
+            GenerateSuccess(response.data.message)
+            queryClient.invalidateQueries("appointmentsUser")
+            setOpen(!open)
+        } else {
+            GenerateError(response.data.message)
+            setOpen(!open)
+        }
     }
-}
     const [open, setOpen] = React.useState(false);
-
     const handleOpen = () => setOpen(!open);
-
     return (
         <>
             <Button
@@ -40,11 +37,9 @@ const handleCancel =async ()=>{
                 cancel
             </Button>
             <Dialog open={open} handler={handleOpen} size="xs">
-                
                 <DialogBody className="flex flex-col justify-center items-center">
-
-                   <Typography variant="h5"> Are You Sure </Typography>
-                   <Typography variant="h6"> Cancel the Booking </Typography>
+                    <Typography variant="h5"> Are You Sure </Typography>
+                    <Typography variant="h6"> Cancel the Booking </Typography>
                 </DialogBody>
                 <DialogFooter>
                     <Button
@@ -61,7 +56,7 @@ const handleCancel =async ()=>{
                     </Button>
                 </DialogFooter>
             </Dialog>
-            <ToastContainer/>
+            <ToastContainer />
         </>
     );
 }

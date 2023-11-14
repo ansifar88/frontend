@@ -20,7 +20,6 @@ export function Review({ id }) {
     const [review, setReview] = React.useState("");
     const queryClient = useQueryClient()
     const handleOpen = () => setOpen(!open);
-
     const handleRating = (newRating) => {
         setRating(newRating)
     }
@@ -51,17 +50,12 @@ export function Review({ id }) {
                     <DialogHeader className="flex flex-col items-start">
                         {" "}
                         <Typography className="mb-1" variant="h4">
-                        
                         </Typography>
                     </DialogHeader>
-
                 </div>
                 <DialogBody>
-
                     <div className="grid gap-6 ">
-
                         <Rating value={rating} className="h-16" onChange={handleRating} />
-
                         <Textarea label="Message" value={review} onChange={(e) => setReview(e.target.value)} />
                     </div>
                 </DialogBody>

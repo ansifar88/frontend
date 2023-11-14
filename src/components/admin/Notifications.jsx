@@ -1,4 +1,4 @@
-import { Alert, Spinner, Typography, Button } from "@material-tailwind/react";
+import { Alert, Typography, Button } from "@material-tailwind/react";
 import { useQuery } from "@tanstack/react-query";
 import adminRequest from "../../utils/adminRequest";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +23,6 @@ function IconOutlined() {
     );
 }
 
-
 export function Notifications() {
     const navigate = useNavigate()
     const { isLoading, error, data } = useQuery({
@@ -32,7 +31,7 @@ export function Notifications() {
     })
     if (isLoading) {
         return (
-            <Loading/>
+            <Loading />
         );
     }
 
@@ -41,10 +40,8 @@ export function Notifications() {
     }
 
     return (
-
         <>
             {data.data.length > 0 ? data.data.map(({ name, _id }) => (
-
                 <div className="flex w-full flex-col gap-2 p-3 " key={_id}>
                     <Alert
                         icon={<IconOutlined />}
@@ -54,26 +51,21 @@ export function Notifications() {
                                 color="blue"
                                 size="md"
                                 className="!absolute top-6 right-3" onClick={() => navigate(`/admin/verification/${_id}`)}>view</Button>
-
                         }
                     >
                         <Typography className="font-medium text-blue-gray-900">
                             Verification request.
                         </Typography>
-
                         <ul className="mt-2 ml-2 list-inside list-disc text-blue-gray-600">
                             <li>{`Dr ${name} Requested verification`}</li>
                         </ul>
                     </Alert>
-
                 </div>
             )) : (
-            <div className="flex justify-center items-center h-full">
-                <Typography variant="h5" className="text-[#ef8888] ">! Notification is Empty</Typography>
-            </div>
+                <div className="flex justify-center items-center h-full">
+                    <Typography variant="h5" className="text-[#ef8888] ">! Notification is Empty</Typography>
+                </div>
             )}
         </>
-
-
     );
 }

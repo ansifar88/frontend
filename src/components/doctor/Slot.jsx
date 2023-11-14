@@ -15,8 +15,6 @@ import doctorRequest from "../../utils/doctorRequest";
 import { useState } from "react";
 export function Slot() {
     const [selectedDate, setSelectedDate] = useState("");
-
-   
     const { isLoading: dateisLoading, error: dateError, data: dateData } = useQuery({
         queryKey: ['slotsDoctor'],
         queryFn: () => doctorRequest.get(`/slotDate`).then((res) => res.data)
@@ -27,14 +25,9 @@ export function Slot() {
         { retry: false }
     );
 
-    console.log(slotData);
-
     if (dateisLoading) {
         return <div className="h-screen flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>
     }
-    // if (slotDataLoading) {
-    //     return <div className="h-screen flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>
-    // }
     if (dateError) {
         return <h1>Something went Wrong</h1>
     }
@@ -54,28 +47,22 @@ export function Slot() {
                         <AddSlot />
                     </div>
                 </div>
-
                 <div className="grid md:grid-cols-2">
                     <div className="col-span-1">
-
                         <Card className="my-3 mx-3 rounded-md p-3  bg-[#A8C2D0] ">
                             <Typography variant="h5" className="text-blue-gray-900 ">Given Slotes</Typography>
                         </Card>
                         <Card className="my-3 mx-3 rounded-md min-h-[20rem] p-3  bg-[#A8C2D0] ">
                             <div className="my-2">
-
                                 <Select
                                     size="md"
-
                                     color='white'
-                                    // variant="static"
                                     label="Choose date"
                                     value={selectedDate}
                                     onChange={(val) => {
                                         const newSelectedDate = val
                                         setSelectedDate(newSelectedDate);
                                     }}
-
                                 >
                                     {dateData.data.map((dates, index) => (
                                         <Option key={index} value={dates}>
@@ -84,8 +71,7 @@ export function Slot() {
                                     ))}
                                 </Select>
                             </div>
-                            <div className="grid grid-cols-1 max-h-[50rem] overflow-y-scroll">
-
+                            <div className="grid grid-cols-1 max-h-[30rem] overflow-y-scroll scrollBarDoctor">
                                 {slotData && slotData.data ? (
                                     slotData.data.map((item, dataIndex) => (
                                         <div className="col-span-1" key={dataIndex}>
@@ -106,9 +92,7 @@ export function Slot() {
                                                             </Typography>
                                                         </div>
                                                         <div>
-
                                                             <Typography color="light-green" className="mb-2">
-
                                                                 <Chip
                                                                     className="text-center my-2"
                                                                     variant="ghost"
@@ -116,17 +100,9 @@ export function Slot() {
                                                                     value={slot.isBooked === true ? "BOOKED" : "AVAILABLE"}
                                                                     color={slot.isBooked === true ? "red" : "green"}
                                                                 />
-                                                                {/* <Button
-                                                            className="text-center my-2 cursor-pointer" 
-                                                                variant="ghost"
-                                                                size="sm"
-                                                                value='cancel'
-                                                                color="red"
-                                                            >cancel</Button> */}
                                                             </Typography>
                                                         </div>
                                                     </CardBody>
-
                                                 </Card>
                                             ))}
                                         </div>
@@ -134,16 +110,13 @@ export function Slot() {
                                 ) : (
                                     <div className="flex-col h-40">
                                         <div className="flex justify-center">
-
                                             <InformationCircleIcon className="h-24 w-24 text-white" />
                                         </div>
                                         <div className="flex justify-center">
-
                                             <p className=" text-white">please choose a date to show slots</p>
                                         </div>
                                     </div>
                                 )}
-
                             </div>
                         </Card>
                     </div >
@@ -152,7 +125,7 @@ export function Slot() {
                             <Typography variant="h5" className="text-blue-gray-900 ">Appointments</Typography>
                         </Card>
                         <Card className="my-3 mx-3 rounded-md p-3  bg-[#A8C2D0]">
-                            <Appointments/>
+                            <Appointments />
                         </Card>
                     </div>
                 </div >

@@ -8,26 +8,23 @@ import {
 } from "@material-tailwind/react";
 import { Certificates } from "./Certificates";
 import { useNavigate, useParams } from "react-router-dom";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import adminRequest from "../../utils/adminRequest";
 import { verifyDoctor } from "../../api/adminApi";
 import { Reject } from "./Reject";
 export const Verification = () => {
     const { id } = useParams();
     const navigate = useNavigate()
-    // const queryClient = useQueryClient();
     const { isLoading, error, data } = useQuery({
         queryKey: ['doctorverification'],
         queryFn: () => adminRequest.get(`/doctor/${id}`).then((res) => res.data),
     });
-
     const handleVerify = async (docId) => {
         const response = await verifyDoctor(docId)
         console.log(response);
         if (response.data.verified) {
             navigate('/admin/notifications')
         }
-
     }
     if (isLoading) {
         return <div className="h-screen flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>
@@ -80,14 +77,12 @@ export const Verification = () => {
                                 </div>
                                 <div>
                                     <Button variant="filled" className="rounded-none text-xs hover:bg-green-800 text-white me-4 bg-green-600" onClick={() => handleVerify(data.data._id)}>approve</Button>
-
                                     <Reject id={data.data._id} />
                                 </div>
                             </div>
                         </CardBody>
                     </div>
                 </Card>
-
                 <div>
                     <Typography variant="h3" className="text-blue-gray-900 m-3">CERTIFICATES</Typography>
                     <div className=" md:overflow-x-auto  md:flex w-[76.2rem] ">
@@ -95,7 +90,6 @@ export const Verification = () => {
                     </div>
                 </div>
             </div>
-
         </>
     );
 }

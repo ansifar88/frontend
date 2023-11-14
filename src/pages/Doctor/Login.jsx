@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { DoctorLogin } from '../../api/doctorApi';
 import { useGoogleLogin } from '@react-oauth/google';
@@ -19,7 +19,6 @@ import { GenerateError } from '../../toast/GenerateError';
 import vclogo from '../../logos/logonobackground.png'
 
 function Login() {
-  const [value, setValue] = useState({ email: '', password: '' })
   const [guser, setGUser] = useState([])
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -35,7 +34,6 @@ function Login() {
     handleBlur,
     handleSubmit,
     handleChange,
-    setFieldValue,
   } = useFormik({
     initialValues: initialValues,
     validationSchema: LoginSchema,
@@ -44,13 +42,11 @@ function Login() {
       console.log(response);
       if (response.data.access) {
         localStorage.setItem("currentDoctor", response.data.token)
-
         const doctorDetails = {
           id: response.data.doctor._id,
           name: response.data.doctor.name,
           email: response.data.doctor.email,
           displaypicture: response.data.doctor.displaypicture
-
         }
         dispatch(setdoctordetails({ doctorInfo: doctorDetails }))
         navigate('/doctor')
@@ -115,13 +111,10 @@ function Login() {
                 />
               </div>
               <div className="p-6 w-full md:w-2/4 h-screen flex flex-col bg-[#476e83a7] justify-center items-center ">
-
                 <Typography variant="h4" color="white" className="text-center mb-4 md:mb-8 ">
                   LOG IN
                 </Typography>
-
                 <form className="xl:w-1/2 md:w-2/3 sm:w-2/3 " onSubmit={handleSubmit} >
-
                   <div className="mb-4">
                     <Input size="lg" label="Email" variant="standard" name='email' color='white' className='bg-[#1572a9b6]'
                       onChange={handleChange}
@@ -132,7 +125,6 @@ function Login() {
                       <div className="text-red-500 text-sm ">{errors.email}</div>
                     )}
                   </div>
-
                   <div className="mb-4">
                     <Input type="password" size="lg" variant="standard" name='password' label="Password" color='white' className='bg-[#1572a9b6]'
                       onChange={handleChange}
@@ -145,7 +137,6 @@ function Login() {
                   </div>
                   <div className="flex items-start justify-between">
                     <img src={google} className='h-12 w-12 mt-4 cursor-pointer rounded-full bg-white hover:bg-[#476e83] p-2' onClick={() => Glogin()} />
-
                     <Button className="mt-4 bg-[#476e83] hover:bg-[#476e839c]" variant="filled" type='submit' >
                       LOGIN
                     </Button>

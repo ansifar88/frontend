@@ -1,6 +1,5 @@
-import { Button, Card, Typography } from "@material-tailwind/react"
+import { Card, Typography } from "@material-tailwind/react"
 import { UserIcon, AcademicCapIcon } from '@heroicons/react/24/solid'
-import { EyeIcon } from '@heroicons/react/24/outline'
 import Icon from '../../logos/vc-favicon-white.png'
 import { useQuery } from "@tanstack/react-query"
 import { Loading } from "../common/LoadingDark"
@@ -10,28 +9,19 @@ function Dashboard() {
         queryKey: ["dashboardAdmin"],
         queryFn: () => dashboard().then((res) => res.data)
     })
-    // console.log(data.doctorCounts);
     if (isLoading) {
         <Loading />
     }
     if (error) {
         <Typography>somthing went Wrong</Typography>
     }
-
-
     const TABLE_HEAD = ["Name", "Department", "Appointments"];
-
-  
-
-
-
     return (
         <>
             <div className="shadow-none m-5">
                 <div className="grid  sm:grid-cols-3">
-
                     <div className="flex md:justify-start">
-                        <Card className="h-36 w-80 bg-[#4caabf] rounded-md p-2 my-2 shadow-sm hover:bg-[#377d8d]">
+                        <Card className="h-36 w-full sm:w-80 bg-[#4caabf] rounded-md p-2 my-2 shadow-sm hover:bg-[#377d8d]">
                             <div className="flex">
                                 <UserIcon className="h-7 w-7 me-2 text-white" />
                                 <div className="flex flex-col">
@@ -44,14 +34,11 @@ function Dashboard() {
                             </div>
                         </Card>
                     </div>
-
                     <div className="flex md:justify-center">
-                        <Card className="h-36 w-80 bg-[#4caabf] rounded-md p-2 my-2 shadow-sm hover:bg-[#377d8d]">
+                        <Card className="h-36 w-full sm:w-80 bg-[#4caabf] rounded-md p-2 my-2 shadow-sm hover:bg-[#377d8d]">
                             <div className="flex">
                                 <img src={Icon} className="w-7 h-8 me-2" />
-
                                 <div className="flex flex-col">
-
                                     <Typography variant="h4" className="text-white">DOCTORS</Typography>
                                     <div className="flex items-baseline">
                                         <Typography variant="h1" className="text-white my-3 me-3">{data && data.totalDoctors} </Typography>
@@ -61,9 +48,8 @@ function Dashboard() {
                             </div>
                         </Card>
                     </div>
-
                     <div className="flex md:justify-end">
-                        <Card className="h-36 w-80 bg-[#4caabf] rounded-md p-2 my-2 shadow-sm hover:bg-[#377d8d]">
+                        <Card className="h-36 w-full sm:w-80 bg-[#4caabf] rounded-md p-2 my-2 shadow-sm hover:bg-[#377d8d]">
                             <div className="flex">
                                 <AcademicCapIcon className="h-7 w-7 me-2 text-white" />
                                 <div className="flex flex-col">
@@ -97,11 +83,10 @@ function Dashboard() {
                                 ))}
                             </tr>
                         </thead>
-                        <tbody className=""> 
-                            {data ? data.doctorCounts.map(({ name, _id, appointmentCount,department }, index) => {
+                        <tbody className="">
+                            {data ? data.doctorCounts.map(({ name, _id, appointmentCount, department }, index) => {
                                 const isLast = index === data.doctorCounts.length - 1;
                                 const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
-
                                 return (
                                     <tr key={_id}>
                                         <td className={`${classes} bg-blue-gray-50/50 text-center `} >
@@ -119,15 +104,10 @@ function Dashboard() {
                                                 {appointmentCount}
                                             </Typography>
                                         </td>
-                                        {/* <td className={`${classes} bg-blue-gray-50/50  text-center flex ` }>
-                                            <Button  variant="text"  size="md"  className="rounded-none flex items-center">
-                                        <EyeIcon className="h-6 me-2 "/>
-                                                view
-                                            </Button>
-                                        </td> */}
+
                                     </tr>
                                 );
-                            }):""}
+                            }) : ""}
                         </tbody>
                     </table>
                 </Card>

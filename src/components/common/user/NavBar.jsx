@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import dp from '../../../logos/dp.png'
-import vclogo from '../../../logos/logonobackground.png' 
+import vclogo from '../../../logos/logonobackground.png'
 import { useDispatch } from "react-redux";
 import { Logoutdetails } from "../../../Redux/UserSlice";
 import {
-  Navbar,
-  MobileNav,
   Typography,
   Button,
   Menu,
@@ -13,20 +11,14 @@ import {
   MenuList,
   MenuItem,
   Avatar,
-  Card,
   IconButton,
   Drawer,
   Tooltip,
 } from "@material-tailwind/react";
 import {
   UserCircleIcon,
-  Square3Stack3DIcon,
   ChevronDownIcon,
-  Cog6ToothIcon,
-  InboxArrowDownIcon,
-  LifebuoyIcon,
   PowerIcon,
-  RocketLaunchIcon,
   UserGroupIcon,
   Bars3Icon,
   ChatBubbleLeftRightIcon,
@@ -35,7 +27,6 @@ import {
 import { Sidebar } from "../user/Sidebar";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
 
 function MenuLists() {
   const { userInfo } = useSelector(state => state.user)
@@ -56,7 +47,6 @@ function MenuLists() {
   }
   return (
     <MenuList className="p-1">
-
       <MenuItem className="flex gap-4" onClick={profileNavigate}>
         <UserCircleIcon className="h-5 w-5" />
         My Profile
@@ -65,19 +55,13 @@ function MenuLists() {
         <PowerIcon className="h-5 w-5" />
         Sign Out
       </MenuItem>
-
     </MenuList>
   )
 }
 
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
-  // const { doctorInfo } = useSelector(state => state.doctor)
-  // const displaypicture = doctorInfo.displaypicture
-
   const closeMenu = () => setIsMenuOpen(false);
-
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
       <MenuHandler>
@@ -104,34 +88,22 @@ function ProfileMenu() {
   );
 }
 
-// nav list menu
-
-
-
-
 export function NavBar() {
   const [isNavOpen, setIsNavOpen] = React.useState(false);
   const [scrolled, setScrolled] = useState(false);
-
   const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
-
   React.useEffect(() => {
     window.addEventListener(
       "resize",
       () => window.innerWidth >= 960 && setIsNavOpen(false),
     );
   }, []);
-
-
-
-
   const [open, setOpen] = React.useState(false);
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
   const [isHoveredDoctor, setIsHoveredDoctor] = useState(false);
   const [isHoveredAppointments, setIsHoveredAppointments] = useState(false);
   const [isHoveredChats, setIsHoveredChats] = useState(false);
-
   const toggleHoverDoctor = () => {
     setIsHoveredDoctor(!isHoveredDoctor);
   };
@@ -147,7 +119,6 @@ export function NavBar() {
 
   return (
     <navbar className={`  lg:roun  ded-none   fixed top-0 left-0 right-0 bg-[#023E8A] z-50`}>
-
       <div className="relative mx-auto flex items-center text-blue-gray-900 py-3 bg-[#023E8A] ">
         <Drawer open={open} onClose={closeDrawer} className="bg-[#09264b]">
           <div className="mb-2 flex items-center justify-between p-4 ">
@@ -174,18 +145,12 @@ export function NavBar() {
           <Sidebar />
         </Drawer>
         <div className="visible md:invisible">
-
           <Bars3Icon onClick={openDrawer} className="h-8 w-8 ms-5 cursor-pointer text-white  " />
         </div>
         <Tooltip content="Home" placement="bottom-end">
 
-        <img src={vclogo} alt="vc logo" className="h-14 ps-7 py-1 cursor-pointer"onClick={() => navigate("/")} />
+          <img src={vclogo} alt="vc logo" className="h-14 ps-7 py-1 cursor-pointer" onClick={() => navigate("/")} />
         </Tooltip>
-        {/* <div className="absolute top-2/4 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
-         
-        </div> */}
-
-
         <IconButton
           size="sm"
           color="blue-gray"
@@ -193,8 +158,6 @@ export function NavBar() {
           onClick={toggleIsNavOpen}
           className="ml-auto mr-2 lg:hidden"
         >
-
-
         </IconButton>
         <div className="w-full flex justify-around">
           <div className="flex justify-between w-[40rem]  invisible md:visible">
@@ -214,7 +177,6 @@ export function NavBar() {
                 Doctors
               </Typography>
             </Button>
-
             <Button variant="text"
               onClick={() => navigate('/appointments')}
               className=" flex items-center "

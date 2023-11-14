@@ -3,7 +3,6 @@ import {
     Typography,
     Chip,
     Button,
-    Spinner,
 } from "@material-tailwind/react";
 import dp from '../../logos/dp.png'
 import { Loading } from '../common/Loading'
@@ -23,11 +22,7 @@ export function Appointments() {
     if (error) {
         return <h1>Something went Wrong</h1>
     }
-
-
     const handleJoin = async (link) => {
-        console.log(link);
-        // navigate(`/doctor/room/${id}`)
         window.open(link, '_blank');
     }
     return (
@@ -36,24 +31,18 @@ export function Appointments() {
                 <Typography variant="h3">Appointments</Typography>
             </Card>
             {data.data.map((appointments, index) => (
-
-
                 <Card color="transparent" shadow={false} className="w-full bg-[#CAF0F8] p-3 my-2" key={index}>
                     <div className="grid md:grid-cols-[10rem,1fr,10rem]">
-
                         <div className=" ">
                             <div
                                 color="transparent"
-
                                 className="mx-0 flex items-center gap-4 pt-0 pb-8"
                             >
                                 <img
                                     size="lg"
                                     src={appointments.doctor.displaypicture ?? dp}
-
                                     className="h-16 w-16 md:h-28 md:w-28 rounded-full"
                                 />
-
                             </div>
                         </div>
                         <div className=" ">
@@ -64,7 +53,6 @@ export function Appointments() {
                                 Working @ {appointments.doctor.currentHospital}
                             </Typography>
                             <div className="flex my-2">
-
                                 <Typography>
                                     Appointment Status :
                                 </Typography>
@@ -72,7 +60,6 @@ export function Appointments() {
                             </div>
                         </div>
                         <div className="flex-col ">
-
                             <Chip
                                 color="cyan"
                                 variant="ghost"
@@ -93,9 +80,7 @@ export function Appointments() {
                                 color={appointments.status === "cancelled" ? "red" : "cyan"}
                                 className=" text-center"
                                 value={appointments.status}
-
                             />
-
                             {appointments.callId && appointments.status == "notConsulted" && appointments.AppoinmentStatus == "active" ? (
                                 <Button
                                     size="sm"
@@ -107,8 +92,6 @@ export function Appointments() {
                                     join</Button>
                             ) : ""
                             }
-
-
                             {
                                 appointments.status == "cancelled" || appointments.AppoinmentStatus == "expired" ? "" : (
                                     <CancelBooking id={appointments._id} />
@@ -117,10 +100,7 @@ export function Appointments() {
                             {appointments.status == "cunsulted" ? (
                                 <Prescription Data={appointments} />) : ""
                             }
-
-
                         </div>
-
                     </div>
                 </Card>
             ))

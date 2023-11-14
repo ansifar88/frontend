@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import {
     GetCountries,
@@ -16,9 +16,7 @@ import {
     Option,
     Spinner,
 } from "@material-tailwind/react";
-
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-
 import { userEditProfileSchema } from "../../yup/validation";
 import { editProfile } from "../../api/userApi";
 import { useFormik } from "formik";
@@ -30,7 +28,6 @@ export function EditProfile({ user }) {
     const [open, setOpen] = React.useState(false);
     const queryClient = useQueryClient();
 
-    // Use useQuery for fetching city data
     const { isLoading: cityLoading, error: cityError, data: cityData } = useQuery({
         queryKey: ['city'],
         queryFn: async () => {
@@ -47,9 +44,6 @@ export function EditProfile({ user }) {
             }
         },
     });
-
-
-
 
     const initialValues = {
         name: user ? user.name : "",
@@ -110,7 +104,6 @@ export function EditProfile({ user }) {
                     <form onSubmit={handleSubmit} encType="multipart/form-data" >
                         <div className="mt-8 mb-2 w-70 max-w-screen-lg sm:w-96">
                             <div className="my-3">
-
                                 <Input
                                     size="md"
                                     variant="standard"
@@ -127,11 +120,8 @@ export function EditProfile({ user }) {
                                 )}
                             </div>
                             <div className="mb-4 flex flex-col ">
-
-
                                 <div className="grid md:grid-cols-2 gap-4 ">
                                     <div className="col-span-1 ">
-
                                         <Select
                                             variant="standard"
                                             label="Gender"
@@ -142,7 +132,6 @@ export function EditProfile({ user }) {
                                                 setFieldValue("gender", selectedValue);
                                             }}
                                         >
-
                                             <Option value="MALE">
                                                 MALE
                                             </Option >
@@ -152,7 +141,6 @@ export function EditProfile({ user }) {
                                             <Option value="OTHER">
                                                 OTHER
                                             </Option>
-
                                         </Select>
                                         {touched.gender && errors.gender && (
                                             <div className="text-red-500 text-xs ">
@@ -186,7 +174,6 @@ export function EditProfile({ user }) {
                                 </div>
                                 <div className="grid md:grid-cols-2 gap-4 my-2">
                                     <div className="col-span-1 ">
-
                                         <Input
                                             className="w-5"
                                             size="md"
@@ -223,7 +210,6 @@ export function EditProfile({ user }) {
                                 </div>
                                 <div className="grid md:grid-cols-2 gap-4 my-2">
                                     <div className="col-span-1">
-
                                         <Input
                                             size="md"
                                             variant="standard"
@@ -256,10 +242,6 @@ export function EditProfile({ user }) {
                                         )}
                                     </div>
                                 </div>
-
-
-
-
                             </div>
                         </div>
                         <DialogFooter className="flex justify-between">
@@ -274,11 +256,9 @@ export function EditProfile({ user }) {
                             <Button variant="filled" type="submit" color="green">
                                 <span>update </span>
                             </Button>
-
                         </DialogFooter>
                     </form>
                 </DialogBody>
-
             </Dialog>
         </>
     );

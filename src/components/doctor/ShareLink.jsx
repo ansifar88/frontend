@@ -2,42 +2,37 @@ import React from "react";
 import {
     Button,
     Dialog,
-    DialogHeader,
     DialogBody,
     DialogFooter,
     Input,
 } from "@material-tailwind/react";
 import { ShareIcon } from '@heroicons/react/24/outline'
 import { useState } from "react";
-import {  GenerateSuccess } from "../../toast/GenerateError";
+import { GenerateSuccess } from "../../toast/GenerateError";
 import { ShareVideoLink } from "../../api/doctorApi";
 import { ToastContainer } from 'react-toastify';
-export function ShareLink({id}) {
+export function ShareLink({ id }) {
     const [open, setOpen] = React.useState(false);
     const [link, setLink] = useState("")
     const handleOpen = () => setOpen(!open);
     const handleSubmit = async (e) => {
-       
         e.preventDefault()
         if (!link) {
             console.log("link cany be blank")
-        }else{
-            const data= {
-                link : link,
-                id : id
+        } else {
+            const data = {
+                link: link,
+                id: id
             }
             const response = await ShareVideoLink(data)
-
-            if(response.data.created){
+            if (response.data.created) {
                 setOpen(!open)
                 GenerateSuccess("link shared successfully")
             }
-
         }
     }
     return (
         <>
-
             <Button
                 onClick={handleOpen}
                 size="sm"
@@ -73,7 +68,7 @@ export function ShareLink({id}) {
                     </DialogFooter>
                 </form>
             </Dialog>
-            <ToastContainer/>
+            <ToastContainer />
         </>
     );
 }

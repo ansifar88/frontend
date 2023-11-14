@@ -27,21 +27,14 @@ export const Appointments = () => {
     if (dateisLoading) {
         return <div className="h-20 flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>
     }
-
     const handleCreate = async (id) => {
-
-   
         window.open(`/doctor/room/${id}`, '_blank');
     }
-
-
     return (
         <>
             <div className="my-2  ">
-
                 <Select
                     size="md"
-
                     color='white'
                     label="Choose date"
                     value={selectedDate}
@@ -49,7 +42,6 @@ export const Appointments = () => {
                         const newSelectedDate = val
                         setSelectedDate(newSelectedDate);
                     }}
-
                 >
                     {dateData.data.map((dates, index) => (
                         <Option key={index} value={dates}>
@@ -57,10 +49,8 @@ export const Appointments = () => {
                         </Option>
                     ))}
                 </Select>
-                <div className='min-h-[15rem] max-h-[50rem] overflow-y-scroll'>
+                <div className='min-h-[15rem] max-h-[30rem] overflow-y-scroll scrollBarDoctor'>
                     {appointmentData ? appointmentData.data.map((appointment, index) => (
-
-
                         <Card className="  mt-6 mx-2 min-w-min rounded-md bg-white  hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 " key={index} >
                             <Chip
                                 value={appointment.AppoinmentStatus == "active" ? "Active" : "Expired"}
@@ -96,11 +86,7 @@ export const Appointments = () => {
                                             Status: {appointment.status}
                                         </Typography>
                                     </div>
-                                    {/* {appointment.AppoinmentStatus} */}
-
-                                    
                                     {appointment.AppoinmentStatus === "active" && appointment.isConsulted === false && appointment.status === "notConsulted" ? (
-                                        
                                         <div className='flex'>
                                             <Button
                                                 size="sm"
@@ -110,40 +96,31 @@ export const Appointments = () => {
                                             >
                                                 <VideoCameraIcon className="h-5 w-5" />
                                                 start</Button>
-
                                             <ShareLink id={appointment._id} />
                                         </div>
-                                        ) : ""
+                                    ) : ""
                                     }
-                                        <div className='flex'>
-                                        { appointment.isConsulted === true ? (
-                                           <Prescription id={appointment._id}/>
-                                           )
+                                    <div className='flex'>
+                                        {appointment.isConsulted === true ? (
+                                            <Prescription id={appointment._id} />
+                                        )
                                             : ""
-                                            }
-                                               { appointment.isConsulted === false && appointment.status === "notConsulted" ? (
-                                               <ConfirmCunsult id={appointment._id}/>
-                                               )
+                                        }
+                                        {appointment.isConsulted === false && appointment.status === "notConsulted" ? (
+                                            <ConfirmCunsult id={appointment._id} />
+                                        )
                                             : ""
-                                            }
-                                        </div>
-                                    
-                                    
-
-                                    
+                                        }
+                                    </div>
                                 </div>
-
                             </CardBody>
-
                         </Card>
                     )) : (
                         <div className="flex-col h-40">
                             <div className="flex justify-center">
-
                                 <InformationCircleIcon className="h-24 w-24 text-white" />
                             </div>
                             <div className="flex justify-center">
-
                                 <p className=" text-white">please choose a date to show Your Appointments</p>
                             </div>
                         </div>

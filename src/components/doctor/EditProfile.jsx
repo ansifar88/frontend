@@ -11,9 +11,7 @@ import {
     Option,
     Spinner,
 } from "@material-tailwind/react";
-
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-
 import { doctorEditProfileSchema } from "../../yup/validation";
 import { editProfile } from "../../api/doctorApi";
 import { useFormik } from "formik";
@@ -25,7 +23,6 @@ export function EditProfile({ doctor }) {
     const id = doctorInfo.id;
     const [open, setOpen] = React.useState(false);
     const queryClient = useQueryClient();
-
     const initialValues = {
         name: doctor ? doctor.name : "",
         currentHospital: doctor ? doctor.currentHospital : "",
@@ -56,13 +53,11 @@ export function EditProfile({ doctor }) {
             }
         },
     });
-
     const handleOpen = () => setOpen(!open);
     const { isLoading, error, data } = useQuery({
         queryKey: ["department"],
         queryFn: () => doctorRequest.get("/department").then((res) => res.data),
     });
-
     if (isLoading) {
         return (
             <div>
@@ -70,7 +65,6 @@ export function EditProfile({ doctor }) {
             </div>
         );
     }
-
     if (error) {
         return <h1>Something went wrong</h1>;
     }
@@ -88,7 +82,6 @@ export function EditProfile({ doctor }) {
                     <form onSubmit={handleSubmit}  >
                         <div className="mt-8 mb-2 w-70 max-w-screen-lg sm:w-96">
                             <div className="my-3">
-
                                 <Input
                                     size="md"
                                     variant="standard"
@@ -105,7 +98,6 @@ export function EditProfile({ doctor }) {
                                 )}
                             </div>
                             <div className="mb-4 flex flex-col ">
-
                                 <div className="grid md:grid-cols-2 gap-4 ">
                                     <div className="col-span-1 ">
                                         <Input
@@ -146,9 +138,7 @@ export function EditProfile({ doctor }) {
                                         )}
                                     </div>
                                 </div>
-
                                 <div className="my-2">
-
                                     <Input
                                         className="w-5"
                                         size="md"
@@ -166,7 +156,6 @@ export function EditProfile({ doctor }) {
                                     )}
                                 </div>
                                 <div className="my-2">
-
                                     <Input
                                         size="md"
                                         variant="standard"
@@ -183,7 +172,6 @@ export function EditProfile({ doctor }) {
                                     )}
                                 </div>
                                 <div className="my-2">
-
                                     <Input
                                         size="md"
                                         variant="standard"
@@ -199,9 +187,7 @@ export function EditProfile({ doctor }) {
                                         </div>
                                     )}
                                 </div>
-
                                 <div className="grid md:grid-cols-1 gap-4 my-2">
-
                                     <div className="col-span-1">
                                         <Input
                                             size="md"
@@ -219,7 +205,6 @@ export function EditProfile({ doctor }) {
                                         )}
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                         <DialogFooter className="flex justify-between">
@@ -234,11 +219,9 @@ export function EditProfile({ doctor }) {
                             <Button variant="filled" type="submit" color="green">
                                 <span>save   </span>
                             </Button>
-
                         </DialogFooter>
                     </form>
                 </DialogBody>
-
             </Dialog>
         </>
     );

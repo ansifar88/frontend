@@ -1,5 +1,4 @@
 import icon from '../../logos/vc-favicon-black.png'
-// import './loading.css'
 export const Loading = () => {
     return (
         <>

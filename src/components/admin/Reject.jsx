@@ -7,8 +7,6 @@ import {
     CardBody,
     CardFooter,
     Typography,
-    Input,
-    Checkbox,
     Textarea,
 } from "@material-tailwind/react";
 import { rejectDoctorSchema } from "../../yup/validation";
@@ -19,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 
 export function Reject({ id }) {
     const queryClient = useQueryClient()
-    const  navigate = useNavigate()
+    const navigate = useNavigate()
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen((cur) => !cur);
     const initialvalues = {
@@ -37,18 +35,16 @@ export function Reject({ id }) {
         validationSchema: rejectDoctorSchema,
         onSubmit: async (values) => {
             const response = await rejectDoctor(values, id)
-            if(response.data.reject){
+            if (response.data.reject) {
                 setOpen(!open)
                 queryClient.invalidateQueries('doctorverification')
                 navigate('/admin/notifications')
-
             }
         }
     })
     return (
         <>
             <Button onClick={handleOpen} className="rounded-none bg-red-500 hover:bg-red-800">reject</Button>
-
             <Dialog
                 size="xs"
                 open={open}
@@ -81,7 +77,6 @@ export function Reject({ id }) {
                                     {errors.reason}
                                 </div>
                             )}
-
                         </CardBody>
                         <CardFooter className="pt-0 flex justify-around">
                             <Button className="hover:bg-red-500 hover:text-white rounded-none" variant="text" onClick={handleOpen} >
@@ -90,7 +85,6 @@ export function Reject({ id }) {
                             <Button variant="filled" type="submit" className="rounded-none bg-green-700"  >
                                 confirm
                             </Button>
-
                         </CardFooter>
                     </Card>
                 </form>

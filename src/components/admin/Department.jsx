@@ -15,13 +15,12 @@ import {
   Tooltip,
   CardFooter
 } from "@material-tailwind/react";
-import {Loading} from '../common/LoadingDark'
+import { Loading } from '../common/LoadingDark'
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import adminRequest from "../../utils/adminRequest";
 import { manageDepartment } from "../../api/adminApi";
 import { allDepartments } from "../../api/adminApi";
 import { useEffect, useState } from "react";
-
 
 const TABLE_HEAD = ["Name", "Description", "Status", "Actions"];
 
@@ -48,13 +47,9 @@ export function Department() {
     setFilter(tabValue);
   };
 
-  //SEARCH HANDLE
-
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
   };
-
-  //PAGINATION HANDLE
 
   const handlePageChange = (newPage) => {
     const totalPages = Math.ceil(data.count / data.pageSize);
@@ -69,7 +64,7 @@ export function Department() {
     queryClient.invalidateQueries("department")
   }
   if (isLoading) {
-    return <Loading/>
+    return <Loading />
   }
   if (error) {
     return <h1>Something went Wrong</h1>
@@ -113,7 +108,6 @@ export function Department() {
           </div>
         </div>
       </CardHeader>
-
       <CardBody className="overflow-hidden   px-0">
         <table className="mt-4 w-full min-w-max table-auto text-left m-1 sm:overflow-x-scroll" >
           <thead className="bg-[#5e838b] ">
@@ -141,7 +135,6 @@ export function Department() {
                 const classes = isLast
                   ? "p-4"
                   : "p-4 border-b border-blue-gray-50";
-
                 return (
                   <tr key={_id}>
                     <td className={classes}>
@@ -160,12 +153,10 @@ export function Department() {
                             color="blue-gray"
                             className="font-normal opacity-70"
                           >
-
                           </Typography>
                         </div>
                       </div>
                     </td>
-
                     <td className={classes}>
                       <Typography
                         variant="small"
@@ -195,14 +186,11 @@ export function Department() {
                             </Button>
                           </Tooltip>
                         </td>
-
                       ) : (
-
                         <td className={classes}>
                           <Tooltip content="Undo Delete">
                             <Button size="sm" color="green" className="rounded-md flex gap-2" variant="outlined" onClick={() => handleAction(_id)}>
                               <ArrowPathIcon strokeWidth={1.5} stroke="currentColor" className="h-4 w-4" />
-
                               u n d o
                             </Button>
                           </Tooltip>
@@ -220,7 +208,6 @@ export function Department() {
         <Typography variant="small" color="blue-gray" className="font-normal">
         </Typography>
         <div className="flex items-center gap-2 text-white">
-
           <Button
             variant="text"
             className="flex items-center gap-2 text-white"

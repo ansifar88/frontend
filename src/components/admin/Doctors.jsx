@@ -1,5 +1,5 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { UserPlusIcon, NoSymbolIcon, ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/solid";
+import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/solid";
 import {
     Card,
     CardHeader,
@@ -12,14 +12,10 @@ import {
     TabsHeader,
     Tab,
     Avatar,
-    Tooltip,
-    Spinner,
     CardFooter
 } from "@material-tailwind/react";
 import dp from '../../logos/dp.png'
-
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { manageDoctor } from "../../api/adminApi";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { allDoctors } from "../../api/adminApi";
 import { ManageDoctor } from "./ManageDoctor";
@@ -40,23 +36,18 @@ export function Doctors() {
         return () => clearTimeout(timeoutId);
     }, [search]);
 
-    const queryClient = useQueryClient()
     const { isLoading, error, data } = useQuery({
         queryKey: ['doctor', { page: page, filter, search: debouncedSearch }],
         queryFn: () => allDoctors({ page: page, filter, search: debouncedSearch }).then((res) => res.data)
     })
-    //TAB CHANGE
 
     const handleTabChange = (tabValue) => {
         setFilter(tabValue);
     };
-    //SEARCH HANDLE
 
     const handleSearchChange = (event) => {
         setSearch(event.target.value);
     };
-
-    //PAGINATION HANDLE
 
     const handlePageChange = (newPage) => {
         const totalPages = Math.ceil(data.count / data.pageSize);
@@ -66,12 +57,8 @@ export function Doctors() {
         setPage(newPage);
     };
 
-    const handleAction = async (doctorId) => {
-        await manageDoctor(doctorId)
-        queryClient.invalidateQueries("doctor")
-    }
     if (isLoading) {
-        return <Loading/>
+        return <Loading />
     }
     if (error) {
         return <h1>Something went Wrong</h1>
@@ -142,7 +129,6 @@ export function Doctors() {
                                 const classes = isLast
                                     ? "p-4"
                                     : "p-4 border-b border-blue-gray-50";
-
                                 return (
                                     <tr key={name}>
                                         <td className={classes}>
@@ -166,7 +152,6 @@ export function Doctors() {
                                                 </div>
                                             </div>
                                         </td>
-
                                         <td className={classes}>
                                             <div className="w-max">
                                                 <Chip
@@ -188,12 +173,9 @@ export function Doctors() {
                                             </div>
                                         </td>
                                         <>
-
                                             <td className={classes}>
-                                                <ManageDoctor data={{ is_blocked: is_blocked, _id: _id ,name:name}}/>
+                                                <ManageDoctor data={{ is_blocked: is_blocked, _id: _id, name: name }} />
                                             </td>
-
-
                                         </>
                                     </tr>
                                 );
@@ -206,7 +188,6 @@ export function Doctors() {
                 <Typography variant="small" color="blue-gray" className="font-normal">
                 </Typography>
                 <div className="flex items-center gap-2 ">
-
                     <Button
                         variant="text"
                         className="flex items-center gap-2 text-white"

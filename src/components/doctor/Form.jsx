@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   Button,
   Dialog,
-  DialogHeader,
   DialogBody,
   DialogFooter,
   Input,
@@ -12,9 +11,7 @@ import {
   Textarea,
   Spinner,
 } from "@material-tailwind/react";
-
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-
 import { ProfileUpdateSchema } from "../../yup/validation";
 import { updateProfile } from "../../api/doctorApi";
 import { useFormik } from "formik";
@@ -57,7 +54,6 @@ export function Form() {
       formData.append("experience", values.experience);
       formData.append("description", values.description);
       formData.append("cunsultationFee", values.cunsultationFee);
-
       for (let i = 0; i < values.certificates.length; i++) {
         formData.append("certificates", values.certificates[i]);
       }
@@ -71,12 +67,10 @@ export function Form() {
     },
   });
   const queryClient = useQueryClient()
-
   const { isLoading, error, data } = useQuery({
     queryKey: ["department"],
     queryFn: () => doctorRequest.get("/department").then((res) => res.data),
   });
-
   if (isLoading) {
     return (
       <div>
@@ -84,11 +78,9 @@ export function Form() {
       </div>
     );
   }
-
   if (error) {
     return <h1>Something went wrong</h1>;
   }
-
   return (
     <>
       <Button onClick={handleOpen} variant="outlined">
@@ -101,7 +93,7 @@ export function Form() {
         className="rounded-none"
       >
         <div className="flex justify-center">
-        <Typography className="mt-8" variant="h5">COMPLETE PROFILE AND VERIFY</Typography>
+          <Typography className="mt-8" variant="h5">COMPLETE PROFILE AND VERIFY</Typography>
         </div>
         <DialogBody className="flex justify-center ">
           <form onSubmit={handleSubmit} encType="multipart/form-data" >
@@ -122,7 +114,6 @@ export function Form() {
                   </div>
                 )}
                 <div className="flex justify-between gap-2">
-
                   <Select
                     variant="standard"
                     name="department"
@@ -160,7 +151,6 @@ export function Form() {
                     {errors.department}
                   </div>
                 )}
-
                 <div className="flex justify-between gap-2">
                   <div className="flex flex-col">
                     <Input
@@ -195,7 +185,6 @@ export function Form() {
                     )}
                   </div>
                 </div>
-
                 <Textarea
                   size="lg"
                   variant="standard"
@@ -210,9 +199,7 @@ export function Form() {
                     {errors.description}
                   </div>
                 )}
-
                 <Typography className="text-xs"># a short description about you .</Typography>
-
                 <Input
                   size="lg"
                   type="file"
@@ -245,21 +232,18 @@ export function Form() {
               >
                 <span>Cancel</span>
               </Button>
-
               {loading ?
                 <Button variant="filled" color="green" disabled>
-                <span>please wait .......</span>
-              </Button>
-              :
+                  <span>please wait .......</span>
+                </Button>
+                :
                 <Button variant="filled" type="submit" color="green">
-                <span>update & verify</span>
-              </Button>
+                  <span>update & verify</span>
+                </Button>
               }
-
             </DialogFooter>
           </form>
         </DialogBody>
-
       </Dialog>
     </>
   );
