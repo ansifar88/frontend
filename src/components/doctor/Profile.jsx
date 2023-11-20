@@ -110,7 +110,7 @@ const Profile = () => {
                                 </Card>
                             </div>
                         ) : (
-                            <div className="flex justify-center text-red-700 animate-bounce">
+                            <div className="flex justify-center items-center text-red-700 animate-pulse">
                                 <ExclamationCircleIcon className="h-7 w-7 me-6" /> <Typography>Please complete your profile and verify</Typography>
                             </div>
                         )

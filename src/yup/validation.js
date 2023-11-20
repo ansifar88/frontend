@@ -85,8 +85,8 @@ export const userProfileUpdateSchema = Yup.object({
   gender: Yup.string().required("Choose Gender"),
   city: Yup.string().required("Choose city"),
   dob: Yup.string().required("Choose DOB"),
-  height: Yup.number().trim().max(400).required("Enter your Height"),
-  weight: Yup.number().trim().max(300).required("Enter your Weight"),
+  height: Yup.number().max(400).required("Enter your Height"),
+  weight: Yup.number().max(300).required("Enter your Weight"),
   blood: Yup.string().trim().required("Enter your Blood Group"),
 });
 export const userEditProfileSchema = Yup.object({
@@ -94,8 +94,8 @@ export const userEditProfileSchema = Yup.object({
   gender: Yup.string().required("Choose Gender"),
   city: Yup.string().required("Choose city"),
   dob: Yup.string().required("Choose DOB"),
-  height: Yup.number().trim().max(400).required("Enter your Height"),
-  weight: Yup.number().trim().max(300).required("Enter your Weight"),
+  height: Yup.number().max(400).required("Enter your Height"),
+  weight: Yup.number().max(300).required("Enter your Weight"),
   blood: Yup.string().trim().required("Enter your Blood Group"),
 });
 

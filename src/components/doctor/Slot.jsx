@@ -6,6 +6,7 @@ import {
     Option,
     Spinner,
     Chip,
+    Button,
 } from "@material-tailwind/react";
 import { ClockIcon, InformationCircleIcon } from '@heroicons/react/24/outline'
 import { AddSlot } from "./AddSlot";
@@ -13,6 +14,8 @@ import { Appointments } from "./Appointments";
 import { useQuery } from "@tanstack/react-query";
 import doctorRequest from "../../utils/doctorRequest";
 import { useState } from "react";
+import { GenerateError, GenerateSuccess } from "../../toast/GenerateError";
+import { ToastContainer, toast } from "react-toastify";
 export function Slot() {
     const [selectedDate, setSelectedDate] = useState("");
     const { isLoading: dateisLoading, error: dateError, data: dateData } = useQuery({
@@ -24,7 +27,9 @@ export function Slot() {
         () => doctorRequest.get(`/slots?date=${selectedDate}`).then((res) => res.data),
         { retry: false }
     );
-
+const handleToast = () => {
+    toast.warn("please virify your account to add slot")
+}
     if (dateisLoading) {
         return <div className="h-screen flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>
     }
@@ -33,6 +38,7 @@ export function Slot() {
     }
     return (
         <>
+        <ToastContainer/>
             <div className="container mx-auto">
                 <div className="m-3 flex items-center justify-between gap-8 bg-[#A8C2D0] rounded-md p-3">
                     <div>
@@ -44,7 +50,13 @@ export function Slot() {
                         </Typography>
                     </div>
                     <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-                        <AddSlot />
+                        {dateData && dateData.doctor.verified ?
+                            <AddSlot />
+                            :
+                            <Button onClick={handleToast} variant="filled" className="bg-[#5d7582]">
+                                add slot
+                            </Button>
+                        }
                     </div>
                 </div>
                 <div className="grid md:grid-cols-2">
