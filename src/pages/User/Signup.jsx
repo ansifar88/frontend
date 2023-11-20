@@ -20,6 +20,7 @@ import { useFormik } from 'formik';
 function Signup() {
   const navigate = useNavigate()
   const [guser, setGUser] = useState([]);
+  const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
   const initialValues = {
     name: "",
@@ -38,15 +39,17 @@ function Signup() {
     initialValues: initialValues,
     validationSchema: SignupSchema,
     onSubmit: async (values, { resetForm }) => {
+      setLoading(true)
       const response = await userSignup(values)
       if (response.data.created) {
         resetForm(initialValues);
         GenerateSuccess(response.data.message);
+        setLoading(false)
       } else {
         resetForm(initialValues);
         GenerateError(response.data.message);
+        setLoading(false)
       }
-
     }
   })
   const Gsignup = useGoogleLogin({
@@ -149,9 +152,15 @@ function Signup() {
                   </div>
                   <div className="flex items-start justify-between">
                     <img src={google} className='h-12 w-12 mt-4 cursor-pointer rounded-full bg-white hover:bg-blue-gray-900 p-2' onClick={() => Gsignup()} />
-                    <Button className="mt-4" variant="filled" type='submit' color="blue">
-                      Sign up
-                    </Button>
+                    {loading ?
+                      <Button className="mt-4 disabled" variant="filled" color="blue">
+                        Please wait...
+                      </Button>
+                      :
+                      <Button className="mt-4" variant="filled" type='submit' color="blue">
+                        Sign up
+                      </Button>
+                    }
                   </div>
                   <Typography color="white" className="mt-4 text-center font-normal">
                     Already have an account ?{"  "}

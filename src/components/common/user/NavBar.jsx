@@ -25,16 +25,13 @@ import {
   DocumentCheckIcon
 } from "@heroicons/react/24/outline";
 import { Sidebar } from "../user/Sidebar";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 function MenuLists() {
-  const { userInfo } = useSelector(state => state.user)
-  const id = userInfo.id
   const navigate = useNavigate()
 
   const profileNavigate = async () => {
-    navigate('/profile/', { state: { id } })
+    navigate('/profile')
   }
   const dispatch = useDispatch()
 

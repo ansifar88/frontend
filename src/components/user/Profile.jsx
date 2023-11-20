@@ -16,8 +16,6 @@ import { GenerateError } from "../../toast/GenerateError";
 import { useState } from "react";
 
 export default function Profile() {
-  const location = useLocation();
-  const id = location.state && location.state.id;
   const navigate = useNavigate()
   const [open, setOpen] = useState(null);
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
@@ -27,7 +25,7 @@ export default function Profile() {
   }
   const { isLoading, error, data } = useQuery({
     queryKey: ['profile'],
-    queryFn: () => userRequest.get(`/profile/${id}`).then((res) => res.data),
+    queryFn: () => userRequest.get(`/profile`).then((res) => res.data),
   });
   if (isLoading) {
     return <>
