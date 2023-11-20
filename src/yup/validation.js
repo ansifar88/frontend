@@ -1,25 +1,26 @@
 import * as Yup from "yup";
 const imageFormats = ["image/jpeg", "image/png", "image/avif"];
+
 export const LoginSchema = Yup.object({
-  email: Yup.string().email().required("Please Enter Your email id"),
-  password: Yup.string().min(4).required("Please enter password"),
+  email: Yup.string().trim().email().required("Please Enter Your email id"),
+  password: Yup.string().trim().min(4).required("Please enter password"),
 });
 
 export const SignupSchema = Yup.object({
-  name: Yup.string().min(2).max(20).required("Please Enter Your Name"),
-  email: Yup.string().email().required("Please Enter Your email"),
-  mobile: Yup.string()
+  name: Yup.string().trim().min(2).max(20).required("Please Enter Your Name"),
+  email: Yup.string().trim().email().required("Please Enter Your email"),
+  mobile: Yup.string().trim()
     .required("Please Enter Your Mobile Number")
     .matches(/^\d{10}$/, "Mobile number must have 10 digits"),
-  password: Yup.string().min(4).required("Please enter password"),
+  password: Yup.string().trim().min(4).required("Please enter password"),
 });
 
 export const DepartmentSchema = Yup.object({
-  departmentName: Yup.string()
+  departmentName: Yup.string().trim()
     .min(2)
     .max(50)
     .required("Please enter department Name"),
-  description: Yup.string()
+  description: Yup.string().trim()
     .min(2)
     .max(100)
     .required("Please enter description"),
@@ -31,10 +32,10 @@ export const ProfileUpdateSchema = Yup.object({
     .max(30)
     .required("Please enter your current hospital"),
   department: Yup.string(),
-  qualification: Yup.string().min(2).required("enter qualifiation"),
-  experience: Yup.string().required("enter years of experience"),
-  cunsultationFee: Yup.string().required("enter your cunsultation Fee"),
-  description: Yup.string()
+  qualification: Yup.string().trim().min(2).required("enter qualifiation"),
+  experience: Yup.string().trim().required("enter years of experience"),
+  cunsultationFee: Yup.string().trim().required("enter your cunsultation Fee"),
+  description: Yup.string().trim()
     .min(10)
     .max(1000)
     .required("please provide a description"),
@@ -54,16 +55,16 @@ export const ProfileUpdateSchema = Yup.object({
 });
 
 export const doctorEditProfileSchema = Yup.object({
-  name: Yup.string().min(3).required("please Enter Your name"),
-  currentHospital: Yup.string()
+  name: Yup.string().trim().min(3).required("please Enter Your name"),
+  currentHospital: Yup.string().trim()
     .min(3)
     .max(30)
     .required("Please enter your current hospital"),
   department: Yup.string().required("choose a department"),
-  qualification: Yup.string().min(2).required("enter qualifiation"),
-  experience: Yup.string().required("enter years of experience"),
-  cunsultationFee: Yup.string().required("enter your cunsultation Fee"),
-  description: Yup.string()
+  qualification: Yup.string().trim().min(2).required("enter qualifiation"),
+  experience: Yup.string().trim().required("enter years of experience"),
+  cunsultationFee: Yup.string().trim().required("enter your cunsultation Fee"),
+  description: Yup.string().trim()
     .min(10)
     .max(1000)
     .required("please provide a description"),
@@ -84,22 +85,22 @@ export const userProfileUpdateSchema = Yup.object({
   gender: Yup.string().required("Choose Gender"),
   city: Yup.string().required("Choose city"),
   dob: Yup.string().required("Choose DOB"),
-  height: Yup.number().max(400).required("Enter your Height"),
-  weight: Yup.number().max(300).required("Enter your Weight"),
-  blood: Yup.string().required("Enter your Blood Group"),
+  height: Yup.number().trim().max(400).required("Enter your Height"),
+  weight: Yup.number().trim().max(300).required("Enter your Weight"),
+  blood: Yup.string().trim().required("Enter your Blood Group"),
 });
 export const userEditProfileSchema = Yup.object({
-  name: Yup.string().required("Enter Your Name"),
+  name: Yup.string().trim().required("Enter Your Name"),
   gender: Yup.string().required("Choose Gender"),
   city: Yup.string().required("Choose city"),
   dob: Yup.string().required("Choose DOB"),
-  height: Yup.number().max(400).required("Enter your Height"),
-  weight: Yup.number().max(300).required("Enter your Weight"),
-  blood: Yup.string().required("Enter your Blood Group"),
+  height: Yup.number().trim().max(400).required("Enter your Height"),
+  weight: Yup.number().trim().max(300).required("Enter your Weight"),
+  blood: Yup.string().trim().required("Enter your Blood Group"),
 });
 
 export const rejectDoctorSchema = Yup.object({
-  reason: Yup.string().max(100).required("Please Give a Reason for Rejection"),
+  reason: Yup.string().trim().max(100).required("Please Give a Reason for Rejection"),
 });
 
 export const slotSchema = Yup.object().shape({
