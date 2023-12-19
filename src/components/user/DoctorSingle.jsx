@@ -80,16 +80,11 @@ export function DoctorSingle() {
   }
 
   if (docError) {
-    if (docError.response) {
-      if (docError.response.status === 403) {
-        GenerateError(docError.response.docData.data.message);
-        localStorage.removeItem("currentUser");
-        navigate("/login");
-      } else {
+  
         return <p>Something went wrong</p>;
-      }
+      
     }
-  }
+  
 
   return (
     <>

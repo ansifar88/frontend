@@ -34,16 +34,8 @@ export default function Profile() {
   }
 
   if (error) {
-    if (error.response) {
-      if (error.response.status === 403) {
-        GenerateError(error.response.data.data.message)
-        localStorage.removeItem("currentUser")
-        navigate("/login")
-      }
+    return <p>somthing went wrong</p>
 
-    } else {
-      return <p>somthing went wrong</p>
-    }
   }
 
   const Dob = formatDate(data.data.dob);

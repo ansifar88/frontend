@@ -20,15 +20,9 @@ export function Doctors() {
         return <Loading />
     }
     if (error) {
-        if (error.response) {
-            if (error.response.status === 403) {
-                GenerateError(error.response.data.data.message)
-                localStorage.removeItem("currentUser")
-                navigate("/login")
-            }
-        } else {
+       
             return <p>somthing went wrong</p>
-        }
+        
     }
     return (
         <>

@@ -31,16 +31,9 @@ export default function Profile() {
     return <div className="h-screen flex justify-center items-center"><Spinner color="blue" className="h-10 w-10 " /></div>
   }
   if (error) {
-    if (error.response) {
-      if (error.response.status === 403) {
-        GenerateError(error.response.data.data.message)
-        localStorage.removeItem("currentDoctor")
-        navigate("/doctor/login")
-      }
 
-    } else {
       return <p>somthing went wrong</p>
-    }
+    
 
   }
   return (
