@@ -1,70 +1,103 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Advent+Pro:wght@200&family=Poppins:wght@200&family=Tourney:wght@100&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Advent+Pro:wght@200&family=Exo&family=Poppins:wght@200&family=Tourney:wght@100&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Exo:ital,wght@1,300&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Advent+Pro:wght@200&family=Poppins:wght@200&family=Tourney:wght@100&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Advent+Pro:wght@200&family=Exo&family=Poppins:wght@200&family=Tourney:wght@100&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Exo:ital,wght@1,300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
 .font {
   font-family: "Poppins", sans-serif !important;
 }
 .docHead {
-    font-family: 'Advent Pro', sans-serif !important;
-    
+  font-family: "Advent Pro", sans-serif !important;
 }
 .docName {
-    font-family: 'Exo', sans-serif !important;
+  font-family: "Exo", sans-serif !important;
 }
 .contents {
-    font-family: 'Exo', sans-serif;
+  font-family: "Exo", sans-serif;
 }
 .navhead {
-    font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .scrollBar {
-    --sb-track-color: #ffffff;
-    --sb-thumb-color: #023E8A;
-  
-    --sb-size: 8px;
-  
-    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
-  }
-  
-  .scrollBar::-webkit-scrollbar {
-    width: var(--sb-size);
-  }
-  
-  .scrollBar::-webkit-scrollbar-track {
-    background: var(--sb-track-color);
-    border-radius: 5px;
-  }
-  
-  .scrollBar::-webkit-scrollbar-thumb {
-    background: var(--sb-thumb-color);
-    border-radius: 5px;
-  }
+  --sb-track-color: #ffffff;
+  --sb-thumb-color: #023e8a;
+
+  --sb-size: 8px;
+
+  scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+}
+
+.scrollBar::-webkit-scrollbar {
+  width: var(--sb-size);
+}
+
+.scrollBar::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 5px;
+}
+
+.scrollBar::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 5px;
+}
 
 .scrollBarDoctor {
-    --sb-track-color: #828282;
-    --sb-thumb-color: #fff;
-  
-    --sb-size: 8px;
-  
-    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
-  }
-  
-  .scrollBarDoctor::-webkit-scrollbar {
-    width: var(--sb-size);
-  }
-  
-  .scrollBarDoctor::-webkit-scrollbar-track {
-    background: var(--sb-track-color);
-    border-radius: 5px;
-  }
-  
-  .scrollBarDoctor::-webkit-scrollbar-thumb {
-    background: var(--sb-thumb-color);
-    border-radius: 5px;
-  }
+  --sb-track-color: #828282;
+  --sb-thumb-color: #fff;
 
-  
-  
+  --sb-size: 8px;
+
+  scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+}
+
+.scrollBarDoctor::-webkit-scrollbar {
+  width: var(--sb-size);
+}
+
+.scrollBarDoctor::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 5px;
+}
+
+.scrollBarDoctor::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 5px;
+}
+
+.feature {
+  display: flex;
+  justify-content: space-between;
+  width: 30rem;
+}
+
+@media (max-width: 767px) {
+  .feature {
+    display: none;
+  }
+}
+.featureItem {
+  font-size: 18px;
+  font-weight: 400;
+  color: #fff;
+  position: relative;
+  font-family: "Poppins", sans-serif !important;
+
+}
+.featureItem::after {
+  content: "";
+  position: absolute;
+  line-height: 28px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  border-radius: 10%;
+  background-color: #fff;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: 0.2s;
+}
+.featureItem:hover:after {
+  transform: scaleX(1);
+}

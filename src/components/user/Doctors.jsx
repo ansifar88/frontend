@@ -10,7 +10,11 @@ import { useQuery } from "@tanstack/react-query";
 import userRequest from "../../utils/userRequest";
 import { useNavigate } from "react-router-dom";
 import { GenerateError } from "../../toast/GenerateError";
+import { useState } from "react";
+import Select from 'react-select';
+
 export function Doctors() {
+    const [selectedOption, setSelectedOption] = useState(null);
     const navigate = useNavigate()
     const { isLoading, error, data } = useQuery({
         queryKey: ['doctors'],
@@ -20,17 +24,30 @@ export function Doctors() {
         return <Loading />
     }
     if (error) {
-       
-            return <p>somthing went wrong</p>
-        
+
+        return <p>somthing went wrong</p>
+
     }
+    const options = [
+        { value: 'chocolate', label: 'Chocolate' },
+        { value: 'strawberry', label: 'Strawberry' },
+        { value: 'vanilla', label: 'Vanilla' },
+    ];
     return (
-        <>
+        <> 
             <div className="container mx-auto">
                 <div className={`flex justify-center items-center h-24 md:h-52 ms-5 mt-4 rounded-lg bg-[url('https://images.unsplash.com/photo-1643780668909-580822430155?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80')]`}>
                     <Typography color="white" className="docHead animate-head text-xl md:text-4xl">WE ARE HERE TO CURE YOU</Typography>
                 </div>
                 <div className={`flex justify-center items-center md:h-10 bg-[#CAF0F8] ms-5 mt-4 rounded-lg `}>
+                    <Select
+                        defaultValue="select"
+                        isMulti
+                        name="colors"
+                        options={options}
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                    />
                 </div>
                 <div className="grid sm:grid-cols-2 mb-5">
                     {data.data.map(

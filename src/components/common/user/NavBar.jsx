@@ -60,22 +60,19 @@ function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const closeMenu = () => setIsMenuOpen(false);
   return (
-    <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
+    <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end fixed">
       <MenuHandler>
         <Button
           variant="text"
           color="blue-gray"
           className="flex items-center gap-1 rounded-full py-0.5 pr-2 me-8 pl-0.5 lg:ml-auto"
         >
-          <Avatar
-            variant="circular"
-            size="sm"
-            alt="tania andrew"
-            className="border border-gray-900 p-0.5"
+          <img
+            className="border border-gray-900 p-0.5 h-10 w-112"
             src={dp} />
           <ChevronDownIcon
             strokeWidth={2.5}
-            className={`h-3 w-3 transition-transform ${isMenuOpen ? "rotate-180" : ""
+            className={`h-5 w-5 transition-transform text-white ${isMenuOpen ? "rotate-180" : ""
               }`}
           />
         </Button>
@@ -98,24 +95,10 @@ export function NavBar() {
   const [open, setOpen] = React.useState(false);
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
-  const [isHoveredDoctor, setIsHoveredDoctor] = useState(false);
-  const [isHoveredAppointments, setIsHoveredAppointments] = useState(false);
-  const [isHoveredChats, setIsHoveredChats] = useState(false);
-  const toggleHoverDoctor = () => {
-    setIsHoveredDoctor(!isHoveredDoctor);
-  };
-
-  const toggleHoverAppointments = () => {
-    setIsHoveredAppointments(!isHoveredAppointments);
-  };
-
-  const toggleHoverChats = () => {
-    setIsHoveredChats(!isHoveredChats);
-  };
   const navigate = useNavigate()
 
   return (
-    <navbar className={`  lg:roun  ded-none   fixed top-0 left-0 right-0 bg-[#023E8A] z-50`}>
+    <navbar className={`lg:rounded-none   fixed top-0 left-0 right-0 bg-[#023E8A] z-50`}>
       <div className="relative mx-auto flex items-center text-blue-gray-900 py-3 bg-[#023E8A] ">
         <Drawer open={open} onClose={closeDrawer} className="bg-[#09264b]">
           <div className="mb-2 flex items-center justify-between p-4 ">
@@ -157,56 +140,37 @@ export function NavBar() {
         >
         </IconButton>
         <div className="w-full flex justify-around">
-          <div className="flex justify-between w-[40rem]  invisible md:visible">
-            <Button variant="text"
+          <div className="feature ">
+            <div
               onClick={() => navigate('/doctors')}
-              className=" flex items-center"
-              onMouseEnter={toggleHoverDoctor}
-              onMouseLeave={toggleHoverDoctor}
+              className=" flex items-center cursor-pointer"
             >
-              <UserGroupIcon
-                className={`w-6 h-6 text-white me-3 absolute ${isHoveredDoctor ? 'opacity-100' : 'opacity-0'
-                  }`}
-              />
-              <Typography
-                className={`text-white text-lg ${isHoveredDoctor ? 'ml-8' : 'ml-auto'} transition-all`}
+              <p
+                className={`featureItem`}
               >
                 Doctors
-              </Typography>
-            </Button>
-            <Button variant="text"
+              </p>
+            </div>
+            <div
               onClick={() => navigate('/appointments')}
-              className=" flex items-center "
-              onMouseEnter={toggleHoverAppointments}
-              onMouseLeave={toggleHoverAppointments}
+              className=" flex items-center cursor-pointer  "
             >
-              <DocumentCheckIcon
-                className={`w-6 h-6 text-white me-3 absolute ${isHoveredAppointments ? 'opacity-100' : 'opacity-0'
-                  }`}
-              />
-              <Typography
-                className={`text-white text-lg ${isHoveredAppointments ? 'ml-8' : 'ml-auto'} transition-all`}
+              <p
+                className={`  featureItem`}
               >
                 Appointments
-              </Typography>
-            </Button >
-
-            <Button variant="text"
+              </p>
+            </div >
+            <div
               onClick={() => navigate('/chats')}
-              className=" flex items-center"
-              onMouseEnter={toggleHoverChats}
-              onMouseLeave={toggleHoverChats}
+              className=" flex items-center cursor-pointer "
             >
-              < ChatBubbleLeftRightIcon
-                className={`w-6 h-6 text-white me-3 absolute ${isHoveredChats ? 'opacity-100' : 'opacity-0'
-                  }`}
-              />
-              <Typography
-                className={`text-white text-lg ${isHoveredChats ? 'ml-8' : 'ml-auto'} transition-all`}
+              <p
+                className={`featureItem`}
               >
                 Chats
-              </Typography>
-            </Button>
+              </p>
+            </div>
           </div>
         </div>
         <ProfileMenu />

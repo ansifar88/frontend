@@ -52,7 +52,7 @@ const Profile = () => {
                                     <img src={data.data.displaypicture ? data.data.displaypicture : dp} alt="profile-picture" className="rounded-full   md:h-80 md:w-80 ms-0 shadow-lg" />
                                 </Badge>
                             </div>
-                            <CardBody className="text-center">
+                            <CardBody className="text-center  ">
                                 <div className="flex justify-center items-center">
                                     <Typography variant="h4" color="blue-gray" className="mb-2">
                                         {data.data.name}
@@ -73,7 +73,7 @@ const Profile = () => {
                                 <Typography color="blue-gray" className="font-medium" textGradient>
                                     Bio
                                 </Typography>
-                                <Typography color="blue-gray" className="font-medium italic text-white" textGradient>
+                                <Typography color="blue-gray" className="font-medium italic text-white h-20 scrollBarDoctor overflow-y-scroll" textGradient>
                                     {data.data.description}
                                 </Typography>
                             </CardBody>
