@@ -94,7 +94,7 @@ export function Doctors() {
                     }
                 </div>
             </div>
-            <Pagination />
+            
         </>
     );
 }
