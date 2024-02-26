@@ -3,15 +3,15 @@ import { Typography } from "@material-tailwind/react";
 const LINKS = [
   {
     title: "Product",
-    items: ["Overview", "Features"],
+    items: ["Overview"],
   },
   {
     title: "Company",
-    items: ["About us", "Careers"],
+    items: ["About us"],
   },
   {
     title: "Resource",
-    items: ["Blog", "Help center"],
+    items: ["Blog"],
   },
 ];
  

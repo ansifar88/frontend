@@ -8,7 +8,7 @@ function Banner() {
   return (
     <Card
       shadow={false}
-      className="relative  h-screen w-[98.9vw] rounded-none items-end justify-center overflow-hidden text-center"
+      className="relative  h-screen w-[98.9vw] rounded-none items-end justify-center overflow-hidden text-center -mt-20"
     >
       <CardHeader
         floated={false}

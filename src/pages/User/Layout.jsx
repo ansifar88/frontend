@@ -11,7 +11,7 @@ function Layout() {
         <div>
           <NavBar />
         </div>
-        <div className='h-auto min-h-screen  bg-blue-100'>
+        <div className='h-auto min-h-screen  bg-blue-50'>
           <Outlet />
         </div>
         <div>

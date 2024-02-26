@@ -12,15 +12,23 @@ import { useNavigate } from "react-router-dom";
 import { GenerateError } from "../../toast/GenerateError";
 import { useState } from "react";
 import Select from 'react-select';
+import SearchFilter from "./SearchFilter";
+import Pagination from "./Pagination";
+import { allDoctors } from "../../api/userApi";
 
 export function Doctors() {
-    const [selectedOption, setSelectedOption] = useState(null);
+    const [filter, setFilter] = useState([]);
+    const [search, setSearch] = useState("");
     const navigate = useNavigate()
     const { isLoading, error, data } = useQuery({
-        queryKey: ['doctors'],
-        queryFn: () => userRequest.get('/doctors').then((res) => res.data),
+        queryKey: ['doctors', { filter, search }], 
+        queryFn: () => allDoctors({ filter, search })
+        // queryFn: () => userRequest.get('/doctors').then((res) => res.data),
+        
     })
+    // console.log(data ? data.data.data :"","daaasta");
     if (isLoading) {
+        
         return <Loading />
     }
     if (error) {
@@ -28,29 +36,22 @@ export function Doctors() {
         return <p>somthing went wrong</p>
 
     }
-    const options = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' },
-    ];
+    const handleSearchFilter = (filter, search) => {
+        setFilter(filter)
+        setSearch(search)
+    }
     return (
-        <> 
+        <>
             <div className="container mx-auto">
                 <div className={`flex justify-center items-center h-24 md:h-52 ms-5 mt-4 rounded-lg bg-[url('https://images.unsplash.com/photo-1643780668909-580822430155?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80')]`}>
                     <Typography color="white" className="docHead animate-head text-xl md:text-4xl">WE ARE HERE TO CURE YOU</Typography>
                 </div>
-                <div className={`flex justify-center items-center md:h-10 bg-[#CAF0F8] ms-5 mt-4 rounded-lg `}>
-                    <Select
-                        defaultValue="select"
-                        isMulti
-                        name="colors"
-                        options={options}
-                        className="basic-multi-select"
-                        classNamePrefix="select"
-                    />
-                </div>
+                {/* {data.data ? 
+                    <SearchFilter option={data.data.departments} handler={handleSearchFilter} />
+                : ""
+                } */}
                 <div className="grid sm:grid-cols-2 mb-5">
-                    {data.data.map(
+                    {data.data && data?.data.data.map(
                         ({ name, currentHospital, _id, department, qualification, displaypicture }) => (
                             <Card key={_id} shadow={true} className=" animate-showcontent  border-x-8 border-e-[#CAF0F8] border-x-[#023E8A] col-span-1  sm:w-72 h-28 md:w-full md:h-52 max-w-[40rem] bg-[#CAF0F8] mt-5  mx-5 hover:bg-[#84d0fb] cursor-pointer" onClick={() => navigate('/doctorview', { state: { _id } })}>
                                 <CardHeader
@@ -85,9 +86,15 @@ export function Doctors() {
                                 </CardHeader>
                             </Card>
                         ))
+                    //      : (
+                    //     <div className="flex justify-center items-center">
+                    //         <Typography variant="h1">NO DOCTORS FOUND</Typography>
+                    //     </div>
+                    // )
                     }
                 </div>
             </div>
+            <Pagination />
         </>
     );
 }

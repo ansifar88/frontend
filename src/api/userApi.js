@@ -28,6 +28,14 @@ export const UserSignupWithGoogle = (data) =>{
     withCredentials:true
   })
 } 
+export const allDoctors = async ({ filter, search }) => {
+  return userRequest.get("/doctors", {
+    params: {
+      filter,
+      search,
+    },
+  });
+};
 
 export const updateProfile =(data,id)=>{
   try {

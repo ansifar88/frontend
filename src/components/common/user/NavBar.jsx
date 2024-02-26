@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import dp from '../../../logos/dp.png'
 import vclogo from '../../../logos/logonobackground.png'
 import { useDispatch } from "react-redux";
 import { Logoutdetails } from "../../../Redux/UserSlice";
+import { useLocation } from 'react-router-dom';
 import {
   Typography,
   Button,
@@ -85,8 +86,9 @@ function ProfileMenu() {
 export function NavBar() {
   const [isNavOpen, setIsNavOpen] = React.useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
   const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener(
       "resize",
       () => window.innerWidth >= 960 && setIsNavOpen(false),
@@ -97,9 +99,42 @@ export function NavBar() {
   const closeDrawer = () => setOpen(false);
   const navigate = useNavigate()
 
+
+  const [navbarColor, setNavbarColor] = useState();
+  const handleWindowResize = () =>
+    window.innerWidth >= 960 && setIsNavOpen(false);
+  const handleScroll = () => {
+    const offset = window.scrollY;
+    if (location.pathname === "/") {
+      if (offset > 50) {
+
+        setNavbarColor("#023E8A");
+      } else {
+        setNavbarColor("#ffffff00");
+      }
+    } else {
+      setNavbarColor("#023E8A");
+    }
+  };
+  useEffect(() => {
+    console.log(location, "paaath");
+    if (location.pathname === "/") {
+
+      window.addEventListener("resize", handleWindowResize);
+      window.addEventListener("scroll", handleScroll);
+    }
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [location.pathname]);
+  useEffect(() => {
+
+    handleScroll();
+  }, [location.pathname]);
   return (
-    <navbar className={`lg:rounded-none   fixed top-0 left-0 right-0 bg-[#023E8A] z-50`}>
-      <div className="relative mx-auto flex items-center text-blue-gray-900 py-3 bg-[#023E8A] ">
+    <navbar className={`lg:rounded-none  navbar fixed top-0 left-0 right-0  z-50`} style={{ backgroundColor: navbarColor }}>
+      <div className="relative mx-auto flex items-center text-blue-gray-900 py-3  ">
         <Drawer open={open} onClose={closeDrawer} className="bg-[#09264b]">
           <div className="mb-2 flex items-center justify-between p-4 ">
             <Typography variant="h5" color="white">
