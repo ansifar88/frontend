@@ -46,7 +46,7 @@ const handleToast = () => {
                             SLOTS AND BOOKINGS
                         </Typography>
                         <Typography color="gray" className="mt-1 font-normal">
-                            See information about provided slotes and Bookings
+                            See information about provided slots and Bookings
                         </Typography>
                     </div>
                     <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
@@ -62,7 +62,7 @@ const handleToast = () => {
                 <div className="grid md:grid-cols-2">
                     <div className="col-span-1">
                         <Card className="my-3 mx-3 rounded-md p-3  bg-[#A8C2D0] ">
-                            <Typography variant="h5" className="text-blue-gray-900 ">Given Slotes</Typography>
+                            <Typography variant="h5" className="text-blue-gray-900 ">Given Slots</Typography>
                         </Card>
                         <Card className="my-3 mx-3 rounded-md min-h-[20rem] p-3  bg-[#A8C2D0] ">
                             <div className="my-2">

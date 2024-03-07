@@ -9,7 +9,7 @@ export function Success() {
       <div className="h-screen flex flex-col justify-center items-center">
         <div className="p-5 h-96 flex flex-col justify-center items-center bg-transparent">
           <CheckCircleIcon className="h-20 w-20 md:h-52 md:w-52 text-green-500" />
-          <Typography variant="h3" className="text-green-500">YOUR SLOT IS BOOKED SUUCESSFULLY</Typography>
+          <Typography variant="h3" className="text-green-500">YOUR SLOT IS BOOKED SUCCESSFULLY</Typography>
           <Typography variant="h5" className="m-3">thank you for choosing us </Typography>
           <Button variant="outlined" color="blue" onClick={() => navigate("/doctors")}>take me to home </Button>
         </div>

@@ -82,9 +82,10 @@ export const Appointments = () => {
                                         </Typography>
                                     </div>
                                     <div>
-                                        <Typography color={appointment.status == "notCunsulted" ? "blue-gray" : "red"} className="mb-2">
-                                            Status: {appointment.status}
+                                        <Typography color={appointment.status === "notConsulted" ? "blue-gray" : "red"} className="mb-2">
+                                            Status: {appointment.status === "notConsulted" ? "Not Consulted" : appointment.status === "cancelled" ? "Cancelled" : "Consulted"}
                                         </Typography>
+
                                     </div>
                                     {appointment.AppoinmentStatus === "active" && appointment.isConsulted === false && appointment.status === "notConsulted" ? (
                                         <div className='flex'>

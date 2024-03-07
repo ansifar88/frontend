@@ -79,7 +79,7 @@ export function Appointments() {
                                 size="md"
                                 color={appointments.status === "cancelled" ? "red" : "cyan"}
                                 className=" text-center"
-                                value={appointments.status}
+                                value={appointments.status === "cancelled" ? "cancelled" : "not cunsulted"}
                             />
                             {appointments.callId && appointments.status == "notConsulted" && appointments.AppoinmentStatus == "active" ? (
                                 <Button
