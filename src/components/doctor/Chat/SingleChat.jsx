@@ -1,21 +1,18 @@
 import { FormControl } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Box, Text } from "@chakra-ui/layout";
-import { IconButton, Spinner, useToast } from "@chakra-ui/react";
+import { IconButton, Spinner } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 // import './style.css'
-import {GenerateError} from '../../../toast/GenerateError'
+import { GenerateError } from '../../../toast/GenerateError'
 import io from "socket.io-client";
 import { ChatState } from "./Components/Context/ChatProvider";
-import Lottie from "lottie-react";
 import animationData from './typing.json'
 import userRequest from "../../../utils/userRequest";
 import doctorRequest from "../../../utils/doctorRequest";
 import ScrollableChat from "./Components/ScrollableChat";
-import { Button } from "@material-tailwind/react";
 import { ToastContainer } from "react-toastify";
-// const ENDPOINT = "http://localhost:8801";
 const ENDPOINT = import.meta.env.VITE_BACKENDURL;
 var socket, selectedChatCompare;
 
@@ -26,12 +23,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [socketConnected, setSocketConnected] = useState(false);
   const [typing, setTyping] = useState(false);
   const [istyping, setIsTyping] = useState(false);
-  // const toast = useToast();
 
   const defaultOptions = {
     loop: true,
     autoplay: true,
-    animationData:animationData,
+    animationData: animationData,
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice",
     },
@@ -39,7 +35,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const { selectedChat, setSelectedChat, user, notification, setNotification } =
     ChatState();
 
-  const  fetchMessages = async () => {
+  const fetchMessages = async () => {
     if (!selectedChat) return;
 
     try {
@@ -61,15 +57,15 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       socket.emit("join chat", selectedChat._id);
     } catch (error) {
       GenerateError(
-       
-         "Failed to Load the Messages"
-        );
+
+        "Failed to Load the Messages"
+      );
     }
   };
 
   const sendMessage = async (event) => {
-      console.log(event.key,"in.........");
-      if (event.key === "Enter" && newMessage) {
+    console.log(event.key, "in.........");
+    if (event.key === "Enter" && newMessage) {
       socket.emit("stop typing", selectedChat._id);
       try {
         // const config = {
@@ -84,11 +80,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           {
             content: newMessage,
             chatId: selectedChat,
-            userId:user.id
+            userId: user.id
           },
-        //   config
+          //   config
         );
-       
+
         socket.emit("new message", data);
         setMessages([...messages, data]);
       } catch (error) {
@@ -118,7 +114,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const handleNewMessageReceived = (newMessageReceived) => {
       console.log('New message received:', newMessageReceived);
       console.log('Selected chat compare:', selectedChatCompare);
-  
+
       if (
         !selectedChatCompare || // If chat is not selected or doesn't match the current chat
         selectedChatCompare._id !== newMessageReceived.chat._id
@@ -132,19 +128,19 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         setMessages([...messages, newMessageReceived]);
       }
     };
-  
+
     // Register the event listener
     socket.on("message received", handleNewMessageReceived);
-  
+
     // Cleanup: Remove the event listener when the component unmounts
     return () => {
       // Unregister the event listener
       socket.off("message received", handleNewMessageReceived);
     };
-  }, [selectedChatCompare, notification, fetchAgain,messages]);
-  
-  
-  
+  }, [selectedChatCompare, notification, fetchAgain, messages]);
+
+
+
 
   const typingHandler = (e) => {
     setNewMessage(e.target.value);
@@ -192,7 +188,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               icon={<ArrowBackIcon />}
               onClick={() => setSelectedChat("")}
             />
-             <img src={selectedChat.users.user && selectedChat.users.user.displaypicture} className='h-10 w-10 rounded-full me-2' />
+            <img src={selectedChat.users.user && selectedChat.users.user.displaypicture} className='h-10 w-10 rounded-full me-2' />
             {selectedChat.users.user && selectedChat.users.user.name}
           </Text>
           <Box
@@ -219,7 +215,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 <ScrollableChat messages={messages} user={user} />
               </div>
             )}
-            {istyping && !isMessageSender(user, selectedChat) ? ( 
+            {istyping && !isMessageSender(user, selectedChat) ? (
               <div>
                 <p style={{ marginBottom: 8, marginLeft: 0, color: "gray" }}>
                   Typing...
@@ -231,28 +227,28 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             <FormControl className="w-full pt-3" id="first-name" isRequired>
               <div className="relative flex w-full">
                 <Input
-                  className="w-full"
-                  borderRadius={15}
-                  bg="#E0E0E0"
-                  placeholder="Enter a message..."
+                  className="w-full h-8"
+                  variant="outline"
+                  bg="#E0E00"
+                  placeholder="  Enter a message..."
                   value={newMessage}
                   onChange={typingHandler}
                   onKeyDown={sendMessage}
                 />
-                <Button onClick={sendMessage}>Send</Button>
+
               </div>
             </FormControl>
           </Box>
         </>
       ) : (
-        // to get socket.io on same page
+
         <Box display="flex" alignItems="center" justifyContent="center" h="100%">
           <Text fontSize="3xl" pb={3} fontFamily="Work sans">
             Click on a user to start chatting
           </Text>
         </Box>
       )}
-      <ToastContainer/>
+      <ToastContainer />
     </>
   );
 };

@@ -26,7 +26,7 @@ function ChatProvider({children}) {
     console.log(doctorInfo);
     setUser(doctorInfo);
     setUser(doctorInfo);
-    setSelectedChat(initialChatState);
+    setSelectedChat();
 
     if (!doctorInfo) navigate("/doctor/");
   }, []);

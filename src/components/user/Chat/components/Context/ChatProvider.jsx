@@ -22,11 +22,10 @@ function ChatUserProvider({children}) {
 
   useEffect(() => {
 
-    // const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     console.log(userInfo);
     setUser(userInfo);
     setUser(userInfo);
-    setSelectedChat(initialChatState);
+    setSelectedChat();
 
     // if (!userInfo) navigate("/");
   }, []);

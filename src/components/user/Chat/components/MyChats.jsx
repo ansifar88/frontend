@@ -1,13 +1,9 @@
-// import { AddIcon } from "@chakra-ui/icons";
 import { Stack, Text } from "@chakra-ui/layout";
 import dp from "../../../../logos/dp.png"
 import axios from "axios";
 import { useEffect, useState } from "react";
-// import ChatLoading from "./ChatLoading";
-// import { Button } from "@chakra-ui/react";
 import userRequest from "../../../../utils/userRequest";
 import { ChatState } from "./Context/ChatProvider";
-// import { getSender } from "../Config/ChatLogistics";
 import { Spinner } from "@material-tailwind/react";
 import { Box } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
@@ -15,33 +11,15 @@ import SideDrawer from "./SideDrawer";
 
 const MyChats = ({ fetchAgain }) => {
     const [loggedUser, setLoggedUser] = useState();
-
     const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
-
-    //   const toast = useToast();
-
     const fetchChats = async () => {
-        // console.log(user.id);
-        try {
-            const config = {
-                headers: {
-                    Authorization: `Bearer ${user.token}`,
-                },
-            };
-            console.log(config, selectedChat, "selected chat");
+        try {          
+            console.log( selectedChat, "selected chat");
             const userId = user.id
-            const { data } = await userRequest.get(`/fetchchat/${userId}`, config);
+            const { data } = await userRequest.get(`/fetchchat/${userId}`);
             console.log(data);
             setChats(data);
-        } catch (error) {
-            //   toast({
-            //     title: "Error Occured!",
-            //     description: "Failed to Load the chats",
-            //     status: "error",
-            //     duration: 5000,
-            //     isClosable: true,
-            //     position: "bottom-left",
-            //   });
+        } catch (error) {           
             console.log("Failed to Load the chats");
         }
     };
@@ -50,7 +28,6 @@ const MyChats = ({ fetchAgain }) => {
     useEffect(() => {
         setLoggedUser(userInfo);
         fetchChats();
-        // eslint-disable-next-line
     }, [fetchAgain]);
 
     return (
@@ -99,7 +76,7 @@ const MyChats = ({ fetchAgain }) => {
 
             >
                 {chats ? (
-                    <Stack overflowY="scroll">
+                    <Stack overflowY="hidden">
                         {chats.map((chat) => (
                             <Box
                                 onClick={() => setSelectedChat(chat)}
@@ -138,8 +115,11 @@ const MyChats = ({ fetchAgain }) => {
                         ))}
                     </Stack>
                 ) : (
-                    //   <ChatLoading />
-                    <Spinner />
+                    <div className="flex justify-center items-center h-52">
+
+                        <Spinner />
+                    </div>
+                    
 
                 )}
             </Box>
