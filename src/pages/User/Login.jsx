@@ -90,12 +90,16 @@ const Login = () => {
 
   return (
     <>
+    <p className='text-red-600'>  user name : user@gmail.com
+    password : 123456</p>
+  
       <div
         className="min-h-screen flex items-center justify-center bg-cover bg-center"
         style={{
           backgroundImage: "url('https://images.unsplash.com/photo-1584982751601-97dcc096659c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80')",
         }}
       >
+        
         <div className="w-full max-w-[48rem] p-4 ">
           <div className="bg-transparent shadow-lg rounded-none overflow-hidden ">
             <div className="md:flex">
@@ -110,6 +114,7 @@ const Login = () => {
                 <Typography variant="h4" color="white" className="text-center mb-4 md:mb-8">
                   LOG IN
                 </Typography>
+                
                 <form className="w-full md:w-96" onSubmit={handleSubmit}>
                   <div className="mb-4">
                     <Input size="lg" label="Email" variant="standard" name='email' color='white' className='bg-[#1572a9b6]'
